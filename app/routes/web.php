@@ -13,3 +13,4 @@
 
 Route::get('index',"Admin\IndexController@index");
 Route::get('/',"Admin\IndexController@index");
+Route::get('main',"Admin\IndexController@main");
