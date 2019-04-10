@@ -11,4 +11,5 @@
 |
 */
 
-Route::get('/',"Admin\IndexController\index");
+Route::get('index',"Admin\IndexController@index");
+Route::get('/',"Admin\IndexController@index");
