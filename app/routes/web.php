@@ -15,6 +15,12 @@ Route::get('index',"Admin\IndexController@index");
 Route::get('/',"Admin\IndexController@index");
 Route::get('main',"Admin\IndexController@main");
 
+//后台管理员登录
+Route::get('adminLogin',"Admin\LoginController@adminLogin");//登录页面
+Route::get('codeImg/{tmp}',"Admin\LoginController@codeImg");//验证码
+Route::post('adminLoginDo',"Admin\LoginController@adminLoginDo");//登录执行
+
+
 //后台管理员管理
 Route::get('adminAdd',"Admin\AdminController@adminAdd");//管理员添加
 Route::post('adminInsert',"Admin\AdminController@adminInsert");//执行添加
