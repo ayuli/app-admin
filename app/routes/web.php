@@ -15,6 +15,8 @@ Route::get('index',"Admin\IndexController@index");
 Route::get('/',"Admin\IndexController@index");
 Route::get('main',"Admin\IndexController@main");
 
+//后台管理员管理
+Route::get('adminAdd',"Admin\AdminController@adminAdd");//管理员添加
 
 //后台商品管理
 Route::get('/brand',"Brand\BrandController@brand");     //品牌添加页面
