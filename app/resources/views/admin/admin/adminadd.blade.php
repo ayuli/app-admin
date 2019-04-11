@@ -5,6 +5,7 @@
     <title>管理员添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
     <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
     <script type="text/javascript" src="layui/layui.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 </head>
@@ -58,20 +59,37 @@
 </html>
 
 <script>
-    $('#btn').click(function(){
-        var admin_name = $("input[name='admin_name']").val();
-        var admin_pwd = $("input[name='admin_pwd']").val();
-        var admin_email = $("input[name='admin_email']").val();
-        var admin_tel = $("input[name='admin_tel']").val();
+    layui.use('layer', function() {
+        var layer = layui.layer;
+        $('#btn').click(function(){
+            var admin_name = $("input[name='admin_name']").val();
+            var admin_pwd = $("input[name='admin_pwd']").val();
+            var admin_email = $("input[name='admin_email']").val();
+            var admin_tel = $("input[name='admin_tel']").val();
 
 
-        $.post(
-            'adminInsert',
-            {admin_name:admin_name,admin_pwd:admin_pwd,admin_email:admin_email,admin_tel:admin_tel},
-            function(res){
-
-            }
-        )
+            $.post(
+                'adminInsert',
+                {admin_name:admin_name,admin_pwd:admin_pwd,admin_email:admin_email,admin_tel:admin_tel},
+                function(res){
+                    if(res.code==0) {
+                        layer.open({
+                            type:0,
+                            content:'添加成功',
+                            btn:['继续添加','列表展示'],
+                            yes:function(index,layero){
+                                location.href="adminAdd";
+                                return true;
+                            },
+                            btn2:function(){
+                                location.href="adminList";
+                                return true;
+                            }
+                        })
+                    }
+                },'json'
+            )
+        })
     })
 
 </script>
