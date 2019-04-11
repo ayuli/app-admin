@@ -84,18 +84,10 @@ class BrandController extends Controller
         ];
         $res = BrandModel::where(["brand_id"=>$brand_id])->update($data);
         if($res!==false){
-            $json = [
-                'code'  => 0,
-                'msg'   => '修改成功'
-            ];
-
+            $json = ['code'  => 0, 'msg'   => '修改成功'];
         }else{
-            $json = [
-                'code'  => 110,
-                'msg'   => '修改失败'
-            ];
+            $json = ['code'  => 110, 'msg'   => '修改失败'];
         }
-
         return  json_encode($json,JSON_UNESCAPED_UNICODE);
 
     }
@@ -144,18 +136,13 @@ class BrandController extends Controller
             if ($fileCharater->isValid()) {
                 $ext = $fileCharater->getClientOriginalExtension();// 文件后缀
                 $path = $fileCharater->getRealPath();//获取文件的绝对路径
-
                 $filename = date('Ymdhis') . '.' . $ext;//定义文件名
-
                 Storage::disk('public')->put($filename, file_get_contents($path));
-
                 $file_path = "./logo/" . $filename;
-
 
             }
 
         }
-
         return json_encode($file_path);
     }
 
