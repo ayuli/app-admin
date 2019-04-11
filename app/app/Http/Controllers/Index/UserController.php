@@ -13,11 +13,11 @@ class UserController extends Controller
     }
     public function registersole(Request $request){
         $name = $request->input('name');
-        $res = DB::table('app_user')->where('username',$name)->first();
+        $res = DB::table('app_user')->where('user_name',$name)->first();
         if($res){
-            return 1;
+            return 1;//已存在
         }else{
-            return 2;
+            return 2;//唯一
         }
     }
     public function  userCenter(){
