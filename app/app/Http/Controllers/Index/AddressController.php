@@ -18,7 +18,7 @@ class AddressController extends Controller
             $data = json_decode($regin,1);
             return $data;
         }else{
-            $regin = DB::table('app_regio')->where('p_id',$pid)->get();
+            $regin = DB::table('app_region')->where('p_id',$pid)->get();
             $data = json_decode($regin,1);
             return $data;
         }
