@@ -18,20 +18,20 @@
                 <a href="#">商品管理</a>
                 &nbsp;-
             </span>
-            &nbsp;品牌添加
+            &nbsp;品牌修改
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         <div class="banneradd bor">
             <div class="baTopNo">
-                <span>品牌添加</span>
+                <span>品牌修改</span>
             </div>
             <div class="baBody">
 
                 <div class="bbD">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;品牌名称：
-                    <input type="text" class="input3" id="name"/>
+                    <input type="text" class="input3" id="name" value="{{$brand['brand_name']}}"/>
                 </div>
 
                 <div class="bbD" style="margin-left: 24px;">
@@ -44,12 +44,13 @@
 
                 <div class="bbD">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;品牌网址：
-                    <input type="text" class="input3" id="url"/>
+                    <input type="text" class="input3" id="url" value="{{$brand['site_url']}}" />
                 </div>
 
                 <div class="bbD">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     是否展示：
+                    @if($brand['is_show']==1)
                     <label>
                         <input type="radio" checked="checked" value="1" name="styleshoice2"/>
                         &nbsp;是
@@ -58,10 +59,20 @@
                         <input type="radio" value="2" name="styleshoice2" />
                         &nbsp;否
                     </label>
+                    @elseif($brand['is_show']==2)
+                    <label>
+                        <input type="radio"  value="1" name="styleshoice2"/>
+                        &nbsp;是
+                    </label>
+                    <label>
+                        <input type="radio" checked="checked" value="2" name="styleshoice2" />
+                        &nbsp;否
+                    </label>
+                    @endif
                 </div>
                 <div class="bbD">
                     <p class="bbDP">
-                        <button class="btn_ok btn_yes" href="#" id="addbtn">提交</button>
+                        <button class="btn_ok btn_yes" href="#" id="updabtn">确认修改</button>
                         <a class="btn_ok btn_no" href="#">取消</a>
                     </p>
                 </div>
@@ -106,7 +117,8 @@
     })
 
 
-    $("#addbtn").click(function(){
+    $("#updabtn").click(function(){
+        var brand_id = "{{$brand['brand_id']}}";
         var name = $("#name").val();
         var url = $("#url").val();
         $("input[name=styleshoice2]").each(function(){
@@ -119,9 +131,10 @@
         data.name = name;
         data.url = url;
         data.redio = redio;
+        data.brand_id = brand_id;
 
         $.ajax({
-            url : '/brandadd',
+            url : '/brandupdado',
             type: 'post',
             data : data,
             dataType: 'json',
@@ -132,7 +145,7 @@
                     $(".delP1").text(d.msg);
                     $(".yes").click(function(){
                         $(".banDel").hide();
-                        location.href='/brand'
+                        location.href='/brandget'
                     });
                 }else{
                     // 广告弹出框
@@ -140,12 +153,12 @@
                     $(".delP1").text(d.msg);
                     $(".yes").click(function(){
                         $(".banDel").hide();
-                        location.href='/brand'
+                        location.href='/brandget'
                     });
                 }
-
             }
         })
+
 
     })
 
