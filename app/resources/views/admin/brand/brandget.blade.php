@@ -75,7 +75,7 @@
                     </tr>
                     @endforeach
                 </table>
-                <div class="paging">此处是分页</div>
+                <div class="paging">{{ $data->links() }}</div>
             </div>
             <!-- banner 表格 显示 end-->
         </div>
