@@ -16,6 +16,9 @@ class AddressController extends Controller
         $district = $request->input('district');
         $consignee_tel = $request->input('consignee_tel');
         $is_address = $request->input('is_address');
+        if($is_address==1){
+            DB::table('app_address')->update('is_address',1);
+        }
         $info = array(
             'consignee_name'=>$consignee_name,
             'detailed_address'=>$detailed_address,
