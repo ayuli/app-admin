@@ -16,7 +16,7 @@ class UserController extends Controller
         $pay2 = DB::table('app_order')->where('order_status',2)->count();
         $pay3 = DB::table('app_order')->where('order_status',3)->count();
         $order = DB::table('app_order')->count();
-        $data = array(
+        $info = array(
                     'uaername' =>$username,
                     'userscore' =>$userscore,
                     'pay1' =>$pay1,
@@ -24,6 +24,7 @@ class UserController extends Controller
                     'pay3' =>$pay3,
                     'order' =>$order,
                 );
+        $data = json_encode($info);
         return $data;
     }
 }
