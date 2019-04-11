@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>品牌添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
-    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 </head>
 <body>
@@ -31,39 +31,37 @@
 
                 <div class="bbD">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;品牌名称：
-                    <input type="text" class="input3" />
+                    <input type="text" class="input3" id="name"/>
                 </div>
 
                 <div class="bbD" style="margin-left: 24px;">
                     品牌logo：
                     <div class="bbDd">
-                        <div class="bbDImg">+
-                            {{--<img src="img/userPICS.png" width="160px;" height="180px;">--}}
-                        </div>
-                        <input type="file" class="file" id="file" />
+                        <div class="bbDImg">+</div>
+                        <input type="file" class="file" id="file" name="file"/>
                     </div>
                 </div>
 
                 <div class="bbD">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;品牌网址：
-                    <input type="text" class="input3" />
+                    <input type="text" class="input3" id="url"/>
                 </div>
 
                 <div class="bbD">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     是否展示：
                     <label>
-                        <input type="radio" checked="checked" name="styleshoice2" />
+                        <input type="radio" checked="checked" value="1" name="styleshoice2"/>
                         &nbsp;是
                     </label>
                     <label>
-                        <input type="radio" name="styleshoice2" />
+                        <input type="radio" value="2" name="styleshoice2" />
                         &nbsp;否
                     </label>
                 </div>
                 <div class="bbD">
                     <p class="bbDP">
-                        <button class="btn_ok btn_yes" href="#" >提交</button>
+                        <button class="btn_ok btn_yes" href="#" id="btn">提交</button>
                         <a class="btn_ok btn_no" href="#">取消</a>
                     </p>
                 </div>
@@ -77,19 +75,48 @@
 </html>
 
 <script>
+
     $("#file").change(function() {
 
         $.ajaxFileUpload({
-            type: 'post',
             url: '/brandlogo',
+            type: 'post',
             secureuri: false, //是否需要安全协议，一般设置为false
             fileElementId: 'file', //文件上传域的ID
             dataType: 'json',
             success: function (resule)
             {
                 console.log(resule)
+                // <img src="img/userPICS.png" id='logo'  width="160px;" height="180px;">
             }
         })
+    })
+
+
+    $("#btn").click(function(){
+        var name = $("#name").val();
+        var url = $("#url").val();
+        $("input[name=styleshoice2]").each(function(){
+            if($(this).prop('checked')==true){
+                redio = $(this).val()
+            }
+        });
+
+        var data = {};
+        data.name = name;
+        data.url = url;
+        data.redio = redio;
+
+        $.ajax({
+            url : '/brandadd',
+            type: 'post',
+            data : data,
+            dataType: 'json',
+            success: function(d){
+                console.log(d)
+            }
+        })
+
     })
 
 </script>

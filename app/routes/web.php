@@ -23,7 +23,10 @@ Route::post('adminDel',"Admin\AdminController@adminDel");//管理员删除
 Route::get('adminUpdate',"Admin\AdminController@adminUpdate");//管理员修改页面
 Route::post('adminUpdataDo',"Admin\AdminController@adminUpdataDo");//管理员执行修改
 //后台商品管理
-Route::get('/brand',"Brand\BrandController@brand");     //品牌添加页面
-Route::get('/brandget',"Brand\BrandController@brandGet");   //品牌展示
-Route::post('/brandadd',"Brand\BrandController@brandAdd");   //品牌添加
-Route::post('/brandlogo',"Brand\BrandController@brandLogo");   //品牌logo上传
+Route::get('/brand',"Admin\BrandController@brand");     //品牌添加页面
+Route::get('/brandget',"Admin\BrandController@brandGet");   //品牌展示
+Route::post('/brandadd',"Admin\BrandController@brandAdd");   //品牌添加
+Route::post('/brandlogo',"Admin\BrandController@brandLogo");   //品牌logo上传
+
+//个人中心
+Route::get('/userCenter',"Index\UserController@userCenter");     //品牌添加页面
