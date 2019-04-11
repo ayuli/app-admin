@@ -15,6 +15,7 @@ class AddressController extends Controller
         $city = $request->input('city');
         $district = $request->input('district');
         $consignee_tel = $request->input('consignee_tel');
+        $is_address = $request->input('is_address');
         $info = array(
             'consignee_name'=>$consignee_name,
             'detailed_address'=>$detailed_address,
@@ -22,6 +23,7 @@ class AddressController extends Controller
             'city'=>$city,
             'district'=>$district,
             'consignee_tel'=>$consignee_tel,
+            'is_address'=>$is_address,
 
         );
         $res = DB::table('app_address')->insert($info);
