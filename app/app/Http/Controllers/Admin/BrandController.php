@@ -80,7 +80,7 @@ class BrandController extends Controller
         }
         $logo = $request->input('logo');
         if($name==''|| $url=="" || $logo==''){
-            $json = ['code'  => 0, 'msg'   => '请填写完整'];
+            $json = ['code'  => 100, 'msg'   => '请填写完整'];
             return  json_encode($json,JSON_UNESCAPED_UNICODE);
         }
         $data = [
@@ -109,7 +109,7 @@ class BrandController extends Controller
         $is_show = $request->input('redio');
         $logo = $request->input('logo');
         if($name==''|| $url=="" || $logo==''){
-            $json = ['code'  => 0, 'msg'   => '请填写完整'];
+            $json = ['code'  => 111, 'msg'   => '请填写完整'];
             return  json_encode($json,JSON_UNESCAPED_UNICODE);
         }
         $data = [

@@ -37,7 +37,7 @@
                 <div class="bbD" style="margin-left: 24px;">
                     品牌logo：
                     <div class="bbDd">
-                        <div class="bbDImg"><img src="{{$brand['brand_logo']}}" width='180px;' height='180px;'></div>
+                        <div class="bbDImg"><img src="{{$brand['brand_logo']}}" id='logo' width='180px;' height='180px;'></div>
                         <input type="file" style="cursor:pointer" class="file" id="file" name="file"/>
                     </div>
                 </div>
