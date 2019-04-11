@@ -41,6 +41,10 @@ Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
 Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
 Route::get('changeType',"Admin\GoodsController@changeType"); //商品添加页面
 
+//前台登陆
+Route::get('/register',"Index\UserController@register"); //注册
+Route::get('/registersole',"Index\UserController@registersole"); //注册验证唯一
+
 //个人中心
 Route::get('/userCenter',"Index\UserController@userCenter");
 //收货地址

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    public function register(){
+
+    }
     public function  userCenter(){
         $user = DB::table('app_user')->first();
         $username = $user->user_name;

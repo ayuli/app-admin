@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
+    public function getregion(Request $request){
+        $pid = $request->input('pid',1);
+        $regin = DB::table('app_region')->where('p_id',$pid)->get();
+        $data = json_decode($regin,1);
+        return $data;
+
+    }
     public function address(Request $request){
         $consignee_name = $request->input('consignee_name');
         $detailed_address = $request->input('detailed_address');
@@ -36,11 +43,7 @@ class AddressController extends Controller
             return 2;
         }
     }
-    public function getregion(Request $request){
-        $pid = $request->input('pid',1);
-        $regin = DB::table('app_region')->where('p_id',$pid)->get();
-        $data = json_decode($regin,1);
-        return $data;
+    public function addressGet(){
 
     }
 }
