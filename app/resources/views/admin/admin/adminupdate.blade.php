@@ -70,8 +70,20 @@
                 {admin_name:admin_name,admin_id:admin_id,admin_email:admin_email,admin_tel:admin_tel},
                 function(res){
                     if(res.code==0){
-                        layer.msg(res.msg)
-                    location.href="adminList";
+                        layer.open({
+                            type:0,
+                            content:'修改成功',
+                            btn:['返回列表','继续修改'],
+                            btn1:function(){
+                                location.href="adminList";
+                                return true;
+                            },
+                            btn2:function(){
+//                                location.href="adminList";
+                                return true;
+                            }
+
+                        })
                     }else if(res.code==1){
                         layer.msg(res.msg)
                     }else{

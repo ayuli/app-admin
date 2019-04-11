@@ -70,14 +70,27 @@
             var _this = $(this);
 //            alert(111)
             var admin_id = $(this).parent().attr('admin_id');
-            $.post(
-                'adminDel',
-                {admin_id:admin_id},
-                function(res){
-                    layer.msg(res.msg);
-                    _this.parents('tr').remove();
-                },'json'
-            )
+
+            layer.open({
+                type:0,
+                content: '是否确认删除？',
+                btn:['确认','取消'],
+                yes:function(index,layero){
+                    $.post(
+                        'adminDel',
+                        {admin_id:admin_id},
+                        function(res){
+                            layer.msg(res.msg);
+                            _this.parents('tr').remove();
+                        },'json'
+                    )
+                },
+                btn2:function(){
+//                    location.href="adminList";
+                    return true;
+                }
+            })
+
         })
     })
 </script>
