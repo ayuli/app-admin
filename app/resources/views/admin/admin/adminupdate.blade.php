@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>管理员添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
+    <script src="layui/layui.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 </head>
@@ -55,20 +56,23 @@
 </html>
 
 <script>
-    $('#btn').click(function(){
-        var admin_name = $("input[name='admin_name']").val();
-        var admin_id = $("input[name='admin_id']").val();
-        var admin_email = $("input[name='admin_email']").val();
-        var admin_tel = $("input[name='admin_tel']").val();
+    layui.use('layer', function() {
+        var layer = layui.layer;
+        $('#btn').click(function(){
+            var admin_name = $("input[name='admin_name']").val();
+            var admin_id = $("input[name='admin_id']").val();
+            var admin_email = $("input[name='admin_email']").val();
+            var admin_tel = $("input[name='admin_tel']").val();
 
 
-        $.post(
-            'adminUpdataDo',
-            {admin_name:admin_name,admin_id:admin_id,admin_email:admin_email,admin_tel:admin_tel},
-            function(res){
-                alert(res.msg);
-            }
-        ),'json'
+            $.post(
+                'adminUpdataDo',
+                {admin_name:admin_name,admin_id:admin_id,admin_email:admin_email,admin_tel:admin_tel},
+                function(res){
+                    layer.msg(res.msg)
+                    location.href="adminList";
+                },'json'
+            )
+        })
     })
-
 </script>
