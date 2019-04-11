@@ -23,7 +23,7 @@ class BrandController extends Controller
      */
     public function brandGet()
     {
-        $brand_all = BrandModel::where(['is_del'=>0])->simplePaginate(4);
+        $brand_all = BrandModel::where(['is_del'=>0])->paginate(4);
         $data = [
             'data' => $brand_all
         ];
