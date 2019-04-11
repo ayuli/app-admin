@@ -53,7 +53,7 @@
                         </td>
                         <td>
                             <div style="margin-top: 25px;margin-bottom:25px;">
-                            <img src="img/userPICS.png" width="75px;" height="75px;">
+                            <img src="{{$v['brand_logo']}}" width="75px;" height="75px;">
                             </div>
                         </td>
                         <td>
