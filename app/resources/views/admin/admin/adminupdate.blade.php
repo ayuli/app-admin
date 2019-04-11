@@ -69,8 +69,15 @@
                 'adminUpdataDo',
                 {admin_name:admin_name,admin_id:admin_id,admin_email:admin_email,admin_tel:admin_tel},
                 function(res){
-                    layer.msg(res.msg)
+                    if(res.code==0){
+                        layer.msg(res.msg)
                     location.href="adminList";
+                    }else if(res.code==1){
+                        layer.msg(res.msg)
+                    }else{
+                        layer.msg(res.msg)
+                    }
+
                 },'json'
             )
         })
