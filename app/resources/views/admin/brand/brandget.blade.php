@@ -59,7 +59,13 @@
                         <td>
                             <a href="{{$v['site_url']}}" target="_blank">{{$v['site_url']}}</a>
                         </td>
-                        <td>2015-25-36 12:12</td>
+                        <td>
+                            @if($v['is_show']==1)
+                            是
+                            @elseif($v['is_show']==2)
+                            否
+                            @endif
+                        </td>
                         <td>
                             <a href="connoisseuradd.html">
                                 <img class="operation" src="img/update.png">

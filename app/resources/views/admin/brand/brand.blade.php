@@ -38,7 +38,7 @@
                     品牌logo：
                     <div class="bbDd">
                         <div class="bbDImg">+</div>
-                        <input type="file" class="file" id="file" />
+                        <input type="file" class="file" id="file" name="file"/>
                     </div>
                 </div>
 
@@ -75,9 +75,6 @@
 </html>
 
 <script>
-    $("#file").click(function() {
-
-    })
 
     $("#file").change(function() {
 
@@ -101,9 +98,25 @@
         var url = $("#url").val();
         $("input[name=styleshoice2]").each(function(){
             if($(this).prop('checked')==true){
-                console.log($(this).val())
-            };
+                redio = $(this).val()
+            }
         });
+
+        var data = {};
+        data.name = name;
+        data.url = url;
+        data.redio = redio;
+
+        $.ajax({
+            url : '/brandadd',
+            type: 'post',
+            data : data,
+            dataType: 'json',
+            success: function(d){
+                console.log(d)
+            }
+        })
+
     })
 
 </script>
