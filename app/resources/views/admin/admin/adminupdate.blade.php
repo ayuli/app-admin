@@ -5,7 +5,6 @@
     <title>管理员添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="layui/layui.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 </head>
 <body>
@@ -31,20 +30,18 @@
             <div class="baBody">
 
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员名称：<input type="text" name="admin_name" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员名称：<input type="text" name="admin_name" value="{{$admininfo->admin_name}}" class="input3" />
                 </div>
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员密码：<input type="password" name="admin_pwd" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员邮箱：<input type="text" name="admin_email" value="{{$admininfo->admin_email}}" class="input3" />
                 </div>
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员邮箱：<input type="text" name="admin_email" class="input3" />
-                </div>
-                <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员电话：<input type="text" name="admin_tel" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员电话：<input type="text" name="admin_tel" value="{{$admininfo->admin_tel}}" class="input3" />
+                    <input type="hidden"  name="admin_id" value="{{$admininfo->admin_id}}">
                 </div>
                 <div class="bbD">
                     <p class="bbDP">
-                        <button class="btn_ok btn_yes" id="btn" href="#" >提交</button>
+                        <button class="btn_ok btn_yes" id="btn" href="#" >修改</button>
                         <a class="btn_ok btn_no" href="#">取消</a>
                     </p>
                 </div>
@@ -60,18 +57,18 @@
 <script>
     $('#btn').click(function(){
         var admin_name = $("input[name='admin_name']").val();
-        var admin_pwd = $("input[name='admin_pwd']").val();
+        var admin_id = $("input[name='admin_id']").val();
         var admin_email = $("input[name='admin_email']").val();
         var admin_tel = $("input[name='admin_tel']").val();
 
 
         $.post(
-            'adminInsert',
-            {admin_name:admin_name,admin_pwd:admin_pwd,admin_email:admin_email,admin_tel:admin_tel},
+            'adminUpdataDo',
+            {admin_name:admin_name,admin_id:admin_id,admin_email:admin_email,admin_tel:admin_tel},
             function(res){
-
+                alert(res.msg);
             }
-        )
+        ),'json'
     })
 
 </script>

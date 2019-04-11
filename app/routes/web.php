@@ -17,7 +17,11 @@ Route::get('main',"Admin\IndexController@main");
 
 //后台管理员管理
 Route::get('adminAdd',"Admin\AdminController@adminAdd");//管理员添加
-
+Route::post('adminInsert',"Admin\AdminController@adminInsert");//执行添加
+Route::get('adminList',"Admin\AdminController@adminList");//管理员展示
+Route::post('adminDel',"Admin\AdminController@adminDel");//管理员删除
+Route::get('adminUpdate',"Admin\AdminController@adminUpdate");//管理员修改页面
+Route::post('adminUpdataDo',"Admin\AdminController@adminUpdataDo");//管理员执行修改
 //后台商品管理
 Route::get('/brand',"Admin\BrandController@brand");     //品牌添加页面
 Route::get('/brandget',"Admin\BrandController@brandGet");   //品牌展示
