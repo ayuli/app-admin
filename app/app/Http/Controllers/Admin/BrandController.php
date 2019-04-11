@@ -19,7 +19,7 @@ class BrandController extends Controller
     }
 
     /**
-     * 商品品牌展示
+     * 商品品牌展示接口
      */
     public function brandGet()
     {
@@ -31,7 +31,7 @@ class BrandController extends Controller
     }
 
     /**
-     * 品牌删除
+     * 品牌删除接口
      */
     public function brandDel(Request $request)
     {
@@ -67,7 +67,7 @@ class BrandController extends Controller
     }
 
     /**
-     * 品牌修改执行
+     * 品牌修改执行接口
      */
     public function brandUpdaDo(Request $request)
     {
@@ -75,10 +75,12 @@ class BrandController extends Controller
         $url = $request->input('url');
         $is_show = $request->input('redio');
         $brand_id = $request->input('brand_id');
+        $logo = $request->input('logo');
         $data = [
             'brand_name' => $name,
             'site_url' => $url,
-            'is_show'   => $is_show
+            'is_show'   => $is_show,
+            'brand_logo' => $logo
         ];
         $res = BrandModel::where(["brand_id"=>$brand_id])->update($data);
         if($res!==false){
@@ -106,10 +108,12 @@ class BrandController extends Controller
         $name = $request->input('name');
         $url = $request->input('url');
         $is_show = $request->input('redio');
+        $logo = $request->input('logo');
         $data = [
             'brand_name' => $name,
             'site_url' => $url,
-            'is_show'   => $is_show
+            'is_show'   => $is_show,
+            'brand_logo' =>  $logo
         ];
         $res = BrandModel::insert($data);
         if($res){
@@ -146,13 +150,13 @@ class BrandController extends Controller
                 Storage::disk('public')->put($filename, file_get_contents($path));
 
                 $file_path = "./logo/" . $filename;
-                var_dump($file_path);die;
 
 
             }
 
         }
 
+        return json_encode($file_path);
     }
 
 

@@ -37,8 +37,8 @@
                 <div class="bbD" style="margin-left: 24px;">
                     品牌logo：
                     <div class="bbDd">
-                        <div class="bbDImg">+</div>
-                        <input type="file" class="file" id="file" name="file"/>
+                        <div class="bbDImg"><img src="{{$brand['brand_logo']}}" width='180px;' height='180px;'></div>
+                        <input type="file" style="cursor:pointer" class="file" id="file" name="file"/>
                     </div>
                 </div>
 
@@ -100,8 +100,7 @@
 
 <script>
 
-    $("#file").change(function() {
-
+    $(".bbDd").change(function(){
         $.ajaxFileUpload({
             url: '/brandlogo',
             type: 'post',
@@ -110,14 +109,15 @@
             dataType: 'json',
             success: function (resule)
             {
-                console.log(resule)
-                // <img src="img/userPICS.png" id='logo'  width="160px;" height="180px;">
+                $(".bbDImg").html("<img src='"+resule+"'width='160px;' height='180px;' id='logo' style='cursor:pointer'>");
+                // console.log(resule)
             }
         })
     })
 
 
     $("#updabtn").click(function(){
+        var logo = $("#logo").prop('src');
         var brand_id = "{{$brand['brand_id']}}";
         var name = $("#name").val();
         var url = $("#url").val();
@@ -131,6 +131,7 @@
         data.name = name;
         data.url = url;
         data.redio = redio;
+        data.logo = logo;
         data.brand_id = brand_id;
 
         $.ajax({
