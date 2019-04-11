@@ -118,6 +118,7 @@
 
     $("#addbtn").click(function(){
         var logo = $("#logo").prop('src');
+        console.log(logo)
         var name = $("#name").val();
         var url = $("#url").val();
         $("input[name=styleshoice2]").each(function(){

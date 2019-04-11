@@ -75,7 +75,14 @@ class BrandController extends Controller
         $url = $request->input('url');
         $is_show = $request->input('redio');
         $brand_id = $request->input('brand_id');
+        if($brand_id==''){
+            echo "非法操作";
+        }
         $logo = $request->input('logo');
+        if($name==''|| $url=="" || $logo==''){
+            $json = ['code'  => 0, 'msg'   => '请填写完整'];
+            return  json_encode($json,JSON_UNESCAPED_UNICODE);
+        }
         $data = [
             'brand_name' => $name,
             'site_url' => $url,
@@ -101,6 +108,10 @@ class BrandController extends Controller
         $url = $request->input('url');
         $is_show = $request->input('redio');
         $logo = $request->input('logo');
+        if($name==''|| $url=="" || $logo==''){
+            $json = ['code'  => 0, 'msg'   => '请填写完整'];
+            return  json_encode($json,JSON_UNESCAPED_UNICODE);
+        }
         $data = [
             'brand_name' => $name,
             'site_url' => $url,
@@ -109,15 +120,9 @@ class BrandController extends Controller
         ];
         $res = BrandModel::insert($data);
         if($res){
-            $json = [
-                'code'  => 0,
-                'msg'   => '添加成功'
-            ];
+            $json = ['code'  => 0, 'msg'   => '添加成功'];
         }else{
-            $json = [
-                'code'  => 110,
-                'msg'   => '添加失败'
-            ];
+            $json = ['code'  => 110, 'msg'   => '添加失败'];
         }
 
         return  json_encode($json,JSON_UNESCAPED_UNICODE);
@@ -145,7 +150,6 @@ class BrandController extends Controller
         }
         return json_encode($file_path);
     }
-
 
 
 }
