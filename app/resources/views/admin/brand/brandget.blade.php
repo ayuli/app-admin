@@ -47,9 +47,9 @@
                     </tr>
                     @foreach($data as $v)
                     <tr>
-                        <td>{{$v['brand_id']}}</td>
+                        <td id="bid">{{$v['brand_id']}}</td>
                         <td>
-                            华莱士
+                            {{$v['brand_name']}}
                         </td>
                         <td>
                             <div style="margin-top: 25px;margin-bottom:25px;">
@@ -67,10 +67,12 @@
                             @endif
                         </td>
                         <td>
-                            <a href="connoisseuradd.html">
+                            <a href="/brandupda?brand_id={{$v['brand_id']}}">
                                 <img class="operation" src="img/update.png">
                             </a>
+
                             <img class="operation delban" src="img/delete.png">
+
                         </td>
                     </tr>
                     @endforeach
@@ -93,7 +95,7 @@
         </div>
         <p class="delP1">你确定要删除此条记录吗？</p>
         <p class="delP2">
-            <a href="#" class="ok yes">确定</a><a class="ok no">取消</a>
+            <a class="ok yes" id="yes">确定</a><a class="ok no">取消</a>
         </p>
     </div>
 </div>
@@ -108,6 +110,39 @@
     $(".close").click(function(){
         $(".banDel").hide();
     });
+    $("#yes").click(function(){
+
+        var brand_id=$("#bid").text();
+        $.ajax({
+            url : '/branddel',
+            type: 'post',
+            data : {brand_id:brand_id},
+            dataType: 'json',
+            success: function(d){
+                if(d.code==0){
+                    // 广告弹出框
+                    $(".banDel").show();
+                    $(".delP1").text(d.msg);
+                    $(".delP2").html("<a class='ok no'>确定</a>");
+                    $(".no").click(function(){
+                        $(".banDel").hide();
+                        location.href='/brandget'
+                    });
+                }else{
+                    // 广告弹出框
+                    $(".banDel").show();
+                    $(".delP1").text(d.msg);
+                    $(".delP2").html("<a class='ok no'>确定</a>");
+                    $(".no").click(function(){
+                        $(".banDel").hide();
+                        location.href='/brandget'
+                    });
+                }
+            }
+        })
+
+    });
+
     $(".no").click(function(){
         $(".banDel").hide();
     });

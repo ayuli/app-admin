@@ -23,11 +23,79 @@ class BrandController extends Controller
      */
     public function brandGet()
     {
-        $brand_all = BrandModel::all();
+        $brand_all = BrandModel::where(['is_del'=>0])->get();
         $data = [
             'data' => $brand_all
         ];
         return view('admin.brand.brandget',$data);
+    }
+
+    /**
+     * 品牌删除
+     */
+    public function brandDel(Request $request)
+    {
+        $brand_id = $request->input('brand_id');
+//        echo $brand_id;die;
+        $res = BrandModel::where(['brand_id'=>$brand_id])->update(['is_del'=>1]);
+        if($res){
+            $json = [
+                'code' => 0,
+                'msg'   => '删除成功'
+            ];
+        }else{
+            $json=[
+                'code' => 110,
+                'msg'   => '删除失败'
+            ];
+        }
+
+        return json_encode($json,JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * 品牌修改展示
+     */
+    public function brandUpda(Request $request)
+    {
+        $brand_id = $request->input('brand_id');
+        $brand_first = BrandModel::where(['brand_id'=>$brand_id])->first();
+        $data = [
+            'brand'=>$brand_first
+        ];
+        return view('admin.brand.brandupda',$data);
+    }
+
+    /**
+     * 品牌修改执行
+     */
+    public function brandUpdaDo(Request $request)
+    {
+        $name = $request->input('name');
+        $url = $request->input('url');
+        $is_show = $request->input('redio');
+        $brand_id = $request->input('brand_id');
+        $data = [
+            'brand_name' => $name,
+            'site_url' => $url,
+            'is_show'   => $is_show
+        ];
+        $res = BrandModel::where(["brand_id"=>$brand_id])->update($data);
+        if($res!==false){
+            $json = [
+                'code'  => 0,
+                'msg'   => '修改成功'
+            ];
+
+        }else{
+            $json = [
+                'code'  => 110,
+                'msg'   => '修改失败'
+            ];
+        }
+
+        return  json_encode($json,JSON_UNESCAPED_UNICODE);
+
     }
 
     /**
@@ -49,8 +117,15 @@ class BrandController extends Controller
                 'code'  => 0,
                 'msg'   => '添加成功'
             ];
-            return  json_encode($json,JSON_UNESCAPED_UNICODE);
+        }else{
+            $json = [
+                'code'  => 110,
+                'msg'   => '添加失败'
+            ];
         }
+
+        return  json_encode($json,JSON_UNESCAPED_UNICODE);
+
     }
 
     /**

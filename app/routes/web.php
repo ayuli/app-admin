@@ -32,7 +32,11 @@ Route::post('adminUpdataDo',"Admin\AdminController@adminUpdataDo");//管理员�
 Route::get('/brand',"Admin\BrandController@brand");     //品牌添加页面
 Route::get('/brandget',"Admin\BrandController@brandGet");   //品牌展示
 Route::post('/brandadd',"Admin\BrandController@brandAdd");   //品牌添加
+Route::post('/branddel',"Admin\BrandController@brandDel");   //品牌假删
+Route::get('/brandupda',"Admin\BrandController@brandUpda");   //品牌修改展示
+Route::post('/brandupdado',"Admin\BrandController@brandUpdaDo");   //品牌修改执行
 Route::post('/brandlogo',"Admin\BrandController@brandLogo");   //品牌logo上传
-
 //个人中心
-Route::get('/userCenter',"Index\UserController@userCenter");     //品牌添加页面
+Route::get('/userCenter',"Index\UserController@userCenter");
+
+
