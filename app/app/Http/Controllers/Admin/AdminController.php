@@ -65,7 +65,7 @@ class AdminController extends Controller
     }
     //管理员展示
     public function adminList(){
-        $admininfo = DB::table('app_admin')->where('is_del',0)->get();
+        $admininfo = DB::table('app_admin')->where('is_del',0)->paginate(4);
         return view('admin.admin.adminlist',['admininfo'=>$admininfo]);
     }
     //管理员删除
