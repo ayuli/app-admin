@@ -11,6 +11,15 @@ class UserController extends Controller
     public function register(){
 
     }
+    public function registersole(Request $request){
+        $name = $request->input('name');
+        $res = DB::table('app_user')->where('username',$name)->first();
+        if($res){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
     public function  userCenter(){
         $user = DB::table('app_user')->first();
         $username = $user->user_name;
