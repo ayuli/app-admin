@@ -38,5 +38,7 @@ Route::post('/brandupdado',"Admin\BrandController@brandUpdaDo");   //品牌修�
 Route::post('/brandlogo',"Admin\BrandController@brandLogo");   //品牌logo上传
 //个人中心
 Route::get('/userCenter',"Index\UserController@userCenter");
+//收货地址
+Route::get('/getregion',"Index\AddressController@getregion");
 
 
