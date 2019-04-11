@@ -86,6 +86,8 @@
                                 return true;
                             }
                         })
+                    }else if(res.code==1){
+                        layer.msg(res.msg);
                     }
                 },'json'
             )
