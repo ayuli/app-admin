@@ -39,7 +39,7 @@ class AdminController extends Controller
         }
         $reg='/^[a-z0-9]+([._-][a-z0-9]+)*@([0-9a-z]+\.[a-z]{2,14}(\.[a-z]{2})?)$/i';
         if(!preg_match($reg,$admin_email)){
-            return json_encode(['msg'=>'请输入正确的qq邮箱','code'=>1]);
+            return json_encode(['msg'=>'请输入正确的邮箱','code'=>1]);
         }
         if(empty($admin_tel)){
             return json_encode(['msg'=>'电话不能为空','code'=>1]);
@@ -106,7 +106,7 @@ class AdminController extends Controller
         }
         $reg='/^[a-z0-9]+([._-][a-z0-9]+)*@([0-9a-z]+\.[a-z]{2,14}(\.[a-z]{2})?)$/i';
         if(!preg_match($reg,$admin_email)){
-            return json_encode(['msg'=>'请输入正确的qq邮箱','code'=>1]);
+            return json_encode(['msg'=>'请输入正确的邮箱','code'=>1]);
         }
         if(empty($admin_tel)){
             return json_encode(['msg'=>'电话不能为空','code'=>1]);
