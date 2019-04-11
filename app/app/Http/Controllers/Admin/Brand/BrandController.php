@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Brand;
+namespace App\Http\Controllers\Admin\Brand;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,7 +14,7 @@ class BrandController extends Controller
      */
     public function brand()
     {
-        return view('brand.brand');
+        return view('admin.brand.brand');
     }
 
     /**
@@ -26,7 +26,7 @@ class BrandController extends Controller
         $data = [
             'data' => $brand_all
         ];
-        return view('brand.brandget',$data);
+        return view('admin.brand.brandget',$data);
     }
 
     /**

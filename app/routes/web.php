@@ -19,7 +19,7 @@ Route::get('main',"Admin\IndexController@main");
 Route::get('adminAdd',"Admin\AdminController@adminAdd");//管理员添加
 
 //后台商品管理
-Route::get('/brand',"Brand\BrandController@brand");     //品牌添加页面
-Route::get('/brandget',"Brand\BrandController@brandGet");   //品牌展示
-Route::post('/brandadd',"Brand\BrandController@brandAdd");   //品牌添加
-Route::post('/brandlogo',"Brand\BrandController@brandLogo");   //品牌logo上传
+Route::get('/brand',"Admin\Brand\BrandController@brand");     //品牌添加页面
+Route::get('/brandget',"Admin\Brand\BrandController@brandGet");   //品牌展示
+Route::post('/brandadd',"Admin\Brand\BrandController@brandAdd");   //品牌添加
+Route::post('/brandlogo',"Admin\Brand\BrandController@brandLogo");   //品牌logo上传
