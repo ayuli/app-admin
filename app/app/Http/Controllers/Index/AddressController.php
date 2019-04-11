@@ -13,14 +13,9 @@ class AddressController extends Controller
     }
     public function getregion(Request $request){
         $pid = $request->input('pid',1);
-        if(empty($request)){
-            $regin = DB::table('app_region')->where('p_id',1)->get();
-            $data = json_decode($regin,1);
-            return $data;
-        }else{
-            $regin = DB::table('app_region')->where('p_id',$pid)->get();
-            $data = json_decode($regin,1);
-            return $data;
-        }
+        $regin = DB::table('app_region')->where('p_id',$pid)->get();
+        $data = json_decode($regin,1);
+        return $data;
+
     }
 }
