@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>管理员添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
+    <script src="layui/layui.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 </head>
@@ -39,17 +40,17 @@
                         <td width="275px" class="tdColor">添加时间</td>
                         <td width="130px" class="tdColor">操作</td>
                     </tr>
-                    </tr>
                     @foreach($admininfo as $v)
-                        <td class="abc">{{$v->admin_id}}</td>
-                        <td class="abc">{{$v->admin_name}}</td>
-                        <td>{{$v->admin_email}}</td>
-                        <td>{{$v->admin_tel}}</td>
-                        <td><?php echo date("Y-m-d H:i:s",$v->create_time)?></td>
-                        <td admin_id={{$v->admin_id}}>
-                            <a href="adminUpdate?admin_id={{$v->admin_id}}}"><img class="operation" src="img/update.png"></a>
-                            <img class="operation delban" src="img/delete.png">
-                        </td>
+                        </tr>
+                            <td class="abc">{{$v->admin_id}}</td>
+                            <td class="abc">{{$v->admin_name}}</td>
+                            <td>{{$v->admin_email}}</td>
+                            <td>{{$v->admin_tel}}</td>
+                            <td><?php echo date("Y-m-d H:i:s",$v->create_time)?></td>
+                            <td admin_id={{$v->admin_id}}>
+                                <a href="adminUpdate?admin_id={{$v->admin_id}}}"><img class="operation" src="img/update.png"></a>
+                                <img class="operation delban" src="img/delete.png">
+                            </td>
                         </tr>
                     @endforeach
                 </table>
@@ -63,15 +64,20 @@
 </html>
 
 <script>
+    layui.use('layer', function() {
+        var layer = layui.layer;
         $('.delban').click(function(){
+            var _this = $(this);
 //            alert(111)
             var admin_id = $(this).parent().attr('admin_id');
             $.post(
                 'adminDel',
                 {admin_id:admin_id},
                 function(res){
-                    console.log(res);
-                }
-            ),'json'
+                    layer.msg(res.msg);
+                    _this.parents('tr').remove();
+                },'json'
+            )
         })
+    })
 </script>
