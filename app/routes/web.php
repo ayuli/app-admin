@@ -40,6 +40,6 @@ Route::post('/brandlogo',"Admin\BrandController@brandLogo");   //品牌logo上�
 Route::get('/userCenter',"Index\UserController@userCenter");
 //收货地址
 Route::get('/getregion',"Index\AddressController@getregion");    //三级联通
-Route::get('/address',"Index\AddressController@address");   //添加收货地址
+Route::post('/address',"Index\AddressController@address");   //添加收货地址
 
 
