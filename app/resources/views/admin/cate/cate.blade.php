@@ -2,10 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>品牌添加-有点</title>
+    <title>分类添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/ajaxfileupload.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script src="/layui/layui.js"></script>
 </head>
 <body>
 <div id="pageAll">
@@ -15,49 +16,56 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">商品管理</a>
+                <a href="#">商品分类管理</a>
                 &nbsp;-
             </span>
-            &nbsp;品牌添加
+            &nbsp;分类添加
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         <div class="banneradd bor">
             <div class="baTopNo">
-                <span>品牌添加</span>
+                <span>分类添加</span>
             </div>
             <div class="baBody">
 
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;品牌名称：
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分类名称：
                     <input type="text" class="input3" id="name"/>
                 </div>
 
-                <div class="bbD" style="margin-left: 24px;">
-                    品牌logo：
-                    <div class="bbDd">
-
-                        <div class="bbDImg" >+</div>
-                        <input type="file" style="cursor:pointer" class="file" id="file" name="file"/>
-                    </div>
-
+                <div class="cfD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    父分类：
+                    <select name="" id="p_id">
+                        <option value="0">--请选择--</option>
+                        @foreach($cate as $v)
+                            <option value="{{$v['cate_id']}}">{{$v['level']}}{{$v['cate_name']}}</option>
+                        @endforeach
+                    </select>
                 </div>
-
-                <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;品牌网址：
-                    <input type="text" class="input3" id="url"/>
-                </div>
-
                 <div class="bbD">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    是否展示：
+                    导航栏展示：
                     <label>
                         <input type="radio" checked="checked" value="1" name="styleshoice2"/>
                         &nbsp;是
                     </label>
                     <label>
                         <input type="radio" value="2" name="styleshoice2" />
+                        &nbsp;否
+                    </label>
+                </div>
+                <div class="bbD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    前台展示：
+                    <label>
+                        <input type="radio" checked="checked" value="1" name="styleshoice3"/>
+                        &nbsp;是
+                    </label>
+                    <label>
+                        <input type="radio" value="2" name="styleshoice3" />
                         &nbsp;否
                     </label>
                 </div>
@@ -88,48 +96,33 @@
 
 </body>
 </html>
-<script>
-    $(".bbDd").change(function(){
-        $.ajaxFileUpload({
-            url: '/brandlogo',
-            type: 'post',
-            secureuri: false, //是否需要安全协议，一般设置为false
-            fileElementId: 'file', //文件上传域的ID
-            dataType: 'json',
-            success: function (resule)
-            {
-                $(".bbDImg").html("<img src='"+resule+"'width='160px;' height='180px;' id='logo' style='cursor:pointer'>");
-                // console.log(resule)
-            }
-        })
-    })
 
-</script>
 <script>
 
-    //点击删除
-    $(".bbDDel").click(function(){
-        $(".bbDImg").html('+')
-    });
 
     $("#addbtn").click(function(){
-        var logo = $("#logo").prop('src');
         var name = $("#name").val();
-        var url = $("#url").val();
+        var p_id = $("#p_id").val();
         $("input[name=styleshoice2]").each(function(){
             if($(this).prop('checked')==true){
-                redio = $(this).val()
+                nav = $(this).val()
+            }
+        });
+
+        $("input[name=styleshoice3]").each(function(){
+            if($(this).prop('checked')==true){
+                show = $(this).val()
             }
         });
 
         var data = {};
         data.name = name;
-        data.url = url;
-        data.redio = redio;
-        data.logo = logo;
+        data.p_id = p_id;
+        data.nav = nav;
+        data.show = show;
 
         $.ajax({
-            url : '/brandadd',
+            url : '/cateadd',
             type: 'post',
             data : data,
             dataType: 'json',
@@ -140,7 +133,7 @@
                     $(".delP1").text(d.msg);
                     $(".yes").click(function(){
                         $(".banDel").hide();
-                        location.href='/brand'
+                        location.href='/cate'
                     });
                 }else{
                     // 广告弹出框
@@ -148,7 +141,7 @@
                     $(".delP1").text(d.msg);
                     $(".yes").click(function(){
                         $(".banDel").hide();
-                        location.href='/brand'
+                        location.href='/cate'
                     });
                 }
 
