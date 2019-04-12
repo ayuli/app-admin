@@ -13,7 +13,7 @@ class UserController extends Controller
         $pd = $request->input('pwd');
         $pwd = sha1(md5(md5($pd)));
         $time = time();
-        $res = DB::table('app_user')->insert(['user_name'=>$name],['user_pwd'=>$pwd],['add_time'=>$time]);
+        $res = DB::table('app_user')->insert(['user_name'=>$name,'user_pwd'=>$pwd,'add_time'=>$time]);
         if($res){
             return 1;//注册成功
         }else{
