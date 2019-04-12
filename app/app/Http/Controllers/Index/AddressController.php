@@ -38,14 +38,18 @@ class AddressController extends Controller
         );
         $res = DB::table('app_address')->insert($info);
         if($res){
-            return 1;
+            return 1;   //添加成功
         }else{
-            return 2;
+            return 2;   //添加失败
         }
     }
         public function addressGet(Request $request){
             $name = $request->session()->get('user_name');
-            $res = DB::table('app_address')->where('user_id',$name)->get();
-            print_r($res);
+            $info = DB::table('app_address')->where('user_id','admin')->get();
+            if($info){
+                return 1;   //查询成功
+            }else{
+                return 2;   //查询失败
+            }
         }
 }
