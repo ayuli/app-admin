@@ -48,10 +48,10 @@ class AddressController extends Controller
             if($name){
                 $info = DB::table('app_address')->where('user_id',$name)->get();
                 if($info){
-                    return 1;   //查询成功
+                    return $info;   //查询成功
                 }
             }else{
-                return 3;   //请先登陆
+                return 2;   //请先登陆
             }
         }
 }
