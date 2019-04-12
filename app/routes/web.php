@@ -71,4 +71,5 @@ Route::get('/getregion',"Index\AddressController@getregion");    //三级联通
 Route::post('/address',"Index\AddressController@address");   //添加收货地址
 
 //收藏
-Route::post('/collection','Index\CollController@coll');
+Route::post('/collection','Index\CollController@coll'); //收藏
+Route::post('/uncollection','Index\CollController@uncoll'); //取消收藏
