@@ -80,6 +80,7 @@ Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页
 Route::get('/getregion',"Index\AddressController@getregion");    //三级联动
 Route::get('/selregion',"Index\AddressController@selregion");    //查询三级联动
 Route::post('/address',"Index\AddressController@address");   //添加收货地址
+Route::post('/upaddress',"Index\AddressController@upaddress");   //修改收货地址
 Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址展示
 
 //收藏
