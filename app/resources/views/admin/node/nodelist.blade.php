@@ -4,7 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>管理员添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
-    <link rel="stylesheet" href="layui/css/layui.css">
     <script src="layui/layui.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
@@ -91,72 +90,62 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">管理员管理</a>
+                <a href="#">权限管理</a>
                 &nbsp;-
             </span>
-            &nbsp;管理员展示
+            &nbsp;权限展示
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         {{--<div class="banneradd bor">--}}
-            <div class="baTopNo">
-                <span>管理员展示</span>
-            </div>
-            <div class="baBody">
+        <div class="baTopNo">
+            <span>权限展示</span>
+        </div>
+        <div class="baBody">
 
-                <table border="1" cellspacing="0" cellpadding="0">
-                    <tr>
-                    <tr>
-                        <td width="66px" class="tdColor tdC">序号</td>
-                        <td width="200px" class="tdColor">管理员名称</td>
-                        <td width="200px" class="tdColor">管理员邮箱</td>
-                        <td width="200px" class="tdColor">管理员电话</td>
-                        <td width="220px" class="tdColor">添加时间</td>
-                        <td width="250px" class="tdColor">操作</td>
-                    </tr>
-                    @foreach($admininfo as $v)
-                        </tr>
-                            <td class="abc" height="60">{{$v->admin_id}}</td>
-                            <td class="abc">{{$v->admin_name}}</td>
-                            <td>{{$v->admin_email}}</td>
-                            <td>{{$v->admin_tel}}</td>
-                            <td><?php echo date("Y-m-d H:i:s",$v->create_time)?></td>
-                            <td admin_id={{$v->admin_id}}>
-                                <a href="adminUpdate?admin_id={{$v->admin_id}}}"><img class="operation" src="img/update.png"></a>
-                                <img class="operation delban" src="img/delete.png">
-                                <a href="roleDo?admin_id={{$v->admin_id}}}"><button class="layui-btn layui-btn-sm layui-btn-normal">赋予角色</button></a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+            <table border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                <tr>
+                    <td width="66px" class="tdColor tdC">序号</td>
+                    <td width="355px" class="tdColor">权限名称</td>
+                    <td width="260px" class="tdColor">方法名称</td>
+                    <td width="130px" class="tdColor">操作</td>
+                </tr>
+                @foreach($nodeinfo as $v)
+                </tr>
+                <td class="abc" height="60">{{$v->node_id}}</td>
+                <td class="abc">{{$v->node_name}}</td>
+                <td>{{$v->action_name}}</td>
+                <td node_id={{$v->node_id}}>
+                    <a href="nodeUpdate?node_id={{$v->node_id}}"><img class="operation" src="img/update.png"></a>
+                    <img class="operation delban" src="img/delete.png">
+                </td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+    <div class="paging">
+        <div id="pull_right">
+            <div class="pull-right">
+                {!! $nodeinfo->render() !!}
             </div>
         </div>
-        <div class="paging">
-            <div id="pull_right">
-                <div class="pull-right">
-                    {!! $admininfo->render() !!}
-                </div>
-            </div>
-        </div>
-        <!-- 上传广告页面样式end -->
+    </div>
+    <!-- 上传广告页面样式end -->
     {{--</div>--}}
 </div>
 </body>
 </html>
 
 <script>
-    layui.use(['layer','form'], function() {
-        var layer = layui.layer;
-        var form = layui.form;
-
-    })
     layui.use('layer', function() {
         var layer = layui.layer;
         $('.delban').click(function(){
             var _this = $(this);
 //            alert(111)
-            var admin_id = $(this).parent().attr('admin_id');
+            var node_id = $(this).parent().attr('node_id');
 
             layer.open({
                 type:0,
@@ -164,8 +153,8 @@
                 btn:['确认','取消'],
                 yes:function(index,layero){
                     $.post(
-                        'adminDel',
-                        {admin_id:admin_id},
+                        'nodeDel',
+                        {node_id:node_id},
                         function(res){
                             layer.msg(res.msg);
                             _this.parents('tr').remove();
