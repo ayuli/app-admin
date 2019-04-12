@@ -46,11 +46,9 @@ class AddressController extends Controller
         public function addressGet(Request $request){
             $name = $request->session()->get('user_name');
             if($name){
-                $info = DB::table('app_address')->where('user_id','admin')->get();
+                $info = DB::table('app_address')->where('user_id',$name)->get();
                 if($info){
                     return 1;   //查询成功
-                }else{
-                    return 2;   //查询失败
                 }
             }else{
                 return 3;   //请先登陆
