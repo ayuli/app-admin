@@ -68,4 +68,5 @@ Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页
 Route::get('/getregion',"Index\AddressController@getregion");    //三级联通
 Route::post('/address',"Index\AddressController@address");   //添加收货地址
 
-
+//收藏
+Route::post('/collection','Index\CollController@coll');
