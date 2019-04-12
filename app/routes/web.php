@@ -42,7 +42,7 @@ Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页�
 Route::get('changeType',"Admin\GoodsController@changeType"); //商品添加页面
 
 //前台登陆
-Route::get('/register',"Index\UserController@register"); //注册
+Route::post('/register',"Index\UserController@register"); //注册
 Route::get('/registersole',"Index\UserController@registersole"); //注册验证唯一
 
 //个人中心
