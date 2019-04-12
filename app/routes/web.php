@@ -44,6 +44,15 @@ Route::get('/brandupda',"Admin\BrandController@brandUpda");   //品牌修改展�
 Route::post('/brandupdado',"Admin\BrandController@brandUpdaDo");   //品牌修改执行
 Route::post('/brandlogo',"Admin\BrandController@brandLogo");   //品牌logo上传
 
+//商品分类管理
+Route::get('/cate',"Admin\CateController@cate");   //分类添加展示
+Route::post('/cateadd',"Admin\CateController@cateAdd");   //分类添加执行
+Route::get('/categet',"Admin\CateController@cateGet");   //分类展示
+Route::get('/cateupda',"Admin\CateController@cateUpda");   //分类修改
+Route::post('/cateupdado',"Admin\CateController@cateUpdaDo");   //分类修改执行
+Route::post('/catedel',"Admin\CateController@cateDel");   //分类删除
+
+
 Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
 Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
 Route::get('changeType',"Admin\GoodsController@changeType"); //商品添加页面
