@@ -128,5 +128,82 @@ class AdminController extends Controller
             echo json_encode(['msg'=>'未修改','code'=>2]);
         }
     }
+    //角色添加展示
+    public function roleAdd(){
+        $roleinfo = DB::table('app_node')->get();
+        return view('admin.admin.roleadd',['roleinfo'=>$roleinfo]);
+    }
+    //角色执行添加
+    public function roleInsert(Request $request){
+        $data = $request->input('data');
+        $role_name = $request->input('role_name');
+        $roleinfo = [
+            'role_name'=>$role_name
+        ];
+        $id = DB::table('app_role')->insertGetId($roleinfo);
+        $info = [];
+        foreach($data as $k=>$v){
+            $info[] = ['role_id'=>$id,'node_id'=>$v];
+        }
+        $res = DB::table('app_role_node')->insert($info);
+        if($res){
+            return json_encode(['msg'=>'添加成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'添加失败','code'=>1]);
+        }
+    }
+    //角色展示
+    public function roleList(){
+        $roleinfo = DB::table('app_role')->where('is_del',0)->paginate(4);
+        return view('admin.admin.rolelist',['roleinfo'=>$roleinfo]);
+
+    }
+    //角色删除
+    public function roleDel(Request $request){
+        $role_id = $request->input('role_id');
+        $is_del=[
+            'is_del'=>1
+        ];
+        $res = DB::table('app_role')->where('role_id',$role_id)->update($is_del);
+        if($res){
+            return json_encode(['msg'=>'删除成功','code'=>0]);
+        }
+    }
+    //管理员修改页面
+    public function roleUpdate(Request $request){
+        $role_id = $request->input('role_id');
+        $roleinfo = DB::table('app_role')->where('role_id',$role_id)->first();
+
+        $nodeinfo = DB::table('app_node')->get();
+        $role_node = DB::table('app_role_node')->where('role_id',$role_id)->pluck('node_id');
+        $data = json_decode($role_node);
+
+//        print_r($role_node);exit;
+        return view('admin.admin.roleupdate',['roleinfo'=>$roleinfo,'nodeinfo'=>$nodeinfo,'data'=>$data]);
+    }
+    //管理员执行修改
+    public function roleUpdateDo(Request $request){
+
+        $data = $request->input('data');
+        $role_name = $request->input('role_name');
+        $role_id = $request->input('role_id');
+        $roleinfo = [
+            'role_name'=>$role_name
+        ];
+        $id = DB::table('app_role')->where('role_id',$role_id)->update($roleinfo);
+
+        $info = [];
+        foreach($data as $k=>$v){
+            $info[] = ['role_id'=>$role_id,'node_id'=>$v];
+        }
+        DB::table('app_role_node')->where('role_id',$role_id)->delete();
+
+        $res = DB::Table('app_role_node')->insert($info);
+        if($res){
+            return json_encode(['msg'=>'添加成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'添加失败','code'=>1]);
+        }
+    }
 
 }

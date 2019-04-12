@@ -28,6 +28,13 @@ Route::get('adminList',"Admin\AdminController@adminList");//管理员展示
 Route::post('adminDel',"Admin\AdminController@adminDel");//管理员删除
 Route::get('adminUpdate',"Admin\AdminController@adminUpdate");//管理员修改页面
 Route::post('adminUpdataDo',"Admin\AdminController@adminUpdataDo");//管理员执行修改
+Route::get('roleAdd',"Admin\AdminController@roleAdd");//角色添加
+Route::post('roleInsert',"Admin\AdminController@roleInsert");//角色添加
+Route::get('roleList',"Admin\AdminController@roleList");//角色展示
+Route::post('roleDel',"Admin\AdminController@roleDel");//角色删除
+Route::get('roleUpdate',"Admin\AdminController@roleUpdate");//角色修改页面
+Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
+
 //后台商品管理
 Route::get('/brand',"Admin\BrandController@brand");     //品牌添加页面
 Route::get('/brandget',"Admin\BrandController@brandGet");   //品牌展示
@@ -36,8 +43,18 @@ Route::post('/branddel',"Admin\BrandController@brandDel");   //品牌假删
 Route::get('/brandupda',"Admin\BrandController@brandUpda");   //品牌修改展示
 Route::post('/brandupdado',"Admin\BrandController@brandUpdaDo");   //品牌修改执行
 Route::post('/brandlogo',"Admin\BrandController@brandLogo");   //品牌logo上传
+
+Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
+Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
+Route::get('changeType',"Admin\GoodsController@changeType"); //商品添加页面
+
+//前台登陆
+Route::post('/register',"Index\UserController@register"); //注册
+Route::get('/registersole',"Index\UserController@registersole"); //注册验证唯一
+Route::get('/login',"Index\UserController@login"); //登陆
+
 //个人中心
-Route::get('/userCenter',"Index\UserController@userCenter");
+Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页面展示数据
 //收货地址
 Route::get('/getregion',"Index\AddressController@getregion");    //三级联通
 Route::post('/address',"Index\AddressController@address");   //添加收货地址

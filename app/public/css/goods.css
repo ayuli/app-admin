@@ -1,0 +1,13 @@
+*{ margin:0; padding:0;list-style: none;}
+body {font:12px/1.5 Tahoma;}
+#tab {overflow:hidden;zoom:1;background:#4390b926;border:1px solid #333;}
+#tab li {float:left;color:#666;height:30px;	cursor:pointer;	line-height:30px;padding:0 20px;}
+#tab li.current {color:#fff;background:#4390b9;}
+#content {border:1px solid #f2f2f2;border-top-width:0;}
+.condiv {line-height:25px;	margin:0 30px;padding:30px 0;}
+td.label {text-align: right;vertical-align: top;font-weight: bold;padding: 5px 1em;width: 30%;font-size:12px;}
+tr{height:45px;}
+td {text-align: left;border:0;}
+.button_ok {display: inline-block;width: 100px;height: 40px;line-height: 40px;background-color: #3695cc;color: #fff;margin-top: 10px;margin-right: 25px;font-size: 16px;cursor: pointer;
+text-align: center;margin-bottom: 10px;border: none;}
+.button_no {color: #333;background-color: #fff;border: 1px solid #3695cc;}

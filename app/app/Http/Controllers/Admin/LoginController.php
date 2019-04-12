@@ -18,11 +18,17 @@ class LoginController extends Controller
         $data=$request->input();
         $admin_name=$data['admin_name'];
         $admin_pwd=$data['admin_pwd'];
-        $code=$data['code'];
-        $codeInfo = session('verifylogin');
-        if($code !== $codeInfo){
-            echo json_encode(['code'=>2,'msg'=>'验证码有误！']);die;
+//        $code=$data['code'];
+
+        if($admin_name=="" || $admin_pwd==""){
+            echo json_encode(['code'=>2,'msg'=>'用户名或密码不能为空！']);die;
         }
+
+//        $codeInfo = session('verifylogin');
+//        if($code !== $codeInfo){
+//            echo json_encode(['code'=>2,'msg'=>'验证码有误！']);die;
+//        }
+
         $admin_pwd=md5($admin_pwd);
         $admin_info=DB::table('app_admin')->where('admin_name',$admin_name)->first();
         if(!empty($admin_info)){

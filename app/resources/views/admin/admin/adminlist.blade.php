@@ -116,7 +116,7 @@
                     </tr>
                     @foreach($admininfo as $v)
                         </tr>
-                            <td class="abc">{{$v->admin_id}}</td>
+                            <td class="abc" height="60">{{$v->admin_id}}</td>
                             <td class="abc">{{$v->admin_name}}</td>
                             <td>{{$v->admin_email}}</td>
                             <td>{{$v->admin_tel}}</td>
