@@ -73,9 +73,9 @@ class UserController extends Controller
     public function outlogin(Request $request){
         $res = $request->session()->pull('user_name');
         if($res){
-            return 1;
+            return 1;//退出
         }else{
-            return 2;
+            return 2;//未退出
         }
     }
 }

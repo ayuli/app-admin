@@ -43,7 +43,9 @@ class AddressController extends Controller
             return 2;
         }
     }
-    public function addressGet(){
-
-    }
+        public function addressGet(Request $request){
+            $name = $request->session()->get('user_name');
+            $res = DB::table('app_address')->where('user_id',$name)->get();
+            print_r($res);
+        }
 }
