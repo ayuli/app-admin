@@ -24,6 +24,7 @@ class UserController extends Controller
     }
     //登陆
     public function login(Request $request){
+        $ses=$request->session()->get('user_name');
         if($request->session()->get('user_name')){
             return 3;
         }
@@ -67,5 +68,14 @@ class UserController extends Controller
                 );
         $data = json_encode($info);
         return $data;
+    }
+    //退出登陆
+    public function outlogin(Request $request){
+        $res = $request->session()->pull('user_name');
+        if($res){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 }

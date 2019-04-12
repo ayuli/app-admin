@@ -62,6 +62,7 @@ Route::get('changeType',"Admin\GoodsController@changeType"); //商品添加页�
 Route::post('/register',"Index\UserController@register"); //注册
 Route::get('/registersole',"Index\UserController@registersole"); //注册验证唯一
 Route::get('/login',"Index\UserController@login"); //登陆
+Route::get('/outlogin',"Index\UserController@outlogin"); //登陆
 
 //个人中心
 Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页面展示数据
