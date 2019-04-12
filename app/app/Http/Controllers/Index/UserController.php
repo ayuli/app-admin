@@ -24,6 +24,9 @@ class UserController extends Controller
     }
     //登陆
     public function login(Request $request){
+        if($request->session()->get('user_name')){
+            return 3;
+        }
         $name = $request->input('name');
         $pd = $request->input('pwd');
         $pwd = md5(md5($pd));
