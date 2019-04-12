@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    //注册
     public function register(Request $request){
         $name = $request->input('name');
         $pd = $request->input('pwd');
@@ -15,11 +16,26 @@ class UserController extends Controller
         $time = time();
         $res = DB::table('app_user')->insert(['user_name'=>$name,'user_pwd'=>$pwd,'add_time'=>$time]);
         if($res){
+            $request -> session() -> put('user_name',$name);
             return 1;//注册成功
         }else{
             return 2;//注册失败
         }
     }
+    //登陆
+    public function login(Request $request){
+        $name = $request->input('name');
+        $pd = $request->input('pwd');
+        $pwd = md5(md5($pd));
+        $res = DB::table('app_user')->where(['user_name'=>$name,'user_pwd'=>$pwd])->first();
+        if($res){
+            $request -> session() -> put('user_name',$name);
+            return 1;//登陆成功
+        }else{
+            return 2;//登陆失败
+        }
+    }
+    //验证唯一
     public function registersole(Request $request){
         $name = $request->input('name');
         $res = DB::table('app_user')->where('user_name',$name)->first();
@@ -29,6 +45,7 @@ class UserController extends Controller
             return 1;//唯一
         }
     }
+    //个人中心页面展示数据
     public function  userCenter(){
         $user = DB::table('app_user')->first();
         $username = $user->user_name;
