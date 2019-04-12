@@ -28,6 +28,13 @@ Route::get('adminList',"Admin\AdminController@adminList");//管理员展示
 Route::post('adminDel',"Admin\AdminController@adminDel");//管理员删除
 Route::get('adminUpdate',"Admin\AdminController@adminUpdate");//管理员修改页面
 Route::post('adminUpdataDo',"Admin\AdminController@adminUpdataDo");//管理员执行修改
+Route::get('roleAdd',"Admin\AdminController@roleAdd");//角色添加
+Route::post('roleInsert',"Admin\AdminController@roleInsert");//角色添加
+Route::get('roleList',"Admin\AdminController@roleList");//角色展示
+Route::post('roleDel',"Admin\AdminController@roleDel");//角色删除
+Route::get('roleUpdate',"Admin\AdminController@roleUpdate");//角色修改页面
+Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
+
 //后台商品管理
 Route::get('/brand',"Admin\BrandController@brand");     //品牌添加页面
 Route::get('/brandget',"Admin\BrandController@brandGet");   //品牌展示
