@@ -11,7 +11,7 @@ class UserController extends Controller
     public function register(Request $request){
         $name = $request->input('name');
         $pd = $request->input('pwd');
-        $pwd = sha1(md5(md5($pd)));
+        $pwd = md5(md5($pd));
         $time = time();
         $res = DB::table('app_user')->insert(['user_name'=>$name,'user_pwd'=>$pwd,'add_time'=>$time]);
         if($res){
