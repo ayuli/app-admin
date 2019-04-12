@@ -93,51 +93,45 @@
                 <a href="#">管理员管理</a>
                 &nbsp;-
             </span>
-            &nbsp;管理员展示
+            &nbsp;角色展示
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         {{--<div class="banneradd bor">--}}
-            <div class="baTopNo">
-                <span>管理员展示</span>
-            </div>
-            <div class="baBody">
+        <div class="baTopNo">
+            <span>角色展示</span>
+        </div>
+        <div class="baBody">
 
-                <table border="1" cellspacing="0" cellpadding="0">
-                    <tr>
-                    <tr>
-                        <td width="66px" class="tdColor tdC">序号</td>
-                        <td width="355px" class="tdColor">管理员名称</td>
-                        <td width="260px" class="tdColor">管理员邮箱</td>
-                        <td width="275px" class="tdColor">管理员电话</td>
-                        <td width="275px" class="tdColor">添加时间</td>
-                        <td width="130px" class="tdColor">操作</td>
-                    </tr>
-                    @foreach($admininfo as $v)
-                        </tr>
-                            <td class="abc" height="60">{{$v->admin_id}}</td>
-                            <td class="abc">{{$v->admin_name}}</td>
-                            <td>{{$v->admin_email}}</td>
-                            <td>{{$v->admin_tel}}</td>
-                            <td><?php echo date("Y-m-d H:i:s",$v->create_time)?></td>
-                            <td admin_id={{$v->admin_id}}>
-                                <a href="adminUpdate?admin_id={{$v->admin_id}}}"><img class="operation" src="img/update.png"></a>
-                                <img class="operation delban" src="img/delete.png">
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+            <table border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                <tr>
+                    <td width="66px" class="tdColor tdC">序号</td>
+                    <td width="355px" class="tdColor">角色名称</td>
+                    <td width="130px" class="tdColor">操作</td>
+                </tr>
+                @foreach($roleinfo as $v)
+                </tr>
+                <td class="abc" height="60">{{$v->role_id}}</td>
+                <td class="abc">🍖{{$v->role_name}}</td>
+                <td role_id={{$v->role_id}}>
+                    <a href="roleUpdate?role_id={{$v->role_id}}}"><img class="operation" src="img/update.png"></a>
+                    <img class="operation delban" src="img/delete.png">
+                </td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+    <div class="paging">
+        <div id="pull_right">
+            <div class="pull-right">
+                {!! $roleinfo->render() !!}
             </div>
         </div>
-        <div class="paging">
-            <div id="pull_right">
-                <div class="pull-right">
-                    {!! $admininfo->render() !!}
-                </div>
-            </div>
-        </div>
-        <!-- 上传广告页面样式end -->
+    </div>
+    <!-- 上传广告页面样式end -->
     {{--</div>--}}
 </div>
 </body>
@@ -149,7 +143,7 @@
         $('.delban').click(function(){
             var _this = $(this);
 //            alert(111)
-            var admin_id = $(this).parent().attr('admin_id');
+            var role_id = $(this).parent().attr('role_id');
 
             layer.open({
                 type:0,
@@ -157,8 +151,8 @@
                 btn:['确认','取消'],
                 yes:function(index,layero){
                     $.post(
-                        'adminDel',
-                        {admin_id:admin_id},
+                        'roleDel',
+                        {role_id:role_id},
                         function(res){
                             layer.msg(res.msg);
                             _this.parents('tr').remove();
