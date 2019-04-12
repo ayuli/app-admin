@@ -34,18 +34,23 @@
             <div class="baBody">
 
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员名称：<input type="text" name="admin_name" class="input3" />
-                </div>
-                <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员密码：<input type="password" name="admin_pwd" class="input3" />
-                </div>
-                <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员邮箱：<input type="text" name="admin_email" class="input3" />
-                </div>
-                <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员电话：<input type="text" name="admin_tel" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;管理员名称：<input type="text" name="admin_name" value="{{$admininfo->admin_name}}" class="input3" />
+                    <input type="hidden" name="admin_id" value="{{$admininfo->admin_id}}">
                 </div>
                 <br>
+                <form  class="layui-form">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"> 选择角色:</label>&nbsp;&nbsp;
+                        <div class="layui-input-inline">
+                            <select name="modules" class="selects" lay-verify="required" lay-search="">
+                                <option value="">选择角色</option>
+                                @foreach($roleinfo as $v)
+                                    <option value="{{$v->role_id}}">{{$v->role_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </form>
                 <div class="bbD">
                     <p class="bbDP">
                         <button class="btn_ok btn_yes" id="btn" href="#" >提交</button>
@@ -70,26 +75,20 @@
     layui.use('layer', function() {
         var layer = layui.layer;
         $('#btn').click(function(){
-            var admin_name = $("input[name='admin_name']").val();
-            var admin_pwd = $("input[name='admin_pwd']").val();
-            var admin_email = $("input[name='admin_email']").val();
-            var admin_tel = $("input[name='admin_tel']").val();
+            var role_id = $(".selects").val();
+            var admin_id = $("input[name='admin_id']").val();
 
 
             $.post(
-                'adminInsert',
-                {admin_name:admin_name,admin_pwd:admin_pwd,admin_email:admin_email,admin_tel:admin_tel},
+                'adminrole',
+                {role_id:role_id,admin_id:admin_id},
                 function(res){
                     if(res.code==0) {
                         layer.open({
                             type:0,
                             content:'添加成功',
-                            btn:['继续添加','列表展示'],
+                            btn:['确定'],
                             yes:function(index,layero){
-                                location.href="adminAdd";
-                                return true;
-                            },
-                            btn2:function(){
                                 location.href="adminList";
                                 return true;
                             }

@@ -128,6 +128,32 @@ class AdminController extends Controller
             echo json_encode(['msg'=>'未修改','code'=>2]);
         }
     }
+    //赋予角色页面
+    public function roleDo(Request $request){
+        $admin_id = $request->input('admin_id');
+        $admininfo = DB::table('app_admin')->where('admin_id',$admin_id)->first();
+        $roleinfo = DB::table('app_role')->get();
+
+        return view('admin.admin.roledo',['admininfo'=>$admininfo,'roleinfo'=>$roleinfo]);
+    }
+    //执行赋予
+    public function adminrole(Request $request){
+        $admin_id = $request->input('admin_id');
+        $role_id = $request->input('role_id');
+
+        $res = DB::table('app_admin_role')->where('admin_id',$admin_id)->first();
+        $data = [
+            'admin_id'=>$admin_id,
+            'role_id'=>$role_id
+        ];
+        if($res){
+            DB::table('app_admin_role')->where('admin_id',$admin_id)->update($data);
+            return json_encode(['msg'=>'赋予成功','code'=>0,'admin_id'=>$admin_id]);
+        }else{
+            DB::table('app_admin_role')->where('admin_id',$admin_id)->insert($data);
+            return json_encode(['msg'=>'赋予成功','code'=>0]);
+        }
+    }
     //角色添加展示
     public function roleAdd(){
         $roleinfo = DB::table('app_node')->get();
@@ -137,6 +163,14 @@ class AdminController extends Controller
     public function roleInsert(Request $request){
         $data = $request->input('data');
         $role_name = $request->input('role_name');
+
+        if(empty($data)){
+            return json_encode(['msg'=>'您未选择权限','code'=>1]);
+        }
+        if(empty($role_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+
         $roleinfo = [
             'role_name'=>$role_name
         ];
@@ -169,7 +203,7 @@ class AdminController extends Controller
             return json_encode(['msg'=>'删除成功','code'=>0]);
         }
     }
-    //管理员修改页面
+    //角色修改页面
     public function roleUpdate(Request $request){
         $role_id = $request->input('role_id');
         $roleinfo = DB::table('app_role')->where('role_id',$role_id)->first();
@@ -181,12 +215,19 @@ class AdminController extends Controller
 //        print_r($role_node);exit;
         return view('admin.admin.roleupdate',['roleinfo'=>$roleinfo,'nodeinfo'=>$nodeinfo,'data'=>$data]);
     }
-    //管理员执行修改
+    //角色执行修改
     public function roleUpdateDo(Request $request){
 
         $data = $request->input('data');
         $role_name = $request->input('role_name');
         $role_id = $request->input('role_id');
+
+        if(empty($data)){
+            return json_encode(['msg'=>'您未选择权限','code'=>1]);
+        }
+        if(empty($role_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
         $roleinfo = [
             'role_name'=>$role_name
         ];
@@ -205,5 +246,77 @@ class AdminController extends Controller
             return json_encode(['msg'=>'添加失败','code'=>1]);
         }
     }
+    //权限添加展示
+    public function nodeAdd(){
+        return view('admin.node.nodeadd');
+    }
+    //权限执行添加
+    public function nodeInsert(Request $request){
+        $node_name = $request->input('node_name');
+        $action_name = $request->input('action_name');
 
+        if(empty($node_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        if(empty($action_name)){
+            return json_encode(['msg'=>'方法名不能为空','code'=>1]);
+        }
+
+        $nodeinfo = [
+            'node_name'=>$node_name,
+            'action_name'=>$action_name
+        ];
+        $res = DB::table('app_node')->insert($nodeinfo);
+        if($res){
+            return json_encode(['msg'=>'添加成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'添加失败','code'=>1]);
+        }
+    }
+    //权限展示
+    public function nodeList(){
+        $nodeinfo = DB::table('app_node')->where('is_del',0)->paginate(4);
+        return view('admin.node.nodelist',['nodeinfo'=>$nodeinfo]);
+    }
+    //权限删除
+    public function nodeDel(Request $request){
+        $node_id = $request->input('node_id');
+        $is_del=[
+            'is_del'=>1
+        ];
+        $res = DB::table('app_node')->where('node_id',$node_id)->update($is_del);
+        if($res){
+            echo json_encode(['msg'=>'删除成功','code'=>0]);
+        }
+    }
+    //权限的修改页面
+    public function nodeUpdate(Request $request){
+        $node_id = $request->input('node_id');
+        $nodeinfo = DB::table('app_node')->where('node_id',$node_id)->first();
+        return view('admin.node.nodeupdate',['nodeinfo'=>$nodeinfo]);
+    }
+    //前线的执行修改
+    public function nodeUpdataDo(Request $request){
+        $node_name = $request->input('node_name');
+        $action_name = $request->input('action_name');
+        $node_id = $request->input('node_id');
+
+        if(empty($node_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        if(empty($action_name)){
+            return json_encode(['msg'=>'方法名不能为空','code'=>1]);
+        }
+
+        $nodeinfo = [
+            'node_name'=>$node_name,
+            'action_name'=>$action_name
+        ];
+        $res = DB::table('app_node')->where('node_id',$node_id)->update($nodeinfo);
+        if($res){
+            return json_encode(['msg'=>'修改成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'未修改','code'=>1]);
+        }
+    }
 }

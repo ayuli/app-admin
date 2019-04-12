@@ -34,6 +34,16 @@ Route::get('roleList',"Admin\AdminController@roleList");//角色展示
 Route::post('roleDel',"Admin\AdminController@roleDel");//角色删除
 Route::get('roleUpdate',"Admin\AdminController@roleUpdate");//角色修改页面
 Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
+Route::get('roleDo',"Admin\AdminController@roleDo");//赋予角色页面
+Route::post('adminrole',"Admin\AdminController@adminrole");//执行赋予角色
+//后台权限管理
+Route::get('nodeAdd',"Admin\AdminController@nodeAdd");//权限添加
+Route::get('nodeList',"Admin\AdminController@nodeList");//权限添加
+Route::post('nodeInsert',"Admin\AdminController@nodeInsert");//权限添加
+Route::post('nodeDel',"Admin\AdminController@nodeDel");//权限删除
+Route::get('nodeUpdate',"Admin\AdminController@nodeUpdate");//权限修改页面
+Route::post('nodeUpdataDo',"Admin\AdminController@nodeUpdataDo");//权限执行修改
+
 
 //后台商品管理
 Route::get('/brand',"Admin\BrandController@brand");     //品牌添加页面
