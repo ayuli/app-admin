@@ -72,4 +72,5 @@ Route::post('/address',"Index\AddressController@address");   //添加收货地�
 Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址展示
 
 //收藏
-Route::post('/collection','Index\CollController@coll');
+Route::post('/collection','Index\CollController@coll'); //收藏
+Route::post('/uncollection','Index\CollController@uncoll'); //取消收藏
