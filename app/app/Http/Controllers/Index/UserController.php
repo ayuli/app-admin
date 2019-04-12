@@ -25,7 +25,7 @@ class UserController extends Controller
     //登陆
     public function login(Request $request){
         if($request->session()->get('user_name')){
-            return 3;
+            echo "<script>alert('已登录');history.go(-1)</script>";die;
         }
         $name = $request->input('name');
         $pd = $request->input('pwd');
