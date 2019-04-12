@@ -8,16 +8,25 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function register(){
-
+    public function register(Request $request){
+        $name = $request->input('name');
+        $pd = $request->input('pwd');
+        $pwd = sha1(md5(md5($pd)));
+        $time = time();
+        $res = DB::table('app_user')->insert(['user_name'=>$name],['user_pwd'=>$pwd],['add_time'=>$time]);
+        if($res){
+            return 1;//注册成功
+        }else{
+            return 2;//注册失败
+        }
     }
     public function registersole(Request $request){
         $name = $request->input('name');
         $res = DB::table('app_user')->where('user_name',$name)->first();
         if($res){
-            return 1;//已存在
+            return 2;//已存在
         }else{
-            return 2;//唯一
+            return 1;//唯一
         }
     }
     public function  userCenter(){
