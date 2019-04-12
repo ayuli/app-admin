@@ -77,7 +77,8 @@ Route::get('/outlogin',"Index\UserController@outlogin"); //登陆
 //个人中心
 Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页面展示数据
 //收货地址
-Route::get('/getregion',"Index\AddressController@getregion");    //三级联通
+Route::get('/getregion',"Index\AddressController@getregion");    //三级联动
+Route::get('/selregion',"Index\AddressController@selregion");    //查询三级联动
 Route::post('/address',"Index\AddressController@address");   //添加收货地址
 Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址展示
 

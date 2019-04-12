@@ -15,6 +15,11 @@ class AddressController extends Controller
         return $data;
 
     }
+    public function selregion(){
+        $regin = DB::table('app_region')-get();
+        $data = json_decode($regin,1);
+        return $data;
+    }
     public function address(Request $request){
         $consignee_name = $request->input('consignee_name');
         $detailed_address = $request->input('detailed_address');
