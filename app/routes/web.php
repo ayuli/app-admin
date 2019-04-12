@@ -19,6 +19,7 @@ Route::get('main',"Admin\IndexController@main");
 Route::get('adminLogin',"Admin\LoginController@adminLogin");//登录页面
 Route::get('codeImg/{tmp}',"Admin\LoginController@codeImg");//验证码
 Route::post('adminLoginDo',"Admin\LoginController@adminLoginDo");//登录执行
+Route::get('adminInfo',"Admin\LoginController@adminInfo");//获取用户信息
 
 
 //后台管理员管理

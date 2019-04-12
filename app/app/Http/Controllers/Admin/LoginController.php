@@ -34,11 +34,21 @@ class LoginController extends Controller
         if(!empty($admin_info)){
             if($admin_info->admin_pwd == $admin_pwd){
                 echo json_encode(['code'=>1,'msg'=>'登录成功！']);
+                session(['admin_id'=>$admin_info->admin_id,'admin_name'=>$admin_info->admin_name]);
             }else{
                 echo json_encode(['code'=>2,'msg'=>'登录失败！']);
             }
         }else{
             echo json_encode(['code'=>2,'msg'=>'登录失败！']);
+        }
+    }
+
+    public function adminInfo(){
+        $admin_name=session('admin_name');
+        if(!empty($admin_name)){
+            echo json_encode(['code'=>1,'admin_name'=>$admin_name]);
+        }else{
+            echo json_encode(['code'=>2,'admin_name'=>'']);
         }
     }
 

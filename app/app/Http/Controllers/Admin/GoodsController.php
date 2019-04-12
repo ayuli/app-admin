@@ -17,6 +17,50 @@ class GoodsController extends Controller
     //商品添加执行页面
     public function goodsAddDo(Request $request){
         $data=$request->input();
+        print_r($data);die;
+        $attr_values_list=$data['attr_value_list'];
+        $attr_price_list=$data['attr_price_list'];
+        $attrInsert=[];
+        foreach($attr_values_list as $k=>$v){
+            if(!empty($v)){
+                if(is_array($v)){
+                    foreach($v as $key=>$val){
+                        $attrInsert[]=[
+                            'attr_id'=>$k,
+                            'attr_value'=>$val,
+                            'attr_price'=>$attr_price_list[$k][$key]
+                        ];
+                    }
+                }else{
+                    $attrInsert[]=[
+                        'attr_id'=>$k,
+                        'attr_value'=>$v,
+                    ];
+                }
+            }
+        }
+        print_r($attrInsert);die;
+        $goods_imgs="";
+        $goods_insert=[
+            'cate_id'=>$data['cate_id'],
+            'goods_name'=>$data['goods_name'],
+            'brand_id'=>$data['brand_id'],
+            'goods_number'=>$data['goods_number'],
+            'goods_price'=>$data['goods_price'],
+            'goods_img'=>$data['goods_img'],
+            'goods_score'=>$data['goods_score'],
+            'add_time'=>time(),
+            'is_show'=>$data['is_show'],
+            'is_best'=>$data['is_best'],
+            'is_new'=>$data['is_new'],
+            'is_hot'=>$data['is_hot'],
+            'goods_imgs'=>$goods_imgs
+        ];
+    }
+
+    //生成货号
+    public function goodsSn(){
+
     }
 
     //选择类型

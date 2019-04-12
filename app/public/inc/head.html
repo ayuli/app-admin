@@ -43,3 +43,20 @@
 
 </body>
 </html>
+<script>
+	$(function(){
+		$.ajax({
+			url:'/adminInfo',
+			type:'get',
+			async:false,
+			dataType:'json',
+			success:function(res){
+				if(res.code==1){
+					$(".p1").text("欢迎，"+res.admin_name);
+				}else{
+					$(".p1").html("<a href='/adminLogin' target='_top'>请先登录</a>");
+				}
+			}
+		});
+	})
+</script>

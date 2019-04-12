@@ -51,7 +51,6 @@
     <div class="page ">
         <!-- 会员注册页面样式 -->
         <form class="form-inline">
-            <input type="hidden" name="MAX_FILE_SIZE" value="2097152"/>
             <div class="banneradd bor">
                 <ul id="tab">
                     <li class="current">商品基本信息</li>
@@ -119,8 +118,7 @@
                                 <tr>
                                     <td class="label">上传商品图片：</td>
                                     <td>
-                                        <input type="file" name="goods_img" size="35" >
-                                        <input type="text" class="layui-input" size="40" value="商品图片外部URL" style="color:#aaa;" onfocus="if (this.value == '商品图片外部URL'){this.value='http://';this.style.color='#000';}" name="goods_img_url">
+                                        <input type="file" id="imageFiles" name="goods_img" size="35" >
                                     </td>
                                 </tr>
 
@@ -185,9 +183,7 @@
                         <tr>
                         <td>
                         <a href="javascript:;" onclick="addSpec(this)">[+]</a>
-                            <input type="text" name="goods_img_desc[]" size="20" placeholder="图片描述">
-                            <input type="file" name="img_url[]">
-                            <input type="text" size="40"   placeholder="或者输入外部图片链接地址" style="color:#aaa;" onfocus="if (this.placeholder == '或者输入外部图片链接地址'){this.value='http://';this.style.color='#000';}" name="goods_link[]">
+                            <input type="file" name="goods_imgs[]">
 
                             </td>
                             </tr>
@@ -198,14 +194,13 @@
                         <!--商品相册 end-->
                         </div>
 
+                        </form>
 
-                        <p align="center">
-                            <button class="button_ok" href="#">提交</button>
-                            <button type="reset" class="button_ok button_no" >取消</button>
+                        <p align="left" style='margin-left:250px;'>
+                                <input type='button' value='提交' class='button_ok'>
                             </p>
 
                             </div>
-                            </form>
                             </div>
                             <script type="text/javascript">
                             var ue = UE.getEditor('editor');
@@ -239,4 +234,30 @@
                                 $(obj).parent().parent().remove();
                             }
 
+                        </script>
+                        <script>
+                            $(function(){
+                                $(".button_ok").click(function(){
+                                    var form=$(".form-inline").serialize();
+                                    var file = document.getElementById('imageFiles').files;
+                                    //新建一个FormData对象
+                                    var formData = new FormData();
+                                    //追加文件数据
+                                    for(i=0;i<file.length;i++){
+                                        formData.append("file["+i+"]", file[i]);
+                                    }
+                                    console.log(formData);
+                                    return false;
+                                    var url="goodsAddDo";
+                                    $.ajax({
+                                        url:url,
+                                        type:'post',
+                                        data:form,
+                                        dataType:'json',
+                                        success:function(res){
+                                            console.log(res);
+                                        }
+                                    });
+                                });
+                            })
                         </script>
