@@ -74,3 +74,7 @@ Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
 Route::post('/uncollection','Index\CollController@uncoll'); //取消收藏
+
+
+//前台商品
+Route::get('/indexgoods','Index\GoodsController@goods'); //所有商品数据展示
