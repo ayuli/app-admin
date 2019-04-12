@@ -16,7 +16,7 @@ class AddressController extends Controller
 
     }
     public function selregion(){
-        $regin = DB::table('app_region')-get();
+        $regin = DB::table('app_region')->get();
         $data = json_decode($regin,1);
         return $data;
     }
