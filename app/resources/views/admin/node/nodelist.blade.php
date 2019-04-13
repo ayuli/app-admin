@@ -109,7 +109,7 @@
                 <tr>
                     <td width="66px" class="tdColor tdC">序号</td>
                     <td width="355px" class="tdColor">权限名称</td>
-                    <td width="260px" class="tdColor">方法名称</td>
+                    <td width="260px" class="tdColor">路由名称</td>
                     <td width="130px" class="tdColor">操作</td>
                 </tr>
                 @foreach($nodeinfo as $v)

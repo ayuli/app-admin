@@ -45,7 +45,11 @@
                             <select name="modules" class="selects" lay-verify="required" lay-search="">
                                 <option value="">选择角色</option>
                                 @foreach($roleinfo as $v)
-                                    <option value="{{$v->role_id}}">{{$v->role_name}}</option>
+                                    @if($role_id->role_id == $v->role_id)
+                                        <option value="{{$v->role_id}}" selected>{{$v->role_name}}</option>
+                                    @else
+                                        <option value="{{$v->role_id}}">{{$v->role_name}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>

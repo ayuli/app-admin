@@ -23,17 +23,17 @@ Route::get('adminInfo',"Admin\LoginController@adminInfo");//获取用户信息
 
 
 //后台管理员管理
-Route::get('adminAdd',"Admin\AdminController@adminAdd");//管理员添加
+Route::get('adminAdd',"Admin\AdminController@adminAdd")->middleware('AdminRole');//管理员添加
 Route::post('adminInsert',"Admin\AdminController@adminInsert");//执行添加
-Route::get('adminList',"Admin\AdminController@adminList");//管理员展示
-Route::post('adminDel',"Admin\AdminController@adminDel");//管理员删除
-Route::get('adminUpdate',"Admin\AdminController@adminUpdate");//管理员修改页面
+Route::get('adminList',"Admin\AdminController@adminList")->middleware('AdminRole');//管理员展示
+Route::post('adminDel',"Admin\AdminController@adminDel")->middleware('AdminRole');//管理员删除
+Route::get('adminUpdate',"Admin\AdminController@adminUpdate")->middleware('AdminRole');//管理员修改页面
 Route::post('adminUpdataDo',"Admin\AdminController@adminUpdataDo");//管理员执行修改
-Route::get('roleAdd',"Admin\AdminController@roleAdd");//角色添加
+Route::get('roleAdd',"Admin\AdminController@roleAdd")->middleware('AdminRole');//角色添加
 Route::post('roleInsert',"Admin\AdminController@roleInsert");//角色添加
-Route::get('roleList',"Admin\AdminController@roleList");//角色展示
-Route::post('roleDel',"Admin\AdminController@roleDel");//角色删除
-Route::get('roleUpdate',"Admin\AdminController@roleUpdate");//角色修改页面
+Route::get('roleList',"Admin\AdminController@roleList")->middleware('AdminRole');//角色展示
+Route::post('roleDel',"Admin\AdminController@roleDel")->middleware('AdminRole');//角色删除
+Route::get('roleUpdate',"Admin\AdminController@roleUpdate")->middleware('AdminRole');//角色修改页面
 Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
 Route::get('roleDo',"Admin\AdminController@roleDo");//赋予角色页面
 Route::post('adminrole',"Admin\AdminController@adminrole");//执行赋予角色

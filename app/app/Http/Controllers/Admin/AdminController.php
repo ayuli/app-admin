@@ -134,7 +134,8 @@ class AdminController extends Controller
         $admininfo = DB::table('app_admin')->where('admin_id',$admin_id)->first();
         $roleinfo = DB::table('app_role')->get();
 
-        return view('admin.admin.roledo',['admininfo'=>$admininfo,'roleinfo'=>$roleinfo]);
+        $role_id = DB::table('app_admin_role')->where('admin_id',$admin_id)->first();
+        return view('admin.admin.roledo',['admininfo'=>$admininfo,'roleinfo'=>$roleinfo,'role_id'=>$role_id]);
     }
     //执行赋予
     public function adminrole(Request $request){
