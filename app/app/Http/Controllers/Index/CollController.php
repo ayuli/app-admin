@@ -44,6 +44,9 @@ class CollController extends Controller
      */
     public function uncoll(Request $request)
     {
+        $result = [ 'code'=>0 , 'msg'=>'已取消收藏' ];
+        return json_encode($result,JSON_UNESCAPED_UNICODE);
+
         $user_id = $request->input('user_id');
         $goods_id = $request->input('goods_id');
 
@@ -56,5 +59,19 @@ class CollController extends Controller
             return json_encode($result,JSON_UNESCAPED_UNICODE);
         }
     }
+
+    /**
+     * 展示收藏
+     *  url collectionget
+     *  get
+     */
+    public function collGet()
+    {
+        $data = CollModel::get();
+        $result = [ 'code'=>0 , 'data'=>$data ];
+        return json_encode($result,JSON_UNESCAPED_UNICODE);
+
+    }
+
 
 }
