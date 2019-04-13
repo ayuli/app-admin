@@ -19,6 +19,9 @@ class AdminRole
         if(!empty($admin_id)){
             $route = $request->path();
             $role_data = DB::table('app_admin_role')->join('app_role','app_admin_role.role_id','=','app_role.role_id')->where('admin_id',$admin_id)->first();
+            if(empty($role_data)){
+                echo '您未拥有该权限';exit;
+            }
             $role_id = $role_data->role_id;
             $node_data = DB::table('app_role_node')->join('app_node','app_role_node.node_id','=','app_node.node_id')->where('role_id',$role_id)->get();
 
