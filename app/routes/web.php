@@ -91,11 +91,12 @@ Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址
 Route::get('/orderget',"Admin\OrderController@orderGet");
 
 //广告管理
-Route::get('/adv',"Admin\OrderController@adv");     //广告添加展示
-Route::post('/advadd',"Admin\OrderController@advAdd");     //广告添加执行
-Route::get('/advGet',"Admin\OrderController@advget");     //广告展示
-Route::get('/advUpda',"Admin\OrderController@advupda");     //广告修改展示
-Route::post('/advupdado',"Admin\OrderController@advUpdaDo");     //广告修改执行
+Route::get('/adv',"Admin\AdvController@adv");     //广告添加展示
+Route::post('/advadd',"Admin\AdvController@advAdd");     //广告添加执行
+Route::get('/advget',"Admin\AdvController@advget");     //广告展示
+Route::post('/advdel',"Admin\AdvController@advDel");     //广告删除
+Route::get('/advupda',"Admin\AdvController@advUpda");     //广告修改展示
+Route::post('/advupdado',"Admin\AdvController@advUpdaDo");     //广告修改执行
 
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
