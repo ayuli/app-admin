@@ -87,9 +87,13 @@ Route::post('/address',"Index\AddressController@address");   //添加收货地�
 Route::post('/upaddress',"Index\AddressController@upaddress");   //修改收货地址
 Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址展示
 
+//订单展示
+Route::get('/orderget',"Admin\OrderController@orderGet");
+
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
 Route::post('/uncollection','Index\CollController@uncoll'); //取消收藏
+Route::get('/collectionget','Index\CollController@collGet'); //展示收藏
 
 
 //前台商品
