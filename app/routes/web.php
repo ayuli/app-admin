@@ -46,6 +46,14 @@ Route::post('nodeDel',"Admin\AdminController@nodeDel");//权限删除
 Route::get('nodeUpdate',"Admin\AdminController@nodeUpdate");//权限修改页面
 Route::post('nodeUpdataDo',"Admin\AdminController@nodeUpdataDo");//权限执行修改
 
+//后台优惠券管理
+Route::get('couponAdd',"Admin\AdminController@couponAdd");//优惠券添加
+Route::get('couponList',"Admin\AdminController@couponList");//优惠券展示
+Route::post('couponInsert',"Admin\AdminController@couponInsert");//优惠券执行添加
+Route::post('couponDel',"Admin\AdminController@couponDel");//优惠券删除
+Route::get('couponUpdate',"Admin\AdminController@couponUpdate");//优惠券修改
+Route::post('couponUpdateDo',"Admin\AdminController@couponUpdateDo");//优惠券修改执行
+
 
 //后台商品管理
 Route::get('/brand',"Admin\BrandController@brand");     //品牌添加页面

@@ -297,7 +297,7 @@ class AdminController extends Controller
         $nodeinfo = DB::table('app_node')->where('node_id',$node_id)->first();
         return view('admin.node.nodeupdate',['nodeinfo'=>$nodeinfo]);
     }
-    //前线的执行修改
+    //权限的执行修改
     public function nodeUpdataDo(Request $request){
         $node_name = $request->input('node_name');
         $action_name = $request->input('action_name');
@@ -315,6 +315,95 @@ class AdminController extends Controller
             'action_name'=>$action_name
         ];
         $res = DB::table('app_node')->where('node_id',$node_id)->update($nodeinfo);
+        if($res){
+            return json_encode(['msg'=>'修改成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'未修改','code'=>1]);
+        }
+    }
+    //优惠券添加
+    public function couponAdd(Request $request){
+        $goods_id = $request->input('goods_id');
+        return view('admin.coupon.couponadd',['goods_id'=>$goods_id]);
+    }
+    //优惠券执行添加
+    public function couponInsert(Request $request){
+        $goods_id = $request->input('goods_id');
+        $coupon_name = $request->input('coupon_name');
+        $coupon_num = $request->input('coupon_num');
+        $coupon_price = $request->input('coupon_price');
+
+        if(empty($coupon_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        if(empty($coupon_num)){
+            return json_encode(['msg'=>'数量不能为空','code'=>1]);
+        }
+        if(empty($coupon_price)){
+            return json_encode(['msg'=>'价格不能为空','code'=>1]);
+        }
+
+        $couponinfo = [
+            'goods_id'=>$goods_id,
+            'coupon_name'=>$coupon_name,
+            'coupon_num'=>$coupon_num,
+            'coupon_price'=>$coupon_price
+        ];
+
+        $res = DB::table('app_coupon')->insert($couponinfo);
+        if($res){
+            return json_encode(['msg'=>'添加成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'添加失败','code'=>1]);
+        }
+    }
+    //优惠券展示
+    public function couponList(){
+        $couponinfo = DB::table('app_coupon')->where('coupon_del',0)->paginate(4);
+        return view('admin.coupon.couponlist',['couponinfo'=>$couponinfo]);
+    }
+    //优惠券删除
+    public function couponDel(Request $request){
+        $coupon_id = $request->input('coupon_id');
+        $coupon_del=[
+            'coupon_del'=>1
+        ];
+        $res = DB::table('app_coupon')->where('coupon_id',$coupon_id)->update($coupon_del);
+        if($res){
+            echo json_encode(['msg'=>'删除成功','code'=>0]);
+        }else{
+            echo json_encode(['msg'=>'删除失败','code'=>1]);
+        }
+    }
+    //优惠券修改页面
+    public function couponUpdate(Request $request){
+        $coupon_id = $request->input('coupon_id');
+        $couponinfo = DB::table('app_coupon')->where('coupon_id',$coupon_id)->first();
+        return view('admin.coupon.couponupdate',['couponinfo'=>$couponinfo]);
+    }
+    //优惠券执行修改
+    public function couponUpdateDo(Request $request){
+        $coupon_id = $request->input('coupon_id');
+        $coupon_name = $request->input('coupon_name');
+        $coupon_num = $request->input('coupon_num');
+        $coupon_price = $request->input('coupon_price');
+
+        if(empty($coupon_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        if(empty($coupon_num)){
+            return json_encode(['msg'=>'数量不能为空','code'=>1]);
+        }
+        if(empty($coupon_price)){
+            return json_encode(['msg'=>'价格不能为空','code'=>1]);
+        }
+
+        $couponinfo = [
+            'coupon_name'=>$coupon_name,
+            'coupon_num'=>$coupon_num,
+            'coupon_price'=>$coupon_price
+        ];
+        $res = DB::table('app_coupon')->where('coupon_id',$coupon_id)->update($couponinfo);
         if($res){
             return json_encode(['msg'=>'修改成功','code'=>0]);
         }else{

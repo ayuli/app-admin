@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>商品管理-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
+    <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <!-- <script type="text/javascript" src="js/page.js" ></script> -->
     <style type="text/css">
@@ -117,10 +118,10 @@
                         <td width="260px" class="tdColor">商品分类</td>
                         <td width="275px" class="tdColor">商品品牌</td>
                         <td width="290px" class="tdColor">商品价格</td>
-                        <td width="290px" class="tdColor">是否精品</td>
-                        <td width="290px" class="tdColor">是否新品</td>
-                        <td width="290px" class="tdColor">是否热卖</td>
-                        <td width="130px" class="tdColor">操作</td>
+                        <td width="180px" class="tdColor">是否精品</td>
+                        <td width="180px" class="tdColor">是否新品</td>
+                        <td width="180px" class="tdColor">是否热卖</td>
+                        <td width="300px" class="tdColor">操作</td>
                     </tr>
                     @foreach($goods_info as $k=>$v)
                         <tr goods_id="{{$v->goods_id}}">
@@ -151,6 +152,7 @@
                                     <img class="operation" src="img/update.png">
                                 </a>
                                 <img class="operation delban" src="img/delete.png">
+                                <a href="couponAdd?goods_id={{$v->goods_id}}"><button class="layui-btn layui-btn-sm layui-btn-normal">添加优惠券</button></a>
                             </td>
                         </tr>
                     @endforeach
