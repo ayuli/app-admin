@@ -5,6 +5,7 @@
     <title>商品管理-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
     <script type="text/javascript" src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
     <!-- <script type="text/javascript" src="js/page.js" ></script> -->
     <style type="text/css">
         #pull_right{
@@ -117,10 +118,10 @@
                         <td width="260px" class="tdColor">商品分类</td>
                         <td width="275px" class="tdColor">商品品牌</td>
                         <td width="290px" class="tdColor">商品价格</td>
-                        <td width="290px" class="tdColor">是否精品</td>
-                        <td width="290px" class="tdColor">是否新品</td>
-                        <td width="290px" class="tdColor">是否热卖</td>
-                        <td width="130px" class="tdColor">操作</td>
+                        <td width="130px" class="tdColor">是否精品</td>
+                        <td width="130px" class="tdColor">是否新品</td>
+                        <td width="130px" class="tdColor">是否热卖</td>
+                        <td width="290px" class="tdColor">操作</td>
                     </tr>
                     @foreach($goods_info as $k=>$v)
                         <tr goods_id="{{$v->goods_id}}">
@@ -147,6 +148,7 @@
                                 {{$v->is_new}}
                             </td>
                             <td>
+                                <a href="productAdd?goods_id={{$v->goods_id}}"><button class="layui-btn"><i class="layui-icon"></i>sku</button></a>
                                 <a href="/goodsUpdate?goods_id={{$v->goods_id}}">
                                     <img class="operation" src="img/update.png">
                                 </a>

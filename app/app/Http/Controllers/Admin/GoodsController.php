@@ -265,4 +265,14 @@ class GoodsController extends Controller
             echo json_encode(['code'=>0,'msg'=>'删除失败！']);
         }
     }
+
+    //货品添加
+    public function productAdd(Request $request){
+        $goods_id=$request->input('goods_id');
+        $goods_info=DB::table('app_goods')->where('goods_id',$goods_id)->select('goods_id','goods_name','goods_sn')->first();
+        $attr_id=DB::table('app_goods_attr')->where('goods_id',$goods_id)->pluck('attr_id');
+        $attr_info=DB::table('app_attr')->whereIn('attr_id',$attr_id)->get();
+        print_r($attr_info);die;
+        return view('admin.goods.goodsSku',['goods_info'=>$goods_info]);
+    }
 }
