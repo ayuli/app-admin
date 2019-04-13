@@ -81,6 +81,7 @@ Route::get('goodsUpdate',"Admin\GoodsController@goodsUpdate"); //商品修改
 Route::post('goodsUpdateDo',"Admin\GoodsController@goodsUpdateDo"); //商品修改执行
 Route::post('goodsDelete',"Admin\GoodsController@goodsDelete"); //商品删除
 Route::get('productAdd',"Admin\GoodsController@productAdd"); //商品sku
+Route::post('productAddDo',"Admin\GoodsController@productAddDo"); //商品sku执行
 
 //前台登陆
 Route::post('/register',"Index\UserController@register"); //注册

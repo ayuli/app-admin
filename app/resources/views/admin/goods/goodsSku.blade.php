@@ -1,5 +1,6 @@
-
+<script type="text/javascript" charset="utf-8" src="js/jquery.min.js"></script>
 <link rel="stylesheet" href="css/css.css" />
+
 <style>
     input[type="checkbox"] { height:20px;width:20px; }
     tr{height: 40px;}
@@ -15,48 +16,45 @@
             </tr>
             <tr>
                 <!-- start for specifications -->
-                {volist name='attr_name' id='v'}
-                <td scope="col" style="background-color: rgb(255, 255, 255);"><div align="center"><strong>{$v}</strong></div></td>
-                {/volist}
+                @foreach($attr_name as $k=>$v)
+                <td scope="col" style="background-color: rgb(255, 255, 255);"><div align="center"><strong>{{$v}}</strong></div></td>
+                @endforeach
                 <!-- end for specifications -->
-                <td class="label_2" style="background-color: rgb(255, 255, 255);">货号</td>
                 <td class="label_2" style="background-color: rgb(255, 255, 255);">库存</td>
                 <td class="label_2" style="background-color: rgb(255, 255, 255);">&nbsp;</td>
             </tr>
-            {if condition="$products"}
-            {volist name='products' id='v'}
+            @if(!empty($product_info))
+            @foreach($product_info as $k=>$v)
             <tr>
-                {volist name="$v['goods_attr']" id='vv'}
-                <td>{$vv}</td>
-                {/volist}
-                <td>{$v.product_sn}</td>
-                <td>{$v.product_number}</td>
+                @foreach($v->goods_attr as $kk=>$vv)
+                <td>{{$vv}}</td>
+                @endforeach
+                <td>{{$v->product_number}}</td>
             </tr>
-            {/volist}
-            {/if}
+            @endforeach
+            @endif
 
             <tr id="attr_row">
                 <!-- start for specifications_value -->
-                {foreach $attr_value as $k=>$v}
+                @foreach($attr_values as $k=>$v)
                 <td align="center">
-                    <select name="attr[{$k}][]">
-                        <option value="" selected="">请选择...</option>
-                        {foreach $v as $key=>$val}
-                        <option value="{$key}">{$val}</option>
-                        {/foreach}
+                    <select name="attr[{{$k}}][]">
+                        <option value="0" selected="">请选择...</option>
+                        @foreach($v as $key=>$val)
+                        <option value="{{$key}}">{{$val}}</option>
+                        @endforeach
                     </select>
                 </td>
-                {/foreach}
-                <!-- end for specifications_value -->
+                @endforeach
+            <!-- end for specifications_value -->
 
-                <td class="label_2"><input type="text" name="product_sn[]" value="" size="20"></td>
                 <td class="label_2"><input type="text" name="product_number[]" value="1" size="10"></td>
                 <td><input type="button" class="button" value=" + " onclick="javascript:add_attr_product(this);"></td>
             </tr>
 
             <tr>
                 <td align="center" colspan="6">
-                    <input type="submit" class="button" value=" 保存 " onclick="checkgood_sn()">
+                    <input type="button" class="button" value=" 保存 " >
                 </td>
             </tr>
             </tbody></table>
@@ -76,5 +74,26 @@
         console.log($(obj));
         $(obj).parent().parent().remove();
     }
+</script>
+<script>
+    $(function(){
+        $(".button").click(function(){
+            var form=$("#addForm").serialize();
+
+            var url="productAddDo";
+            $.ajax({
+                url:url,
+                type:'post',
+                data:form,
+                dataType:'json',
+                success:function(res){
+                    alert(res.msg);
+                    if(res.code==1){
+                        location.href='goodsShow';
+                    }
+                }
+            });
+        });
+    })
 </script>
 

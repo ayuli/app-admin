@@ -18,7 +18,17 @@ class GoodsController extends Controller
     public function goodsAddDo(Request $request){
         DB::beginTransaction();
         $data=$request->input();
-        $goods_imgs=implode('|',$data['goods_imgs']);
+        if(!empty($data['goods_imgs'])){
+            $goods_imgs=implode('|',$data['goods_imgs']);
+        }else{
+            $goods_imgs="";
+        }
+        if(empty($data['goods_img'])){
+            $data['goods_img']="";
+        }
+        if(empty($data['goods_desc'])){
+            $data['goods_desc']="";
+        }
         $goods_insert=[
             'cate_id'=>$data['cate_id'],
             'type_id'=>$data['type_id'],
@@ -40,31 +50,33 @@ class GoodsController extends Controller
         $goods_sn=$this->goodsSn($goods_id);
         $res=DB::table('app_goods')->update(['goods_sn'=>$goods_sn]);
         if($res){
-            $attr_values_list=$data['attr_value_list'];
-            $attr_price_list=$data['attr_price_list'];
-            $attrInsert=[];
-            foreach($attr_values_list as $k=>$v){
-                if(!empty($v)){
-                    if(is_array($v)){
-                        foreach($v as $key=>$val){
+            if(!empty($data['type_id'])){
+                $attr_values_list=$data['attr_value_list'];
+                $attr_price_list=$data['attr_price_list'];
+                $attrInsert=[];
+                foreach($attr_values_list as $k=>$v){
+                    if(!empty($v)){
+                        if(is_array($v)){
+                            foreach($v as $key=>$val){
+                                $attrInsert[]=[
+                                    'goods_id'=>$goods_id,
+                                    'attr_id'=>$k,
+                                    'attr_value'=>$val,
+                                    'attr_price'=>$attr_price_list[$k][$key]
+                                ];
+                            }
+                        }else{
                             $attrInsert[]=[
                                 'goods_id'=>$goods_id,
                                 'attr_id'=>$k,
-                                'attr_value'=>$val,
-                                'attr_price'=>$attr_price_list[$k][$key]
+                                'attr_value'=>$v,
+                                'attr_price'=>0
                             ];
                         }
-                    }else{
-                        $attrInsert[]=[
-                            'goods_id'=>$goods_id,
-                            'attr_id'=>$k,
-                            'attr_value'=>$v,
-                            'attr_price'=>0
-                        ];
                     }
                 }
+                $res=DB::table('app_goods_attr')->insert($attrInsert);
             }
-            $res=DB::table('app_goods_attr')->insert($attrInsert);
             if($res){
                 DB::commit();
                 echo json_encode(['code'=>1,'msg'=>'添加成功！']);
@@ -269,10 +281,69 @@ class GoodsController extends Controller
     //货品添加
     public function productAdd(Request $request){
         $goods_id=$request->input('goods_id');
+        $product_info=DB::table('app_product')->where('goods_id',$goods_id)->get();
         $goods_info=DB::table('app_goods')->where('goods_id',$goods_id)->select('goods_id','goods_name','goods_sn')->first();
         $attr_id=DB::table('app_goods_attr')->where('goods_id',$goods_id)->pluck('attr_id');
-        $attr_info=DB::table('app_attr')->whereIn('attr_id',$attr_id)->get();
-        print_r($attr_info);die;
-        return view('admin.goods.goodsSku',['goods_info'=>$goods_info]);
+        $attr_id=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_id');
+        $attr_name=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_name');
+        $attr_info=DB::table('app_goods_attr')->where('goods_id',$goods_id)->whereIn('attr_id',$attr_id)->get();
+
+
+        foreach($product_info as $k=>$v){
+            $attr_value=DB::table('app_goods_attr')->whereIn('goods_attr_id',explode(',',$v->goods_attr))->pluck('attr_value');
+            $product_info[$k]->goods_attr=$attr_value;
+        }
+
+        $attr_values=[];
+        $attr_price=[];
+
+        foreach($attr_info as $k=>$v){
+            $attr_values[$v->attr_id][$v->goods_attr_id]=$v->attr_value;
+            $attr_price[$v->attr_id][$v->goods_attr_id]=$v->attr_price;
+        }
+
+        return view('admin.goods.goodsSku',['product_info'=>$product_info,'goods_info'=>$goods_info,'attr_name'=>$attr_name,'attr_values'=>$attr_values,'attr_id'=>$attr_id]);
+    }
+
+    //sku添加执行
+    public function productAddDo(Request $request){
+        DB::beginTransaction();
+        $data=$request->input();
+        $attr=$data['attr'];
+
+        $goods_id=$data['goods_id'];
+        $product_number=$data['product_number'];
+        $count=count($data['product_number']);
+        $goods_info=DB::table('app_goods')->where('goods_id',$goods_id)->first();
+        $goods_sn=$goods_info->goods_sn;
+        for($i=0;$i<$count;$i++){
+
+            $productInsert=[
+                'goods_attr'=>implode(',',array_column($attr,$i)),
+                'goods_id'=>$goods_id,
+                'product_number' => $product_number[$i]
+            ];
+            $product_id=DB::table('app_product')->insertGetId($productInsert);
+            if($product_id){
+                $product_sn = $goods_sn . '_' . $product_id;
+                $res=DB::table('app_product')->where('product_id',$product_id)->update(['product_sn'=>$product_sn]);
+
+            }
+        }
+        $goods_num=array_sum($product_number);
+
+        $res=DB::table('app_goods')->where('goods_id',$goods_id)->update(['goods_number'=>$goods_num]);
+        if($res){
+            DB::commit();
+            echo json_encode(['code'=>1,'msg'=>'添加成功！']);
+        }else{
+            DB::rollBack();
+            echo json_encode(['code'=>0,'msg'=>'添加失败！']);
+        }
+
+
+
+
+
     }
 }
