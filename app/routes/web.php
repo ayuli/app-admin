@@ -37,6 +37,7 @@ Route::get('roleUpdate',"Admin\AdminController@roleUpdate");//角色修改页面
 Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
 Route::get('roleDo',"Admin\AdminController@roleDo");//赋予角色页面
 Route::post('adminrole',"Admin\AdminController@adminrole");//执行赋予角色
+
 //后台权限管理
 Route::get('nodeAdd',"Admin\AdminController@nodeAdd");//权限添加
 Route::get('nodeList',"Admin\AdminController@nodeList");//权限添加
@@ -66,7 +67,10 @@ Route::post('/catedel',"Admin\CateController@cateDel");   //分类删除
 
 Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
 Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
-Route::get('changeType',"Admin\GoodsController@changeType"); //商品添加页面
+Route::get('changeType',"Admin\GoodsController@changeType"); //选择商品类型
+Route::post('goodsUpload',"Admin\GoodsController@goodsUpload"); //商品文件上传
+Route::get('goodsShow',"Admin\GoodsController@goodsShow"); //商品文件上传
+Route::get('goodsUpdate',"Admin\GoodsController@goodsUpdate"); //商品修改
 
 //前台登陆
 Route::post('/register',"Index\UserController@register"); //注册
