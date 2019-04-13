@@ -135,6 +135,7 @@ class AdminController extends Controller
         $roleinfo = DB::table('app_role')->get();
 
         $role_id = DB::table('app_admin_role')->where('admin_id',$admin_id)->first();
+//        print_r($role_id);exit;
         return view('admin.admin.roledo',['admininfo'=>$admininfo,'roleinfo'=>$roleinfo,'role_id'=>$role_id]);
     }
     //执行赋予
