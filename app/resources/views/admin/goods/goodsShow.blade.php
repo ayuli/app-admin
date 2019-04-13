@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>商品管理-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
+    <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <link rel="stylesheet" href="layui/css/layui.css"  media="all">
     <!-- <script type="text/javascript" src="js/page.js" ></script> -->
@@ -153,6 +154,7 @@
                                     <img class="operation" src="img/update.png">
                                 </a>
                                 <img class="operation delban" src="img/delete.png">
+                                <a href="couponAdd?goods_id={{$v->goods_id}}"><button class="layui-btn layui-btn-sm layui-btn-normal">添加优惠券</button></a>
                             </td>
                         </tr>
                     @endforeach

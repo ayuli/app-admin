@@ -123,9 +123,9 @@
                             <td>{{$v->admin_tel}}</td>
                             <td><?php echo date("Y-m-d H:i:s",$v->create_time)?></td>
                             <td admin_id={{$v->admin_id}}>
-                                <a href="adminUpdate?admin_id={{$v->admin_id}}}"><img class="operation" src="img/update.png"></a>
+                                <a href="adminUpdate?admin_id={{$v->admin_id}}"><img class="operation" src="img/update.png"></a>
                                 <img class="operation delban" src="img/delete.png">
-                                <a href="roleDo?admin_id={{$v->admin_id}}}"><button class="layui-btn layui-btn-sm layui-btn-normal">赋予角色</button></a>
+                                <a href="roleDo?admin_id={{$v->admin_id}}"><button class="layui-btn layui-btn-sm layui-btn-normal">赋予角色</button></a>
                             </td>
                         </tr>
                     @endforeach
