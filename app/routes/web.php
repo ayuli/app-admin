@@ -64,7 +64,7 @@ Route::get('/cateupda',"Admin\CateController@cateUpda");   //分类修改
 Route::post('/cateupdado',"Admin\CateController@cateUpdaDo");   //分类修改执行
 Route::post('/catedel',"Admin\CateController@cateDel");   //分类删除
 
-
+//商品管理
 Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
 Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
 Route::get('changeType',"Admin\GoodsController@changeType"); //选择商品类型
@@ -89,6 +89,13 @@ Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址
 
 //订单展示
 Route::get('/orderget',"Admin\OrderController@orderGet");
+
+//广告管理
+Route::get('/adv',"Admin\OrderController@adv");     //广告添加展示
+Route::post('/advadd',"Admin\OrderController@advAdd");     //广告添加执行
+Route::get('/advGet',"Admin\OrderController@advget");     //广告展示
+Route::get('/advUpda',"Admin\OrderController@advupda");     //广告修改展示
+Route::post('/advupdado',"Admin\OrderController@advUpdaDo");     //广告修改执行
 
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
