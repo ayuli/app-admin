@@ -189,26 +189,26 @@
 <script type="text/javascript">
     // 广告弹出框
     $(".delban").click(function(){
-        _barnd_id= $(this).parents('tr').attr('barnd_id')
+        _goods_id= $(this).parents('tr').attr('goods_id')
         $(".banDel").show();
 
         $("#yes").click(function(){
 
-            var brand_id=_barnd_id;
+            var goods_id=_goods_id;
             $.ajax({
-                url : '/branddel',
+                url : 'goodsDelete',
                 type: 'post',
-                data : {brand_id:brand_id},
+                data : {goods_id:goods_id},
                 dataType: 'json',
                 success: function(d){
-                    if(d.code==0){
+                    if(d.code==1){
                         // 广告弹出框
                         $(".banDel").show();
                         $(".delP1").text(d.msg);
                         $(".delP2").html("<a class='ok no'>确定</a>");
                         $(".no").click(function(){
                             $(".banDel").hide();
-                            location.href='/brandget'
+                            location.href='goodsShow'
                         });
                     }else{
                         // 广告弹出框
@@ -217,7 +217,7 @@
                         $(".delP2").html("<a class='ok no'>确定</a>");
                         $(".no").click(function(){
                             $(".banDel").hide();
-                            location.href='/brandget'
+                            location.href='goodsShow'
                         });
                     }
                 }

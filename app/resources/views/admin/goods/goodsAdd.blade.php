@@ -185,8 +185,8 @@
                             <tr><td>&nbsp;</td></tr>
                         <tr>
                         <td>
-                        <a href="javascript:;" onclick="addSpec(this)">[+]</a>
-                            <input type="file" id='1' name="goods_imgs[]" onchange="upload(this)">
+                        <a href="javascript:;" onclick="addUpload(this)">[+]</a>
+                            <input type="file" id='0' name="goods_imgs[]" onchange="upload(this)">
 
                             </td>
                             </tr>
@@ -226,8 +226,8 @@
                             });
 
                             //追加一行
-                            var num=1;
-                            function addSpec(obj){
+                            var num=0;
+                            function addUpload(obj){
                                 var newtr=$(obj).parent().parent().clone();
                                 num+=1;
                                 newtr.find('a').text('[ - ]');
@@ -235,6 +235,14 @@
                                 newtr.find('a').attr('onclick','lessSpec(this)');
                                 $(obj).parent().parent().after(newtr);
                             }
+
+                            function addSpec(obj){
+                                var newtr=$(obj).parent().parent().clone();
+                                newtr.find('a').text('[ - ]');
+                                newtr.find('a').attr('onclick','lessSpec(this)');
+                                $(obj).parent().parent().after(newtr);
+                            }
+
                             //减一行
                             function lessSpec(obj){
                                 $(obj).parent().parent().remove();
@@ -275,8 +283,6 @@
 
                                 $(".button_ok").click(function(){
                                     var form=$(".form-inline").serialize();
-
-
 
                                     var url="goodsAddDo";
                                     $.ajax({

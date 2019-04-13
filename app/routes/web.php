@@ -64,13 +64,14 @@ Route::get('/cateupda',"Admin\CateController@cateUpda");   //分类修改
 Route::post('/cateupdado',"Admin\CateController@cateUpdaDo");   //分类修改执行
 Route::post('/catedel',"Admin\CateController@cateDel");   //分类删除
 
-//商品管理
 Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
 Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
 Route::get('changeType',"Admin\GoodsController@changeType"); //选择商品类型
 Route::post('goodsUpload',"Admin\GoodsController@goodsUpload"); //商品文件上传
 Route::get('goodsShow',"Admin\GoodsController@goodsShow"); //商品文件上传
 Route::get('goodsUpdate',"Admin\GoodsController@goodsUpdate"); //商品修改
+Route::post('goodsUpdateDo',"Admin\GoodsController@goodsUpdateDo"); //商品修改执行
+Route::post('goodsDelete',"Admin\GoodsController@goodsDelete"); //商品删除
 
 //前台登陆
 Route::post('/register',"Index\UserController@register"); //注册

@@ -63,6 +63,7 @@
                     <div class="condiv" style="display:block">
                         <div class="layui-form-item">
                             <table  id="general-table"  >
+                                <input type="hidden" name="goods_id" value="{{$goodsInfo->goods_id}}">
                                 <tbody>
                                 <tr>
                                     <td class="label">商品名称：</td>
@@ -121,12 +122,12 @@
                                 <tr>
                                     <td class="label">上传商品图片：</td>
                                     <td>
-                                        <input type="file" id="file" name="goods_img" onchange="upload(this)" size="35" >
+                                        <input type="file" id="file"  onchange="upload(this)" size="35" >
                                         <img src="{{$goodsInfo->goods_img}}" width="100px" height="50px">
+                                        <input type="hidden" name="goods_img" value="{{$goodsInfo->goods_img}}">
                                     </td>
                                 </tr>
                                 </tbody></table>
-                            <div class="goods_img"></div>
 
                         </div>
                     </div>
@@ -183,15 +184,20 @@
                             </div>
                             </td>
                             </tr>-->
+
                             <tr><td>&nbsp;</td></tr>
                         @foreach($goodsInfo->goods_imgs as $k=>$v)
                         <tr>
                         <td>
-                        <a href="javascript:;" onclick="addSpec(this)">[+]</a>
-                            <input type="file" id='1' name="goods_imgs[]" onchange="upload(this)">
+                        <a href="javascript:;" onclick="addUpload(this)">[+]</a>
+                            <input type="file" id='{{$k}}'  onchange="upload(this)">
+                                <input type='hidden' name='goods_imgs[{{$k}}]' value='{{$v}}'>
                             <img src='{{$v}}'  width="100px" height="50px">
                             </td>
                             </tr>
+                                    <script>
+                                        num={{$k}}
+                                    </script>
                                 @endforeach
                             </tbody></table>
 
@@ -199,6 +205,7 @@
                         </div>
                         <!--商品相册 end-->
                         </div>
+                        <div class="goods_img"></div>
 
                         </form>
 
@@ -231,18 +238,22 @@
                         });
 
                         //追加一行
-                        var num=1;
-                        function addSpec(obj){
+                        function addUpload(obj){
+                            num+=1;
+
                             var newtr="<tr>\n" +
                                 "                        <td>\n" +
-                                "                        <a href=\"javascript:;\" onclick=\"addSpec(this)\">[+]</a>\n" +
-                                "                            <input type=\"file\" id='1' name=\"goods_imgs[]\" onchange=\"upload(this)\">\n" +
+                                "                        <a href=\"javascript:;\" onclick=\"lessSpec(this)\">[ - ]</a>\n" +
+                                "                            <input type=\"file\" id='"+num+"' name=\"goods_imgs[]\" onchange=\"upload(this)\">\n" +
                                 "                            </td>\n" +
                                 "                            </tr>";
-                            num+=1;
-                            console.log(newtr);
+
+                            $(obj).parent().parent().after(newtr);
+                        }
+
+                        function addSpec(obj){
+                            var newtr=$(obj).parent().parent().clone();
                             newtr.find('a').text('[ - ]');
-                            newtr.find('a').next().attr('id',num);
                             newtr.find('a').attr('onclick','lessSpec(this)');
                             $(obj).parent().parent().after(newtr);
                         }
@@ -303,7 +314,7 @@
 
 
 
-                                    var url="goodsAddDo";
+                                    var url="goodsUpdateDo";
                                     $.ajax({
                                         url:url,
                                         type:'post',
