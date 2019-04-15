@@ -57,13 +57,15 @@ class GoodsController extends Controller
                 foreach($attr_values_list as $k=>$v){
                     if(!empty($v)){
                         if(is_array($v)){
-                            foreach($v as $key=>$val){
-                                $attrInsert[]=[
-                                    'goods_id'=>$goods_id,
-                                    'attr_id'=>$k,
-                                    'attr_value'=>$val,
-                                    'attr_price'=>$attr_price_list[$k][$key]
-                                ];
+                            if(!empty($v)){
+                                foreach($v as $key=>$val){
+                                    $attrInsert[]=[
+                                        'goods_id'=>$goods_id,
+                                        'attr_id'=>$k,
+                                        'attr_value'=>$val,
+                                        'attr_price'=>$attr_price_list[$k][$key]
+                                    ];
+                                }
                             }
                         }else{
                             $attrInsert[]=[
