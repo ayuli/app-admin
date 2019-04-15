@@ -107,8 +107,8 @@
             <table border="1" cellspacing="0" cellpadding="0">
                 <tr>
                 <tr>
-                    <td width="66px" class="tdColor tdC">序号</td>
-                    <td width="355px" class="tdColor">角色名称</td>
+                    <td width="120px" class="tdColor tdC">序号</td>
+                    <td width="1100px" class="tdColor">角色名称</td>
                     <td width="130px" class="tdColor">操作</td>
                 </tr>
                 @foreach($roleinfo as $v)

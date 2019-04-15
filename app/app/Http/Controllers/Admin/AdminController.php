@@ -410,4 +410,10 @@ class AdminController extends Controller
             return json_encode(['msg'=>'未修改','code'=>1]);
         }
     }
+    //退出
+    public function quit(){
+        session()->pull('admin_id');
+        session()->pull('admin_name');
+        return redirect('adminLogin');
+    }
 }
