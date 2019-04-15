@@ -18,6 +18,18 @@ class GoodsController extends Controller
     public function goodsAddDo(Request $request){
         DB::beginTransaction();
         $data=$request->input();
+        if(!isset($data['is_show'])){
+            $data['is_show']=1;
+        }
+        if(!isset($data['is_best'])){
+            $data['is_best']=0;
+        }
+        if(!isset($data['is_hot'])){
+            $data['is_hot']=0;
+        }
+        if(!isset($data['is_new'])){
+            $data['is_new']=0;
+        }
         if(!empty($data['goods_imgs'])){
             $goods_imgs=implode('|',$data['goods_imgs']);
         }else{
@@ -58,12 +70,14 @@ class GoodsController extends Controller
                     if(!empty($v)){
                         if(is_array($v)){
                             foreach($v as $key=>$val){
-                                $attrInsert[]=[
-                                    'goods_id'=>$goods_id,
-                                    'attr_id'=>$k,
-                                    'attr_value'=>$val,
-                                    'attr_price'=>$attr_price_list[$k][$key]
-                                ];
+                                if($val!=0){
+                                    $attrInsert[]=[
+                                        'goods_id'=>$goods_id,
+                                        'attr_id'=>$k,
+                                        'attr_value'=>$val,
+                                        'attr_price'=>$attr_price_list[$k][$key]
+                                    ];
+                                }
                             }
                         }else{
                             $attrInsert[]=[
@@ -107,7 +121,6 @@ class GoodsController extends Controller
         $data=$_FILES;
         $tmp_name=$data['file']['tmp_name'];
 
-        $picInfo=file_get_contents($tmp_name);
 
         $name=$data['file']['name'];
 
@@ -115,7 +128,7 @@ class GoodsController extends Controller
         if(!is_dir($filename)){
             mkdir($filename,0777,true);
         }
-        $res=file_put_contents($filename.$name,$picInfo,FILE_APPEND);
+        $res=move_uploaded_file($tmp_name,$filename.$name);
         if($res){
             echo json_encode(['code'=>1,'msg'=>'上传成功！','filename'=>$filename.$name]);
         }else{
@@ -178,7 +191,9 @@ class GoodsController extends Controller
     public function goodsUpdate(Request $request){
         $goods_id=$request->input('goods_id');
         $goodsInfo=DB::table('app_goods')->where('goods_id',$goods_id)->first();
-        $goodsInfo->goods_imgs=explode('|',$goodsInfo->goods_imgs);
+        if(!empty($goodsInfo->goods_imgs)){
+            $goodsInfo->goods_imgs=explode('|',$goodsInfo->goods_imgs);
+        }
         $typeInfo=DB::table('app_type')->get();
         return view('admin.goods.goodsUpdate',['goodsInfo'=>$goodsInfo,'typeInfo'=>$typeInfo]);
     }
@@ -199,7 +214,19 @@ class GoodsController extends Controller
         if(!isset($data['is_new'])){
             $data['is_new']=0;
         }
-        $goods_imgs=implode('|',$data['goods_imgs']);
+
+        if(!empty($data['goods_imgs'])){
+            $goods_imgs=implode('|',$data['goods_imgs']);
+        }else{
+            $goods_imgs="";
+        }
+
+        if(empty($data['goods_img'])){
+            $data['goods_img']="";
+        }
+        if(empty($data['goods_desc'])){
+            $data['goods_desc']="";
+        }
         $goods_id=$data['goods_id'];
         $goods_insert=[
             'cate_id'=>$data['cate_id'],
@@ -220,34 +247,40 @@ class GoodsController extends Controller
         ];
         $res=DB::table('app_goods')->where('goods_id',$goods_id)->update($goods_insert);
         if($res){
-            $attr_values_list=$data['attr_value_list'];
-            $attr_price_list=$data['attr_price_list'];
-            $attrInsert=[];
-            $attrWhere=[];
-            foreach($attr_values_list as $k=>$v){
-                if(!empty($v)){
-                    if(is_array($v)){
-                        foreach($v as $key=>$val){
-                            $attrWhere[]=[
-                                'attr_value'=>$val,
-                                'attr_price'=>$attr_price_list[$k][$key]
-                            ];
-                            $attrInsert[]=[
-                                'goods_id'=>$goods_id,
-                                'attr_id'=>$k
-                            ];
+            if(!empty($data['type_id'])) {
+                if(isset($data['attr_value_list']) && isset($data['attr_price_list'])){
+                    $attr_price_list=$data['attr_price_list'];
+                    $attr_values_list=$data['attr_value_list'];
+                    foreach ($attr_values_list as $k => $v) {
+                        if (!empty($v)) {
+                            if (is_array($v)) {
+                                foreach ($v as $key => $val) {
+                                    $attrWhere[] = [
+                                        'attr_value' => $val,
+                                        'attr_price' => $attr_price_list[$k][$key]
+                                    ];
+                                    $attrInsert[] = [
+                                        'goods_id' => $goods_id,
+                                        'attr_id' => $k
+                                    ];
+                                }
+                            } else {
+                                $attrWhere[] = [
+                                    'goods_id' => $goods_id,
+                                    'attr_id' => $k,
+                                ];
+                                $attrInsert[] = [
+                                    'attr_value' => $v,
+                                    'attr_price' => 0
+                                ];
+                            }
                         }
-                    }else{
-                        $attrWhere[]=[
-                            'goods_id'=>$goods_id,
-                            'attr_id'=>$k,
-                        ];
-                        $attrInsert[]=[
-                            'attr_value'=>$v,
-                            'attr_price'=>0
-                        ];
                     }
                 }
+                
+                $attrInsert=[];
+                $attrWhere=[];
+
             }
 
             foreach($attrWhere as $k=>$v){
@@ -286,6 +319,9 @@ class GoodsController extends Controller
         $attr_id=DB::table('app_goods_attr')->where('goods_id',$goods_id)->pluck('attr_id');
         $attr_id=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_id');
         $attr_name=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_name');
+        if(count($attr_name)==0){
+            echo "<script>alert('该商品没有属性！');history.go(-1)</script>";
+        }
         $attr_info=DB::table('app_goods_attr')->where('goods_id',$goods_id)->whereIn('attr_id',$attr_id)->get();
 
 
