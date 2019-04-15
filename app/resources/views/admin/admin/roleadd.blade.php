@@ -101,7 +101,7 @@ layui.use('layer', function() {
                         }
                     })
                 }else{
-                    layui.msg(res.msg)
+                    layer.msg(res.msg)
                 }
             },'json'
         )
