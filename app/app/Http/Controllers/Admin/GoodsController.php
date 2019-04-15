@@ -70,7 +70,7 @@ class GoodsController extends Controller
                     if(!empty($v)){
                         if(is_array($v)){
                             foreach($v as $key=>$val){
-                                if($val!=0){
+                                if($val!=""){
                                     $attrInsert[]=[
                                         'goods_id'=>$goods_id,
                                         'attr_id'=>$k,
@@ -147,9 +147,10 @@ class GoodsController extends Controller
             }
         }
 
+
         if(!empty($goods_id)){
             $goods_attr=DB::table('app_goods_attr')->where('goods_id',$goods_id)->get();
-            $attr_count=count($goods_attr);
+            $attr_count=DB::table('app_goods_attr')->where('goods_id',$goods_id)->count();
             return view("admin.goods.changeType", ['attrInfo' => $attrInfo,'goods_attr'=>$goods_attr,'attr_count'=>$attr_count]);
 
         }else {
@@ -191,6 +192,7 @@ class GoodsController extends Controller
     public function goodsUpdate(Request $request){
         $goods_id=$request->input('goods_id');
         $goodsInfo=DB::table('app_goods')->where('goods_id',$goods_id)->first();
+
         if(!empty($goodsInfo->goods_imgs)){
             $goodsInfo->goods_imgs=explode('|',$goodsInfo->goods_imgs);
         }
@@ -227,6 +229,17 @@ class GoodsController extends Controller
         if(empty($data['goods_desc'])){
             $data['goods_desc']="";
         }
+
+        if(!empty($data['del_imgs'])){
+            foreach($data['del_imgs'] as $k=>$v){
+                unlink($v);
+            }
+        }
+
+        if(!empty($data['del_img'])){
+            unlink($data['del_img']);
+        }
+
         $goods_id=$data['goods_id'];
         $goods_insert=[
             'cate_id'=>$data['cate_id'],
@@ -277,19 +290,20 @@ class GoodsController extends Controller
                         }
                     }
                 }
-                
+
                 $attrInsert=[];
                 $attrWhere=[];
 
             }
-
-            foreach($attrWhere as $k=>$v){
-                $arr=DB::table('app_goods_attr')->where($v)->get();
-                if(count($arr)==0){
-                    $goods_attr_insert=array_merge($v,$attrInsert[$k]);
-                    $res=DB::table('app_goods_attr')->insert($goods_attr_insert);
-                }else{
-                    $res=DB::table('app_goods_attr')->where($v)->update($attrInsert[$k]);
+            if(!empty($attrWhere)) {
+                foreach ($attrWhere as $k => $v) {
+                    $arr = DB::table('app_goods_attr')->where($v)->get();
+                    if (count($arr) == 0) {
+                        $goods_attr_insert = array_merge($v, $attrInsert[$k]);
+                        $res = DB::table('app_goods_attr')->insert($goods_attr_insert);
+                    } else {
+                        $res = DB::table('app_goods_attr')->where($v)->update($attrInsert[$k]);
+                    }
                 }
             }
             DB::commit();

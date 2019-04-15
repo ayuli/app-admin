@@ -124,7 +124,7 @@
                                     <td>
                                         <input type="file" id="file"  onchange="upload(this)" size="35" >
                                         @if(!empty($goodsInfo->goods_img))
-                                            <img src="{{$goodsInfo->goods_img}}" width="100px" height="50px">
+                                            <img src="{{$goodsInfo->goods_img}}" id="goods_img" width="100px" height="50px">
                                             <input type="hidden" name="goods_img" value="{{$goodsInfo->goods_img}}">
                                         @endif
                                     </td>
@@ -195,7 +195,7 @@
                             <a href="javascript:;" onclick="addUpload(this)">[+]</a>
                                 <input type="file" id='{{$k}}'  onchange="upload(this)">
                                     <input type='hidden' name='goods_imgs[{{$k}}]' value='{{$v}}'>
-                                <img src='{{$v}}'  width="100px" height="50px">
+                                <img src='{{$v}}' class='{{$k}}'  width="100px" height="50px">
                                 </td>
                                 </tr>
                                     <script>
@@ -206,9 +206,12 @@
                             <tr>
                                 <td>
                                     <a href="javascript:;" onclick="addUpload(this)">[+]</a>
-                                    <input type="file" id='1'  onchange="upload(this)">
+                                    <input type="file" id='0'  onchange="upload(this)">
                                 </td>
                             </tr>
+                            <script>
+                                num=0;
+                            </script>
                         @endif
                             </tbody></table>
 
@@ -277,6 +280,7 @@
                         <script>
 
                             function upload(obj){
+                                var _this=$(obj)
                                 var id=$(obj).attr('id');
 
                                 var fileInfo=document.getElementById(id).files[0];
@@ -295,8 +299,25 @@
                                     async : true,
                                     success : function( res ){
                                         if(isNaN(id)) {
+
+                                            if($("[name='goods_img']").length>0){
+                                                var src=$("[name='goods_img']").val();
+                                                $(".goods_img").append("<input type='hidden' name='del_img'  value='" + src + "'>");
+                                                $("#goods_img").attr('src',res.filename);
+                                            }else{
+                                                $("#"+id+"").after("<img src='"+ res.filename +"' width='100px' height='50px'>");
+                                            }
+
                                             $(".goods_img").append("<input type='hidden' name='goods_img'  value='" + res.filename + "'>");
                                         }else{
+
+                                            if($("."+id+"").length>0){
+                                                var src=$("[name='goods_imgs["+id+"]']").val();
+                                                $(".goods_img").append("<input type='hidden' name='del_imgs["+id+"]'  value='" + src + "'>");
+                                                $("."+id+"").attr('src',res.filename);
+                                            }else{
+                                                $("#"+id+"").parent().append("<img src='" + res.filename + "' width='100px' height='50px'>");
+                                            }
                                             $(".goods_img").append("<input type='hidden' name='goods_imgs["+id+"]'  value='" + res.filename + "'>");
                                         }
                                     }

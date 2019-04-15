@@ -124,7 +124,6 @@
                                     </td>
                                 </tr>
                                 </tbody></table>
-                            <div class="goods_img"></div>
 
                         </div>
                     </div>
@@ -185,7 +184,7 @@
                         <tr>
                         <td>
                         <a href="javascript:;" onclick="addUpload(this)">[+]</a>
-                            <input type="file" id='0' name="goods_imgs[]" onchange="upload(this)">
+                            <input type="file" id='1' name="goods_imgs[]" onchange="upload(this)">
 
                             </td>
                             </tr>
@@ -195,6 +194,8 @@
                         </div>
                         <!--商品相册 end-->
                         </div>
+
+                        <div class="goods_img"></div>
 
                         </form>
 
@@ -225,13 +226,17 @@
                             });
 
                             //追加一行
-                            var num=0;
+                            var num=1;
                             function addUpload(obj){
-                                var newtr=$(obj).parent().parent().clone();
                                 num+=1;
-                                newtr.find('a').text('[ - ]');
-                                newtr.find('a').next().attr('id',num);
-                                newtr.find('a').attr('onclick','lessSpec(this)');
+
+                                var newtr="<tr>\n" +
+                                    "                        <td>\n" +
+                                    "                        <a href=\"javascript:;\" onclick=\"lessSpec(this)\">[ - ]</a>\n" +
+                                    "                            <input type=\"file\" id='"+num+"' name=\"goods_imgs[]\" onchange=\"upload(this)\">\n" +
+                                    "                            </td>\n" +
+                                    "                            </tr>";
+
                                 $(obj).parent().parent().after(newtr);
                             }
 
@@ -251,6 +256,7 @@
                         <script>
 
                             function upload(obj){
+                                var _this=$(obj);
                                 var id=$(obj).attr('id');
 
                                 var fileInfo=document.getElementById(id).files[0];
@@ -269,9 +275,12 @@
                                     async : true,
                                     success : function( res ){
                                         if(isNaN(id)) {
+                                            _this.after("<img src='"+ res.filename +"' width='100px' height='50px'>");
                                             $(".goods_img").append("<input type='hidden' name='goods_img'  value='" + res.filename + "'>");
                                         }else{
                                             $(".goods_img").append("<input type='hidden' name='goods_imgs["+id+"]'  value='" + res.filename + "'>");
+                                            $("#"+id+"").parent().append("<img src='" + res.filename + "' width='100px' height='50px'>");
+
                                         }
                                     }
                                 });
