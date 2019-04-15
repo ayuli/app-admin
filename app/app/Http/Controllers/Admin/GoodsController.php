@@ -57,8 +57,8 @@ class GoodsController extends Controller
                 foreach($attr_values_list as $k=>$v){
                     if(!empty($v)){
                         if(is_array($v)){
-                            if(!empty($v)){
-                                foreach($v as $key=>$val){
+                            foreach($v as $key=>$val){
+                                if($val!=0){
                                     $attrInsert[]=[
                                         'goods_id'=>$goods_id,
                                         'attr_id'=>$k,
@@ -288,6 +288,9 @@ class GoodsController extends Controller
         $attr_id=DB::table('app_goods_attr')->where('goods_id',$goods_id)->pluck('attr_id');
         $attr_id=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_id');
         $attr_name=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_name');
+        if(count($attr_name)==0){
+            echo "<script>alert('该商品没有属性！');history.go(-1)</script>";
+        }
         $attr_info=DB::table('app_goods_attr')->where('goods_id',$goods_id)->whereIn('attr_id',$attr_id)->get();
 
 

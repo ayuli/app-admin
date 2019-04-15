@@ -14,7 +14,7 @@
                 <tr><td class="label">{{$val->attr_name}}</td><td>
 
                         <select name="attr_value_list[{{$val->attr_id}}]">
-                            <option value="">请选择...</option>
+                            <option value="0">请选择...</option>
                             @foreach($val->attr_values as $k=>$v)
                 `               @if(!empty($v))
                                     <option value="{{rtrim($v)}}"  <?php foreach($goods_attr as $kk=>$vv){  if( $val->attr_id == $vv->attr_id && rtrim($v) == rtrim($vv->attr_value) ){ echo "selected"; } }?> >{{$v}}</option>
@@ -56,7 +56,7 @@
                             @endif
                             <td>
                                 <select name="attr_value_list[{{$val->attr_id}}][]">
-                                    <option value="">请选择...</option>
+                                    <option value="0">请选择...</option>
                                     @foreach($val->attr_values as $k=>$v)
                                         `               @if(!empty($v))
                                             <option value="{{$v}}" <?php   if( $val->attr_id == $vv->attr_id && rtrim($v) == rtrim($vv->attr_value) ){ echo "selected";  }?>>{{$v}}</option>
@@ -89,7 +89,7 @@
             @if($val->attr_type == 0 && $val->attr_input_type == 1)
                 <tr><td class="label">{{$val->attr_name}}</td><td>
                         <select name="attr_value_list[{{$val->attr_id}}]">
-                            <option value="">请选择...</option>
+                            <option value="0">请选择...</option>
                             @foreach($val->attr_values as $k=>$v)
                                 `               @if(!empty($v))
                                     <option value="{{$v}}">{{$v}}</option>
@@ -113,7 +113,7 @@
                         <a href="javascript:;" onclick="addSpec(this)">[+]</a>{{$val->attr_name}}</td>
                     <td>
                         <select name="attr_value_list[{{$val->attr_id}}][]">
-                            <option value="">请选择...</option>
+                            <option value="0">请选择...</option>
                             @foreach($val->attr_values as $k=>$v)
                                 `               @if(!empty($v))
                                     <option value="{{$v}}">{{$v}}</option>
