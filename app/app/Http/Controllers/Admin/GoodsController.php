@@ -109,7 +109,6 @@ class GoodsController extends Controller
         $data=$_FILES;
         $tmp_name=$data['file']['tmp_name'];
 
-        $picInfo=file_get_contents($tmp_name);
 
         $name=$data['file']['name'];
 
@@ -117,7 +116,7 @@ class GoodsController extends Controller
         if(!is_dir($filename)){
             mkdir($filename,0777,true);
         }
-        $res=file_put_contents($filename.$name,$picInfo,FILE_APPEND);
+        $res=move_uploaded_file($tmp_name,$filename.$name);
         if($res){
             echo json_encode(['code'=>1,'msg'=>'上传成功！','filename'=>$filename.$name]);
         }else{
