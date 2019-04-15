@@ -123,8 +123,10 @@
                                     <td class="label">上传商品图片：</td>
                                     <td>
                                         <input type="file" id="file"  onchange="upload(this)" size="35" >
-                                        <img src="{{$goodsInfo->goods_img}}" width="100px" height="50px">
-                                        <input type="hidden" name="goods_img" value="{{$goodsInfo->goods_img}}">
+                                        @if(!empty($goodsInfo->goods_img))
+                                            <img src="{{$goodsInfo->goods_img}}" width="100px" height="50px">
+                                            <input type="hidden" name="goods_img" value="{{$goodsInfo->goods_img}}">
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody></table>
@@ -186,19 +188,28 @@
                             </tr>-->
 
                             <tr><td>&nbsp;</td></tr>
-                        @foreach($goodsInfo->goods_imgs as $k=>$v)
-                        <tr>
-                        <td>
-                        <a href="javascript:;" onclick="addUpload(this)">[+]</a>
-                            <input type="file" id='{{$k}}'  onchange="upload(this)">
-                                <input type='hidden' name='goods_imgs[{{$k}}]' value='{{$v}}'>
-                            <img src='{{$v}}'  width="100px" height="50px">
-                            </td>
-                            </tr>
+                        @if(!empty($goodsInfo->goods_imgs))
+                            @foreach($goodsInfo->goods_imgs as $k=>$v)
+                            <tr>
+                            <td>
+                            <a href="javascript:;" onclick="addUpload(this)">[+]</a>
+                                <input type="file" id='{{$k}}'  onchange="upload(this)">
+                                    <input type='hidden' name='goods_imgs[{{$k}}]' value='{{$v}}'>
+                                <img src='{{$v}}'  width="100px" height="50px">
+                                </td>
+                                </tr>
                                     <script>
                                         num={{$k}}
                                     </script>
                                 @endforeach
+                        @else
+                            <tr>
+                                <td>
+                                    <a href="javascript:;" onclick="addUpload(this)">[+]</a>
+                                    <input type="file" id='1'  onchange="upload(this)">
+                                </td>
+                            </tr>
+                        @endif
                             </tbody></table>
 
 
