@@ -18,37 +18,25 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">管理员管理</a>
+                <a href="#">类型管理</a>
                 &nbsp;-
             </span>
-            &nbsp;角色修改
+            &nbsp;类型修改
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         <div class="banneradd bor">
             <div class="baTopNo">
-                <span>角色修改</span>
+                <span>类型修改</span>
             </div>
             <div class="baBody">
 
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;角色名称：<input type="text" name="role_name" value="{{$roleinfo->role_name}}" id="rolename" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类型名称：<input type="text" name="type_name" value="{{$typeinfo->type_name}}" id="rolename" class="input3" />
                 </div>
                 <br>
-                <input type="hidden" id="roleid" value="{{$roleinfo->role_id}}">
-                <form  class="layui-form">
-                    <div class="layui-form-item">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限：
-                        @foreach($nodeinfo as $v)
-                            @if(in_array($v->node_id,$data))
-                            <input type="checkbox" checked   name="like[write]"  node_id="{{$v->node_id}}"  title="{{$v->node_name}}">
-                            @else
-                            <input type="checkbox" name="like[write]"  node_id="{{$v->node_id}}"  title="{{$v->node_name}}">
-                            @endif
-                        @endforeach
-                    </div>
-                </form>
+                <input type="hidden" id="typeid" value="{{$typeinfo->type_id}}">
                 <div class="bbD">
                     <br>
                     <p class="bbDP">
@@ -70,27 +58,16 @@
 </html>
 
 <script>
-    layui.use(['layer','form'], function() {
-        var layer = layui.layer;
-        var form = layui.form;
-
-    })
     layui.use('layer', function() {
         var layer = layui.layer;
         $('#btn').click(function(){
-            var role_name = $("input[name='role_name']").val();
-            var role_id = $('#roleid').val();
-            var data = [];
-            $('.layui-unselect').each(function(){
-                if($(this).hasClass("layui-form-checked")){
-                    data.push($(this).prev().attr('node_id'));
-                }
-            })
+            var type_name = $("input[name='type_name']").val();
+            var typeid = $('#typeid').val();
 
 
             $.post(
-                'roleUpdateDo',
-                {data:data,role_name:role_name,role_id:role_id},
+                'typeUpdateDo',
+                {type_name:type_name,typeid:typeid},
                 function(res){
                     if(res.code==0){
                         layer.open({
@@ -98,7 +75,7 @@
                             content:'修改成功',
                             btn:['返回列表','继续修改'],
                             btn1:function(){
-                                location.href="roleList";
+                                location.href="typeList";
                                 return true;
                             },
                             btn2:function(){
