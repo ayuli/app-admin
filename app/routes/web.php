@@ -138,4 +138,4 @@ Route::get('/collectionget','Index\CollController@collGet'); //展示收藏
 
 
 //前台商品
-Route::get('/indexgoods','Index\GoodsController@goods'); //所有商品数据展示
+Route::get('/indexgoods','Index\GoodsController@goods'); //所有商品列表
