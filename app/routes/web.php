@@ -108,7 +108,8 @@ Route::get('/outlogin',"Index\UserController@outlogin"); //登陆
 Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页面展示数据
 
 //添加浏览记录
-Route::post('/addhistory','Index\HistoryController@addhistory'); //所有商品数据展示
+Route::post('/addhistory','Index\HistoryController@addhistory'); //添加浏览记录
+Route::post('/addhistory','Index\HistoryController@addhistory'); //浏览记录展示
 
 //收货地址
 Route::get('/getregion',"Index\AddressController@getregion");    //三级联动
