@@ -39,12 +39,6 @@ Route::get('roleUpdate',"Admin\AdminController@roleUpdate")->middleware('AdminRo
 Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
 Route::get('roleDo',"Admin\AdminController@roleDo");//赋予角色页面
 Route::post('adminrole',"Admin\AdminController@adminrole");//执行赋予角色
-Route::get('typeAdd',"Admin\AdminController@typeAdd");//类型添加页面
-Route::get('typeList',"Admin\AdminController@typeList");//类型展示
-Route::post('typeInsert',"Admin\AdminController@typeInsert");//类型执行添加
-Route::post('typeDel',"Admin\AdminController@typeDel");//类型删除
-Route::get('typeUpdate',"Admin\AdminController@typeUpdate");//类型修改页面
-Route::post('typeUpdateDo',"Admin\AdminController@typeUpdateDo");//类型修改页面
 
 //后台权限管理
 Route::get('nodeAdd',"Admin\AdminController@nodeAdd");//权限添加
@@ -90,6 +84,19 @@ Route::post('goodsUpdateDo',"Admin\GoodsController@goodsUpdateDo"); //商品修�
 Route::post('goodsDelete',"Admin\GoodsController@goodsDelete"); //商品删除
 Route::get('productAdd',"Admin\GoodsController@productAdd"); //商品sku
 Route::post('productAddDo',"Admin\GoodsController@productAddDo"); //商品sku执行
+
+Route::get('typeAdd',"Admin\AdminController@typeAdd");//类型添加页面
+Route::get('typeList',"Admin\AdminController@typeList");//类型展示
+Route::post('typeInsert',"Admin\AdminController@typeInsert");//类型执行添加
+Route::post('typeDel',"Admin\AdminController@typeDel");//类型删除
+Route::get('typeUpdate',"Admin\AdminController@typeUpdate");//类型修改页面
+Route::post('typeUpdateDo',"Admin\AdminController@typeUpdateDo");//类型修改页面
+
+Route::get('attrAdd',"Admin\GoodsController@attrAdd"); //商品添加属性页面
+Route::post('attrAddDo',"Admin\GoodsController@attrAddDo"); //商品添加属性执行
+Route::get('attrUpdate',"Admin\GoodsController@attrUpdate"); //商品属性修改
+Route::post('attrUpdateDo',"Admin\GoodsController@attrUpdateDo"); //商品属性修改执行
+
 
 //前台登陆
 Route::post('/register',"Index\UserController@register"); //注册

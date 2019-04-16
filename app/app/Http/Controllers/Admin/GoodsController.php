@@ -400,9 +400,52 @@ class GoodsController extends Controller
             echo json_encode(['code'=>0,'msg'=>'添加失败！']);
         }
 
+    }
 
+    //商品属性
+    public function attrAdd(Request $request){
+        $typeInfo=DB::table('app_type')->get();
+        return view('admin.goods.attrAdd',['typeInfo'=>$typeInfo]);
+    }
 
+    //商品属性添加执行
+    public function attrAddDo(Request $request){
+        $data=$request->input();
+        $res=DB::table('app_attr')->insert($data);
+        if($res){
+            echo json_encode(['code'=>1,'msg'=>'添加成功！']);
+        }else{
+            echo json_encode(['code'=>0,'msg'=>'添加失败！']);
+        }
+    }
 
+    //商品属性展示
+    public function attrShow(Request $request){
+        $type_id=$request->input('type_id');
+        if(empty($type_id)){
+            echo "<script>alert('请先选择类型！');history.go(-1);</script>";die;
+        }
+        $attrInfo=DB::table('app_attr')->where('type_id',$type_id)->get();
+        return view('admin.goods.attrShow',['attrInfo'=>$attrInfo]);
+    }
 
+    //商品属性修改
+    public function attrUpdate(Request $request){
+        $attr_id=$request->input('attr_id');
+        $attrInfo=DB::table('app_attr')->where('attr_id',$attr_id)->first();
+        $typeInfo=DB::table('app_type')->get();
+        return view('admin.goods.attrUpdate',['typeInfo'=>$typeInfo,'attrInfo'=>$attrInfo]);
+    }
+
+    //商品属性修改执行
+    public function attrUpdateDo(Request $request){
+        $data=$request->input();
+        $attr_id=$data['attr_id'];
+        $res=DB::table('app_attr')->where('attr_id',$attr_id)->update($data);
+        if($res){
+            echo json_encode(['code'=>1,'msg'=>'修改成功！']);
+        }else{
+            echo json_encode(['code'=>0,'msg'=>'修改失败！']);
+        }
     }
 }
