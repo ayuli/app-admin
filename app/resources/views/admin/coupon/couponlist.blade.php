@@ -108,10 +108,10 @@
             <table border="1" cellspacing="0" cellpadding="0">
                 <tr>
                 <tr>
-                    <td width="66px" class="tdColor tdC">序号</td>
-                    <td width="200px" class="tdColor">优惠券名称</td>
-                    <td width="200px" class="tdColor">优惠券数量</td>
-                    <td width="200px" class="tdColor">优惠券抵用价格</td>
+                    <td width="100px" class="tdColor tdC">序号</td>
+                    <td width="250px" class="tdColor">优惠券名称</td>
+                    <td width="250px" class="tdColor">优惠券数量</td>
+                    <td width="250px" class="tdColor">优惠券抵用价格</td>
                     <td width="250px" class="tdColor">操作</td>
                 </tr>
                 @foreach($couponinfo as $v)
