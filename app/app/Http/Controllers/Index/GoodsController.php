@@ -11,16 +11,20 @@ class GoodsController extends Controller
     /**
      * 所有商品列表
      */
-    public function goods()
+    public function goods(Request $request)
     {
-        $goods = GoodsModel::get();
-        $data = [
-            'code'  => 0,
-            'data'  =>$goods
-        ];
-        if($goods){
-            return json_encode($data,JSON_UNESCAPED_UNICODE);
+        $type = $request->input('type');
+        if($type=='all'){
+            $goods = GoodsModel::get();
+            $data = [
+                'code'  => 0,
+                'data'  =>$goods
+            ];
+            if($goods){
+                return json_encode($data,JSON_UNESCAPED_UNICODE);
+            }
         }
+
 
 
     }
