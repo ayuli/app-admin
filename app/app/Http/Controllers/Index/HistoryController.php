@@ -28,14 +28,8 @@ class HistoryController extends Controller
     //展示浏览记录
     public function showhistory(Request $request){
         $uid = $request->uid;
-        $res = DB::table('app_histort')->where('user_id',$uid)->get();
-        $time = $res->addtime;
-        $goodsid = $res->goods_id;
-        $goodsname = DB::table('app_goods')->where('goods_id',$goodsid)->first('goods_name');
-        $info = array(
-            'goods_name'=>$goodsname,
-            'addtime'=>$time
-        );
-        return $info;
+        $res = DB::table('app_history')->join('app_goods','app_goods.goods_id','=','app_history.goods_id')->where('user_id',$uid)->get();
+
+        return $res;
     }
 }
