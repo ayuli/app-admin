@@ -433,7 +433,7 @@ class AdminController extends Controller
         }
     }
     //类型展示页面
-    public function typeList(Request $request){
+    public function typeList(){
         $typeinfo = DB::table('app_type')->where('is_del',0)->paginate(4);
         return view('admin.goods.typelist',['typeinfo'=>$typeinfo]);
     }
