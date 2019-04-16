@@ -156,8 +156,13 @@
                         'typeDel',
                         {type_id:type_id},
                         function(res){
-                            layer.msg(res.msg);
-                            _this.parents('tr').remove();
+                            if(res.code==0){
+                                layer.msg(res.msg);
+                                _this.parents('tr').remove();
+                            }else{
+                                layer.msg(res.msg);
+                            }
+
                         },'json'
                     )
                 },
