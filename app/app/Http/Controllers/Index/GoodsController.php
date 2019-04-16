@@ -8,6 +8,9 @@ use App\Model\GoodsModel;
 
 class GoodsController extends Controller
 {
+    /**
+     * 所有商品列表
+     */
     public function goods()
     {
         $goods = GoodsModel::get();
@@ -21,4 +24,6 @@ class GoodsController extends Controller
 
 
     }
+
+
 }
