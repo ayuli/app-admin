@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class HistoryController extends Controller
 {
+    //添加浏览记录
     public function addhistory(Request $request){
         $goodsis = $request->goodsid;
         $uid = $request->uid;
@@ -23,5 +24,18 @@ class HistoryController extends Controller
         }else{
             return 2;
         }
+    }
+    //展示浏览记录
+    public function showhistory(Request $request){
+        $uid = $request->uid;
+        $res = DB::table('app_histort')->where('user_id',$uid)->get();
+        $time = $res->addtime;
+        $goodsid = $res->goods_id;
+        $goodsname = DB::table('app_goods')->where('goods_id',$goodsid)->first('goods_name');
+        $info = array(
+            'goods_name'=>$goodsname,
+            'addtime'=>$time
+        );
+        return $info;
     }
 }
