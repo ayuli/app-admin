@@ -62,7 +62,7 @@ class GoodsController extends Controller
             $page_num = 6;
 
             $start = ($page-1)*$page_num;
-            $arr = GoodsModel::offset($start)->orderBy('price','desc')->limit($page_num)->get();
+            $arr = GoodsModel::offset($start)->orderBy('goods_price','desc')->limit($page_num)->get();
             $count = count($arr);
             if($count){
                 $data = ['code'  => 0, 'data'  =>$arr];
