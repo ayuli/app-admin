@@ -12,7 +12,11 @@ class HistoryController extends Controller
         $goodsis = $request->goodsid;
         $uid = $request->uid;
         $time = time();
-        DB::table('app_his')
-
+        $res = DB::table('app_history')->insert(['user_id'=>$uid],['goods_id'=>$goodsis]);
+        if($res){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 }

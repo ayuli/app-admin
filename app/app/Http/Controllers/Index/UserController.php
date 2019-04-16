@@ -53,13 +53,12 @@ class UserController extends Controller
     //个人中心页面展示数据
     public function  userCenter(Request $request){
         $uid = $request->uid;
-        $user = DB::table('app_user')->where('user_name',$uid)->first();
+        $user = DB::table('app_user')->where('user_id',$uid)->first();
         $username = $user->user_name;
         $userscore = $user->user_score;
-        $userid = $user->user_id;
-        $pay1 = DB::table('app_order')->where(['user_id'=>$userid],['order_status'=>1])->count();
-        $pay2 = DB::table('app_order')->where(['user_id'=>$userid],['order_status'=>2])->count();
-        $pay3 = DB::table('app_order')->where(['user_id'=>$userid],['order_status'=>3])->count();
+        $pay1 = DB::table('app_order')->where(['user_id'=>$uid],['order_status'=>1])->count();
+        $pay2 = DB::table('app_order')->where(['user_id'=>$uid],['order_status'=>2])->count();
+        $pay3 = DB::table('app_order')->where(['user_id'=>$uid],['order_status'=>3])->count();
         $order = DB::table('app_order')->count();
         $info = array(
                     'username' =>$username,
