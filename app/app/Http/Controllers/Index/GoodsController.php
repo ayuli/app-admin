@@ -57,6 +57,20 @@ class GoodsController extends Controller
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
+        }else if($type=='price'){
+            $page = $request->input('page');
+            $page_num = 6;
+
+            $start = ($page-1)*$page_num;
+            $arr = GoodsModel::offset($start)->orderby('price','desc')->limit($page_num)->get();
+            $count = count($arr);
+            if($count){
+                $data = ['code'  => 0, 'data'  =>$arr];
+                return json_encode($data,JSON_UNESCAPED_UNICODE);
+            }else{
+                $data = [ 'code'=>1102 , 'msg'=>'没有更多了!'];
+                return json_encode($data,JSON_UNESCAPED_UNICODE);
+            }
         }
 
 
