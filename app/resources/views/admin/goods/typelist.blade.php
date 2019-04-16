@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>类型添加-有点</title>
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
     <link rel="stylesheet" type="text/css" href="css/css.css" />
     <script src="layui/layui.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -118,6 +119,7 @@
                 <td class="abc">🍖{{$v->type_name}}</td>
                 <td><?php echo date("Y-m-d H:i:s",$v->createtime)?></td>
                 <td type_id={{$v->type_id}}>
+                    <a href="attrShow?type_id={{$v->type_id}}"><button class="layui-btn layui-btn-radius">类型属性</button></a>
                     <a href="typeUpdate?type_id={{$v->type_id}}"><img class="operation" src="img/update.png"></a>
                     <img class="operation delban" src="img/delete.png">
                 </td>
