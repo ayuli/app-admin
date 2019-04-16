@@ -25,6 +25,7 @@ class ExitDos
             $num = $num+1;
             $time = 3600;
             $objredis->set($ipaddr,$num,$time);
+            return $next($request);
         }
     }
 }
