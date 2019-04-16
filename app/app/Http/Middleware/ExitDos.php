@@ -23,7 +23,7 @@ class ExitDos
             echo '调用次数太过频繁';die;
         }else{
             $num = $num+1;
-            $time = 3600;
+            $time = 60;
             $objredis->set($ipaddr,$num,$time);
             return $next($request);
         }
