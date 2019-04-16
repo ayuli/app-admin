@@ -78,7 +78,7 @@ Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
 Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
 Route::get('changeType',"Admin\GoodsController@changeType"); //选择商品类型
 Route::post('goodsUpload',"Admin\GoodsController@goodsUpload"); //商品文件上传
-Route::get('goodsShow',"Admin\GoodsController@goodsShow"); //商品文件上传
+Route::get('goodsShow',"Admin\GoodsController@goodsShow")->middleware('ExitDos'); //商品文件上传
 Route::get('goodsUpdate',"Admin\GoodsController@goodsUpdate"); //商品修改
 Route::post('goodsUpdateDo',"Admin\GoodsController@goodsUpdateDo"); //商品修改执行
 Route::post('goodsDelete',"Admin\GoodsController@goodsDelete"); //商品删除
@@ -110,7 +110,8 @@ Route::get('/outlogin',"Index\UserController@outlogin"); //登陆
 Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页面展示数据
 
 //添加浏览记录
-Route::post('/addhistory','Index\HistoryController@addhistory'); //所有商品数据展示
+Route::post('/addhistory','Index\HistoryController@addhistory'); //添加浏览记录
+Route::get('/showhistory','Index\HistoryController@showhistory'); //浏览记录展示
 
 //收货地址
 Route::get('/getregion',"Index\AddressController@getregion");    //三级联动

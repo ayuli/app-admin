@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>管理员添加-有点</title>
-    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+    <title>类型添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
     <script src="layui/layui.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -91,17 +90,17 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">管理员管理</a>
+                <a href="#">类型管理</a>
                 &nbsp;-
             </span>
-            &nbsp;角色展示
+            &nbsp;类型展示
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         {{--<div class="banneradd bor">--}}
         <div class="baTopNo">
-            <span>角色展示</span>
+            <span>类型展示</span>
         </div>
         <div class="baBody">
 
@@ -119,7 +118,6 @@
                 <td class="abc">🍖{{$v->type_name}}</td>
                 <td><?php echo date("Y-m-d H:i:s",$v->createtime)?></td>
                 <td type_id={{$v->type_id}}>
-                    <a href="attrShow?type_id={{$v->type_id}}"><button class="layui-btn layui-btn-radius">类型属性</button></a>
                     <a href="typeUpdate?type_id={{$v->type_id}}"><img class="operation" src="img/update.png"></a>
                     <img class="operation delban" src="img/delete.png">
                 </td>
@@ -158,8 +156,13 @@
                         'typeDel',
                         {type_id:type_id},
                         function(res){
-                            layer.msg(res.msg);
-                            _this.parents('tr').remove();
+                            if(res.code==0){
+                                layer.msg(res.msg);
+                                _this.parents('tr').remove();
+                            }else{
+                                layer.msg(res.msg);
+                            }
+
                         },'json'
                     )
                 },
