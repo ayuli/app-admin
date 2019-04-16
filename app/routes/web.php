@@ -39,6 +39,12 @@ Route::get('roleUpdate',"Admin\AdminController@roleUpdate")->middleware('AdminRo
 Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
 Route::get('roleDo',"Admin\AdminController@roleDo");//赋予角色页面
 Route::post('adminrole',"Admin\AdminController@adminrole");//执行赋予角色
+Route::get('typeAdd',"Admin\AdminController@typeAdd");//类型添加页面
+Route::get('typeList',"Admin\AdminController@typeList");//类型展示
+Route::post('typeInsert',"Admin\AdminController@typeInsert");//类型执行添加
+Route::post('typeDel',"Admin\AdminController@typeDel");//类型删除
+Route::get('typeUpdate',"Admin\AdminController@typeUpdate");//类型修改页面
+Route::post('typeUpdateDo',"Admin\AdminController@typeUpdateDo");//类型修改页面
 
 //后台权限管理
 Route::get('nodeAdd',"Admin\AdminController@nodeAdd");//权限添加

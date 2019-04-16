@@ -410,6 +410,69 @@ class AdminController extends Controller
             return json_encode(['msg'=>'未修改','code'=>1]);
         }
     }
+    //类型的添加的页面
+    public function typeAdd(){
+        return view('admin.goods.typeadd');
+    }
+    //类型执行添加
+    public function typeInsert(Request $request){
+        $type_name = $request->input('type_name');
+        if(empty($type_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        $typeinfo = [
+            'type_name'=>$type_name,
+            'createtime'=>time()
+        ];
+
+        $res = DB::table('app_type')->insert($typeinfo);
+        if($res){
+            return json_encode(['msg'=>'添加成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'添加失败','code'=>1]);
+        }
+    }
+    //类型展示页面
+    public function typeList(Request $request){
+        $typeinfo = DB::table('app_type')->where('is_del',0)->paginate(4);
+        return view('admin.goods.typelist',['typeinfo'=>$typeinfo]);
+    }
+    //类型的删除
+    public function typeDel(Request $request){
+        $type_id = $request->input('type_id');
+        $is_del=[
+            'is_del'=>1
+        ];
+        $res = DB::table('app_type')->where('type_id',$type_id)->update($is_del);
+        if($res){
+            echo json_encode(['msg'=>'删除成功','code'=>0]);
+        }else{
+            echo json_encode(['msg'=>'删除失败','code'=>1]);
+        }
+    }
+    //类型的修改页面
+    public function typeUpdate(Request $request){
+        $type_id = $request->input('type_id');
+        $typeinfo = DB::table('app_type')->where('type_id',$type_id)->first();
+        return view('admin.goods.typeupdate',['typeinfo'=>$typeinfo]);
+    }
+    //类型执行修改
+    public function typeUpdateDo(Request $request){
+        $typeid= $request->input('typeid');
+        $type_name = $request->input('type_name');
+        if(empty($type_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        $typeinfo = [
+            'type_name'=>$type_name,
+        ];
+        $res = DB::table('app_type')->where('type_id',$typeid)->update($typeinfo);
+        if($res){
+            return json_encode(['msg'=>'修改成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'未修改','code'=>1]);
+        }
+    }
     //退出
     public function quit(){
         session()->pull('admin_id');
