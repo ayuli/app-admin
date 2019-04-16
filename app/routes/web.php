@@ -78,7 +78,7 @@ Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
 Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
 Route::get('changeType',"Admin\GoodsController@changeType"); //选择商品类型
 Route::post('goodsUpload',"Admin\GoodsController@goodsUpload"); //商品文件上传
-Route::get('goodsShow',"Admin\GoodsController@goodsShow"); //商品文件上传
+Route::get('goodsShow',"Admin\GoodsController@goodsShow")->middleware('ExitDos'); //商品文件上传
 Route::get('goodsUpdate',"Admin\GoodsController@goodsUpdate"); //商品修改
 Route::post('goodsUpdateDo',"Admin\GoodsController@goodsUpdateDo"); //商品修改执行
 Route::post('goodsDelete',"Admin\GoodsController@goodsDelete"); //商品删除
@@ -94,8 +94,10 @@ Route::post('typeUpdateDo',"Admin\AdminController@typeUpdateDo");//类型修改�
 
 Route::get('attrAdd',"Admin\GoodsController@attrAdd"); //商品添加属性页面
 Route::post('attrAddDo',"Admin\GoodsController@attrAddDo"); //商品添加属性执行
+Route::get('attrShow',"Admin\GoodsController@attrShow"); //商品添加属性执行
 Route::get('attrUpdate',"Admin\GoodsController@attrUpdate"); //商品属性修改
 Route::post('attrUpdateDo',"Admin\GoodsController@attrUpdateDo"); //商品属性修改执行
+Route::get('attrDelete',"Admin\GoodsController@attrDelete"); //商品属性修改执行
 
 
 //前台登陆
