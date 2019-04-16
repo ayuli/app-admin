@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>管理员添加-有点</title>
+    <title>优惠券添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -19,46 +19,30 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">管理员管理</a>
+                <a href="#">优惠券管理</a>
                 &nbsp;-
             </span>
-            &nbsp;管理员添加
+            &nbsp;优惠券添加
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         <div class="banneradd bor">
             <div class="baTopNo">
-                <span>管理员添加</span>
+                <span>优惠券添加</span>
             </div>
             <div class="baBody">
-
+                <input type="hidden" name="goods_id" value="{{$goods_id}}">
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;管理员名称：<input type="text" name="admin_name" value="{{$admininfo->admin_name}}" class="input3" />
-                    <input type="hidden" name="admin_id" value="{{$admininfo->admin_id}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券名称：<input type="text" name="coupon_name" class="input3" />
+                </div>
+                <div class="bbD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券数量：<input type="text" name="coupon_num" class="input3" />
+                </div>
+                <div class="bbD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券价格：<input type="text" name="coupon_price" class="input3" />
                 </div>
                 <br>
-                <form  class="layui-form">
-                    <div class="layui-inline">
-                        <label class="layui-form-label"> 选择角色:</label>&nbsp;&nbsp;
-                        <div class="layui-input-inline">
-                            <select name="modules" class="selects" lay-verify="required" lay-search="">
-                                <option value="">选择角色</option>
-                                @foreach($roleinfo as $v)
-                                    @if($role_id == '')
-                                        <option value="{{$v->role_id}}">{{$v->role_name}}</option>
-                                    @else
-                                        @if($role_id->role_id == $v->role_id)
-                                            <option value="{{$v->role_id}}" selected>{{$v->role_name}}</option>
-                                        @else
-                                            <option value="{{$v->role_id}}">{{$v->role_name}}</option>
-                                        @endif
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </form>
                 <div class="bbD">
                     <p class="bbDP">
                         <button class="btn_ok btn_yes" id="btn" href="#" >提交</button>
@@ -83,23 +67,25 @@
     layui.use('layer', function() {
         var layer = layui.layer;
         $('#btn').click(function(){
-            var role_id = $(".selects").val();
-            var admin_id = $("input[name='admin_id']").val();
+            var coupon_name = $("input[name='coupon_name']").val();
+            var coupon_num = $("input[name='coupon_num']").val();
+            var coupon_price = $("input[name='coupon_price']").val();
+            var goods_id = $("input[name='goods_id']").val();
 
 
             $.post(
-                'adminrole',
-                {role_id:role_id,admin_id:admin_id},
+                'couponInsert',
+                {coupon_name:coupon_name,coupon_num:coupon_num,coupon_price:coupon_price,goods_id:goods_id},
                 function(res){
                     if(res.code==0) {
                         layer.open({
                             type:0,
                             content:'添加成功',
-                            btn:['确定'],
+                            btn:['添加完成'],
                             yes:function(index,layero){
-                                location.href="adminList";
+                                location.href="goodsShow";
                                 return true;
-                            }
+                            },
                         })
                     }else if(res.code==1){
                         layer.msg(res.msg);

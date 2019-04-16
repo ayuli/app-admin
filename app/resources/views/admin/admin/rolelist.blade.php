@@ -108,15 +108,17 @@
                 <tr>
                 <tr>
                     <td width="66px" class="tdColor tdC">序号</td>
-                    <td width="355px" class="tdColor">角色名称</td>
+                    <td width="500px" class="tdColor">角色名称</td>
+                    <td width="500px" class="tdColor">添加时间</td>
                     <td width="130px" class="tdColor">操作</td>
                 </tr>
                 @foreach($roleinfo as $v)
                 </tr>
                 <td class="abc" height="60">{{$v->role_id}}</td>
                 <td class="abc">🍖{{$v->role_name}}</td>
+                <td><?php echo date("Y-m-d H:i:s",$v->createtime)?></td>
                 <td role_id={{$v->role_id}}>
-                    <a href="roleUpdate?role_id={{$v->role_id}}}"><img class="operation" src="img/update.png"></a>
+                    <a href="roleUpdate?role_id={{$v->role_id}}"><img class="operation" src="img/update.png"></a>
                     <img class="operation delban" src="img/delete.png">
                 </td>
                 </tr>

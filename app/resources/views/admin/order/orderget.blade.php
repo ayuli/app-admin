@@ -2,11 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>管理员添加-有点</title>
+    <title>订单管理-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
-    <script src="layui/layui.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/ajaxfileupload.js"></script>
+    <!-- <script type="text/javascript" src="js/page.js" ></script> -->
     <style type="text/css">
         #pull_right{
             text-align:center;
@@ -82,6 +81,7 @@
         }
     </style>
 </head>
+
 <body>
 <div id="pageAll">
     <div class="pageTop">
@@ -90,83 +90,69 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">权限管理</a>
+                <a href="#">订单管理</a>
                 &nbsp;-
             </span>
-            &nbsp;权限展示
+            &nbsp;订单展示
         </div>
     </div>
-    <div class="page ">
-        <!-- 上传广告页面样式 -->
-        {{--<div class="banneradd bor">--}}
-        <div class="baTopNo">
-            <span>权限展示</span>
-        </div>
-        <div class="baBody">
 
-            <table border="1" cellspacing="0" cellpadding="0">
-                <tr>
-                <tr>
-                    <td width="150px" class="tdColor tdC">序号</td>
-                    <td width="500px" class="tdColor">权限名称</td>
-                    <td width="320px" class="tdColor">路由名称</td>
-                    <td width="210px" class="tdColor">操作</td>
-                </tr>
-                @foreach($nodeinfo as $v)
-                </tr>
-                <td class="abc" height="60">{{$v->node_id}}</td>
-                <td class="abc">{{$v->node_name}}</td>
-                <td>{{$v->action_name}}</td>
-                <td node_id={{$v->node_id}}>
-                    <a href="nodeUpdate?node_id={{$v->node_id}}"><img class="operation" src="img/update.png"></a>
-                    <img class="operation delban" src="img/delete.png">
-                </td>
-                </tr>
-                @endforeach
-            </table>
-        </div>
-    </div>
-    <div class="paging">
-        <div id="pull_right">
-            <div class="pull-right">
-                {!! $nodeinfo->render() !!}
+    <div class="page">
+        <!-- banner页面样式 -->
+        <div class="connoisseur">
+            <div class="conform">
+                <form>
+                    <div class="cfD">
+                        <input class="addUser" type="text" placeholder="输入用户名/ID/手机号/城市" />
+                        <button class="button">搜索</button>
+                    </div>
+                </form>
             </div>
+            <!-- banner 表格 显示 -->
+            <div class="conShow">
+                <table border="1" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="66px" class="tdColor tdC">序号</td>
+                        <td width="355px" class="tdColor">购买用户</td>
+                        <td width="355px" class="tdColor">订单名称</td>
+                        <td width="275px" class="tdColor">商品数量</td>
+                        <td width="275px" class="tdColor">商品价格</td>
+                        <td width="275px" class="tdColor">支付状态</td>
+                        <td width="275px" class="tdColor">支付平台</td>
+                    </tr>
+                    @foreach($data as $v)
+                    <tr barnd_id="">
+                        <td height="60px;">{{$v['order_id']}}</td>
+                        <td>
+                            {{$v['user_id']}}
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+                    @endforeach
+                </table>
+                <div class="paging">
+                    <div id="pull_right">
+                        <div class="pull-right">
+                            {!! $data->render() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- banner 表格 显示 end-->
         </div>
+        <!-- banner页面样式end -->
     </div>
-    <!-- 上传广告页面样式end -->
-    {{--</div>--}}
+
 </div>
+
 </body>
-</html>
 
-<script>
-    layui.use('layer', function() {
-        var layer = layui.layer;
-        $('.delban').click(function(){
-            var _this = $(this);
-//            alert(111)
-            var node_id = $(this).parent().attr('node_id');
+<script type="text/javascript">
 
-            layer.open({
-                type:0,
-                content: '是否确认删除？',
-                btn:['确认','取消'],
-                yes:function(index,layero){
-                    $.post(
-                        'nodeDel',
-                        {node_id:node_id},
-                        function(res){
-                            layer.msg(res.msg);
-                            _this.parents('tr').remove();
-                        },'json'
-                    )
-                },
-                btn2:function(){
-//                    location.href="adminList";
-                    return true;
-                }
-            })
-
-        })
-    })
 </script>
+</html>

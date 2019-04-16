@@ -36,20 +36,12 @@ class BrandController extends Controller
     public function brandDel(Request $request)
     {
         $brand_id = $request->input('brand_id');
-//        echo $brand_id;die;
         $res = BrandModel::where(['brand_id'=>$brand_id])->update(['is_del'=>1]);
         if($res){
-            $json = [
-                'code' => 0,
-                'msg'   => '删除成功'
-            ];
+            $json = ['code' => 0, 'msg'   => '删除成功'];
         }else{
-            $json=[
-                'code' => 110,
-                'msg'   => '删除失败'
-            ];
+            $json=['code' => 110, 'msg'   => '删除失败'];
         }
-
         return json_encode($json,JSON_UNESCAPED_UNICODE);
     }
 

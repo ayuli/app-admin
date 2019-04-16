@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>品牌添加-有点</title>
+    <title>广告修改-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
@@ -15,64 +15,38 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">商品管理</a>
+                <a href="#">广告管理</a>
                 &nbsp;-
             </span>
-            &nbsp;品牌修改
+            &nbsp;广告修改
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         <div class="banneradd bor">
             <div class="baTopNo">
-                <span>品牌修改</span>
+                <span>广告修改</span>
             </div>
             <div class="baBody">
 
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;品牌名称：
-                    <input type="text" class="input3" id="name" value="{{$brand['brand_name']}}"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;广告名称：
+                    <input type="text" class="input3" id="name" value="{{$arr['ad_title']}}"/>
                 </div>
 
                 <div class="bbD" style="margin-left: 24px;">
-                    品牌logo：
+                    广告图片：
                     <div class="bbDd">
-                        <div class="bbDImg"><img src="{{$brand['brand_logo']}}" id='logo' width='160px;' height='180px;'></div>
+
+                        <div class="bbDImg" ><img src="{{$arr['ad_img']}}" id='logo' width='160px;' height='180px;'></div>
                         <input type="file" style="cursor:pointer" class="file" id="file" name="file"/>
                     </div>
+
                 </div>
 
-                <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;品牌网址：
-                    <input type="text" class="input3" id="url" value="{{$brand['site_url']}}" />
-                </div>
-
-                <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    是否展示：
-                    @if($brand['is_show']==1)
-                    <label>
-                        <input type="radio" checked="checked" value="1" name="styleshoice2"/>
-                        &nbsp;是
-                    </label>
-                    <label>
-                        <input type="radio" value="2" name="styleshoice2" />
-                        &nbsp;否
-                    </label>
-                    @elseif($brand['is_show']==2)
-                    <label>
-                        <input type="radio"  value="1" name="styleshoice2"/>
-                        &nbsp;是
-                    </label>
-                    <label>
-                        <input type="radio" checked="checked" value="2" name="styleshoice2" />
-                        &nbsp;否
-                    </label>
-                    @endif
-                </div>
                 <div class="bbD">
                     <p class="bbDP">
-                        <button class="btn_ok btn_yes" href="#" id="updabtn">确认修改</button>
+                        <button class="btn_ok btn_yes" href="#" id="addbtn">修改</button>
                         <a class="btn_ok btn_no" href="#">取消</a>
                     </p>
                 </div>
@@ -97,9 +71,7 @@
 
 </body>
 </html>
-
 <script>
-
     $(".bbDd").change(function(){
         $.ajaxFileUpload({
             url: '/brandlogo',
@@ -115,27 +87,25 @@
         })
     })
 
+</script>
+<script>
 
-    $("#updabtn").click(function(){
+    //点击删除
+    $(".bbDDel").click(function(){
+        $(".bbDImg").html('+')
+    });
+
+    $("#addbtn").click(function(){
         var logo = $("#logo").prop('src');
-        var brand_id = "{{$brand['brand_id']}}";
         var name = $("#name").val();
-        var url = $("#url").val();
-        $("input[name=styleshoice2]").each(function(){
-            if($(this).prop('checked')==true){
-                redio = $(this).val()
-            }
-        });
-
+        var ad_id = "{{$arr['ad_id']}}";
         var data = {};
         data.name = name;
-        data.url = url;
-        data.redio = redio;
         data.logo = logo;
-        data.brand_id = brand_id;
+        data.ad_id = ad_id;
 
         $.ajax({
-            url : '/brandupdado',
+            url : '/advupdado',
             type: 'post',
             data : data,
             dataType: 'json',
@@ -146,7 +116,7 @@
                     $(".delP1").text(d.msg);
                     $(".yes").click(function(){
                         $(".banDel").hide();
-                        location.href='/brandget'
+                        location.href='/advget'
                     });
                 }else{
                     // 广告弹出框
@@ -154,12 +124,12 @@
                     $(".delP1").text(d.msg);
                     $(".yes").click(function(){
                         $(".banDel").hide();
-                        location.href='/brandget'
+                        location.href='/advget'
                     });
                 }
+
             }
         })
-
 
     })
 

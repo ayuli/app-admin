@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>管理员添加-有点</title>
+    <title>优惠券添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
+    <link rel="stylesheet" href="layui/css/layui.css">
     <script src="layui/layui.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
@@ -90,37 +91,38 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">权限管理</a>
+                <a href="#">优惠券管理</a>
                 &nbsp;-
             </span>
-            &nbsp;权限展示
+            &nbsp;优惠券展示
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         {{--<div class="banneradd bor">--}}
         <div class="baTopNo">
-            <span>权限展示</span>
+            <span>优惠券展示</span>
         </div>
         <div class="baBody">
 
             <table border="1" cellspacing="0" cellpadding="0">
                 <tr>
                 <tr>
-                    <td width="150px" class="tdColor tdC">序号</td>
-                    <td width="500px" class="tdColor">权限名称</td>
-                    <td width="320px" class="tdColor">路由名称</td>
-                    <td width="210px" class="tdColor">操作</td>
+                    <td width="100px" class="tdColor tdC">序号</td>
+                    <td width="250px" class="tdColor">优惠券名称</td>
+                    <td width="250px" class="tdColor">优惠券数量</td>
+                    <td width="250px" class="tdColor">优惠券抵用价格</td>
+                    <td width="250px" class="tdColor">操作</td>
                 </tr>
-                @foreach($nodeinfo as $v)
+                @foreach($couponinfo as $v)
                 </tr>
-                <td class="abc" height="60">{{$v->node_id}}</td>
-                <td class="abc">{{$v->node_name}}</td>
-                <td>{{$v->action_name}}</td>
-                <td node_id={{$v->node_id}}>
-                    <a href="nodeUpdate?node_id={{$v->node_id}}"><img class="operation" src="img/update.png"></a>
-                    <img class="operation delban" src="img/delete.png">
-                </td>
+                <td class="abc" height="60">{{$v->coupon_id}}</td>
+                <td class="abc">{{$v->coupon_name}}</td>
+                <td class="abc">{{$v->coupon_num}}</td>
+                <td>{{$v->coupon_price}}</td>
+                <td coupon_id={{$v->coupon_id}}>
+                    <a href="couponUpdate?coupon_id={{$v->coupon_id}}"><img class="operation" src="img/update.png"></a>
+                    <img class="operation delban" src="img/delete.png"></td>
                 </tr>
                 @endforeach
             </table>
@@ -129,7 +131,7 @@
     <div class="paging">
         <div id="pull_right">
             <div class="pull-right">
-                {!! $nodeinfo->render() !!}
+                {!! $couponinfo->render() !!}
             </div>
         </div>
     </div>
@@ -140,12 +142,17 @@
 </html>
 
 <script>
+    layui.use(['layer','form'], function() {
+        var layer = layui.layer;
+        var form = layui.form;
+
+    })
     layui.use('layer', function() {
         var layer = layui.layer;
         $('.delban').click(function(){
             var _this = $(this);
 //            alert(111)
-            var node_id = $(this).parent().attr('node_id');
+            var coupon_id = $(this).parent().attr('coupon_id');
 
             layer.open({
                 type:0,
@@ -153,8 +160,8 @@
                 btn:['确认','取消'],
                 yes:function(index,layero){
                     $.post(
-                        'nodeDel',
-                        {node_id:node_id},
+                        'couponDel',
+                        {coupon_id:coupon_id},
                         function(res){
                             layer.msg(res.msg);
                             _this.parents('tr').remove();

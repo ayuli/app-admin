@@ -20,23 +20,26 @@ Route::get('adminLogin',"Admin\LoginController@adminLogin");//登录页面
 Route::get('codeImg/{tmp}',"Admin\LoginController@codeImg");//验证码
 Route::post('adminLoginDo',"Admin\LoginController@adminLoginDo");//登录执行
 Route::get('adminInfo',"Admin\LoginController@adminInfo");//获取用户信息
+//退出
+Route::get('quit',"Admin\AdminController@quit");//退出
 
 
 //后台管理员管理
-Route::get('adminAdd',"Admin\AdminController@adminAdd");//管理员添加
+Route::get('adminAdd',"Admin\AdminController@adminAdd")->middleware('AdminRole');//管理员添加
 Route::post('adminInsert',"Admin\AdminController@adminInsert");//执行添加
-Route::get('adminList',"Admin\AdminController@adminList");//管理员展示
-Route::post('adminDel',"Admin\AdminController@adminDel");//管理员删除
-Route::get('adminUpdate',"Admin\AdminController@adminUpdate");//管理员修改页面
+Route::get('adminList',"Admin\AdminController@adminList")->middleware('AdminRole');//管理员展示
+Route::post('adminDel',"Admin\AdminController@adminDel")->middleware('AdminRole');//管理员删除
+Route::get('adminUpdate',"Admin\AdminController@adminUpdate")->middleware('AdminRole');//管理员修改页面
 Route::post('adminUpdataDo',"Admin\AdminController@adminUpdataDo");//管理员执行修改
-Route::get('roleAdd',"Admin\AdminController@roleAdd");//角色添加
+Route::get('roleAdd',"Admin\AdminController@roleAdd")->middleware('AdminRole');//角色添加
 Route::post('roleInsert',"Admin\AdminController@roleInsert");//角色添加
-Route::get('roleList',"Admin\AdminController@roleList");//角色展示
-Route::post('roleDel',"Admin\AdminController@roleDel");//角色删除
-Route::get('roleUpdate',"Admin\AdminController@roleUpdate");//角色修改页面
+Route::get('roleList',"Admin\AdminController@roleList")->middleware('AdminRole');//角色展示
+Route::post('roleDel',"Admin\AdminController@roleDel")->middleware('AdminRole');//角色删除
+Route::get('roleUpdate',"Admin\AdminController@roleUpdate")->middleware('AdminRole');//角色修改页面
 Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
 Route::get('roleDo',"Admin\AdminController@roleDo");//赋予角色页面
 Route::post('adminrole',"Admin\AdminController@adminrole");//执行赋予角色
+
 //后台权限管理
 Route::get('nodeAdd',"Admin\AdminController@nodeAdd");//权限添加
 Route::get('nodeList',"Admin\AdminController@nodeList");//权限添加
@@ -44,6 +47,14 @@ Route::post('nodeInsert',"Admin\AdminController@nodeInsert");//权限添加
 Route::post('nodeDel',"Admin\AdminController@nodeDel");//权限删除
 Route::get('nodeUpdate',"Admin\AdminController@nodeUpdate");//权限修改页面
 Route::post('nodeUpdataDo',"Admin\AdminController@nodeUpdataDo");//权限执行修改
+
+//后台优惠券管理
+Route::get('couponAdd',"Admin\AdminController@couponAdd");//优惠券添加
+Route::get('couponList',"Admin\AdminController@couponList");//优惠券展示
+Route::post('couponInsert',"Admin\AdminController@couponInsert");//优惠券执行添加
+Route::post('couponDel',"Admin\AdminController@couponDel");//优惠券删除
+Route::get('couponUpdate',"Admin\AdminController@couponUpdate");//优惠券修改
+Route::post('couponUpdateDo',"Admin\AdminController@couponUpdateDo");//优惠券修改执行
 
 
 //后台商品管理
@@ -63,10 +74,16 @@ Route::get('/cateupda',"Admin\CateController@cateUpda");   //分类修改
 Route::post('/cateupdado',"Admin\CateController@cateUpdaDo");   //分类修改执行
 Route::post('/catedel',"Admin\CateController@cateDel");   //分类删除
 
-
 Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
 Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
-Route::get('changeType',"Admin\GoodsController@changeType"); //商品添加页面
+Route::get('changeType',"Admin\GoodsController@changeType"); //选择商品类型
+Route::post('goodsUpload',"Admin\GoodsController@goodsUpload"); //商品文件上传
+Route::get('goodsShow',"Admin\GoodsController@goodsShow"); //商品文件上传
+Route::get('goodsUpdate',"Admin\GoodsController@goodsUpdate"); //商品修改
+Route::post('goodsUpdateDo',"Admin\GoodsController@goodsUpdateDo"); //商品修改执行
+Route::post('goodsDelete',"Admin\GoodsController@goodsDelete"); //商品删除
+Route::get('productAdd',"Admin\GoodsController@productAdd"); //商品sku
+Route::post('productAddDo',"Admin\GoodsController@productAddDo"); //商品sku执行
 
 //前台登陆
 Route::post('/register',"Index\UserController@register"); //注册
@@ -83,9 +100,21 @@ Route::post('/address',"Index\AddressController@address");   //添加收货地�
 Route::post('/upaddress',"Index\AddressController@upaddress");   //修改收货地址
 Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址展示
 
+//订单展示
+Route::get('/orderget',"Admin\OrderController@orderGet");
+
+//广告管理
+Route::get('/adv',"Admin\AdvController@adv");     //广告添加展示
+Route::post('/advadd',"Admin\AdvController@advAdd");     //广告添加执行
+Route::get('/advget',"Admin\AdvController@advget");     //广告展示
+Route::post('/advdel',"Admin\AdvController@advDel");     //广告删除
+Route::get('/advupda',"Admin\AdvController@advUpda");     //广告修改展示
+Route::post('/advupdado',"Admin\AdvController@advUpdaDo");     //广告修改执行
+
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
 Route::post('/uncollection','Index\CollController@uncoll'); //取消收藏
+Route::get('/collectionget','Index\CollController@collGet'); //展示收藏
 
 
 //前台商品

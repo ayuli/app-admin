@@ -38,7 +38,7 @@
                 <br>
                 <form  class="layui-form">
                 <div class="layui-form-item">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限：
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限:
                     @foreach($roleinfo as $v)
                         <input type="checkbox" name="like[write]" node_id="{{$v->node_id}}"  title="{{$v->node_name}}">
                     @endforeach
@@ -101,7 +101,7 @@ layui.use('layer', function() {
                         }
                     })
                 }else{
-                    layui.msg(res.msg)
+                    layer.msg(res.msg)
                 }
             },'json'
         )
