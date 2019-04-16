@@ -20,7 +20,6 @@ class GoodsController extends Controller
             $page_num = 6;
 
             $start = ($page-1)*$page_num;
-//        $start+$page_num-1;
             $arr = GoodsModel::offset($start)->limit($page_num)->get();
             $count = count($arr);
             if($count){
