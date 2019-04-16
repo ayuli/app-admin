@@ -18,7 +18,16 @@ class HistoryController extends Controller
             'goods_id'=>$goodsis,
             'add_time'=>$time
         );
-        $res = DB::table('app_history')->insert($info);
+        $data = array(
+            'goods_id'=>$goodsis,
+            'user_id'=>$uid
+        );
+        $selectgoods = DB::table('app_history')->where($data)->first();
+        if ($selectgoods){
+            $res = DB::table('app_history')->update($info);
+        }else{
+            $res = DB::table('app_history')->insert($info);
+        }
         if($res){
             return 1;
         }else{
