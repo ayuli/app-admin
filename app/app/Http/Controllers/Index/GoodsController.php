@@ -49,7 +49,7 @@ class GoodsController extends Controller
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
-        }else if($type=='new'){
+        }else if($type=='best'){
             $goods = GoodsModel::where(['is_best'=>1])->limit(8)->get();
             $data = [
                 'code'  => 0,
@@ -58,8 +58,6 @@ class GoodsController extends Controller
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
-        }else if($type=='liu'){     //流加载
-
         }
 
 
