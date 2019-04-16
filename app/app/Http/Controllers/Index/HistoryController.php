@@ -38,7 +38,7 @@ class HistoryController extends Controller
     public function showhistory(Request $request){
         $uid = $request->uid;
         $res = DB::table('app_history')->join('app_goods','app_goods.goods_id','=','app_history.goods_id')->where('user_id',$uid)->get();
-
+        print_r($res);exit;
         return $res;
     }
 }
