@@ -2,12 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>管理员修改-有点</title>
+    <title>属性添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
-    <script src="layui/layui.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 </head>
+
 <body>
 <div id="pageAll">
     <div class="pageTop">
@@ -16,33 +19,27 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">管理员管理</a>
+                <a href="#">类型管理</a>
                 &nbsp;-
             </span>
-            &nbsp;管理员修改
+            类型添加
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         <div class="banneradd bor">
             <div class="baTopNo">
-                <span>管理员修改</span>
+                <span>类型添加</span>
             </div>
             <div class="baBody">
 
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员名称：<input type="text" name="admin_name" value="{{$admininfo->admin_name}}" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 类型名称：<input type="text" name="type_name" class="input3" />
                 </div>
-                <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员邮箱：<input type="text" name="admin_email" value="{{$admininfo->admin_email}}" class="input3" />
-                </div>
-                <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员电话：<input type="text" name="admin_tel" value="{{$admininfo->admin_tel}}" class="input3" />
-                    <input type="hidden"  name="admin_id" value="{{$admininfo->admin_id}}">
-                </div>
+                <br>
                 <div class="bbD">
                     <p class="bbDP">
-                        <button class="btn_ok btn_yes" id="btn" href="#" >修改</button>
+                        <button class="btn_ok btn_yes" id="btn" href="#" >提交</button>
                         <a class="btn_ok btn_no" href="#">取消</a>
                     </p>
                 </div>
@@ -56,42 +53,41 @@
 </html>
 
 <script>
+    layui.use(['layer','form'], function() {
+        var layer = layui.layer;
+        var form = layui.form;
+
+    })
     layui.use('layer', function() {
         var layer = layui.layer;
         $('#btn').click(function(){
-            var admin_name = $("input[name='admin_name']").val();
-            var admin_id = $("input[name='admin_id']").val();
-            var admin_email = $("input[name='admin_email']").val();
-            var admin_tel = $("input[name='admin_tel']").val();
+            var type_name = $("input[name='type_name']").val();
 
 
             $.post(
-                'adminUpdataDo',
-                {admin_name:admin_name,admin_id:admin_id,admin_email:admin_email,admin_tel:admin_tel},
+                'typeInsert',
+                {type_name:type_name},
                 function(res){
-                    if(res.code==0){
+                    if(res.code==0) {
                         layer.open({
                             type:0,
-                            content:'修改成功',
-                            btn:['返回列表','继续修改'],
-                            btn1:function(){
-                                location.href="adminList";
+                            content:'添加成功',
+                            btn:['继续添加','列表展示'],
+                            yes:function(index,layero){
+                                location.href="typeAdd";
                                 return true;
                             },
                             btn2:function(){
-//                                location.href="adminList";
+                                location.href="typeList";
                                 return true;
                             }
-
                         })
                     }else if(res.code==1){
-                        layer.msg(res.msg)
-                    }else{
-                        layer.msg(res.msg)
+                        layer.msg(res.msg);
                     }
-
                 },'json'
             )
         })
     })
+
 </script>

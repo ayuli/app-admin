@@ -63,6 +63,7 @@
                     <div class="condiv" style="display:block">
                         <div class="layui-form-item">
                             <table  id="general-table"  >
+                                <input type="hidden" name="goods_id" value="{{$goodsInfo->goods_id}}">
                                 <tbody>
                                 <tr>
                                     <td class="label">商品名称：</td>
@@ -72,10 +73,14 @@
                                 <tr>
                                     <td class="label">商品分类：</td>
                                     <td>
+
                                         <select name="cate_id" class="form-control">
-                                            <option value="0">请选择...</option>
-                                            <option value="1">分类</option>
+                                            <option value="0">--请选择--</option>
+                                            @foreach($cateInfo as $v)
+                                                <option value="{{$v['cate_id']}}" @if($v['cate_id']==$goodsInfo->cate_id) selected @endif >{{$v['level']}}{{$v['cate_name']}}</option>
+                                            @endforeach
                                         </select>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -83,7 +88,9 @@
                                     <td>
                                         <select name="brand_id" class="form-control" >
                                             <option value="0">请选择...</option>
-                                            <option value="1">品牌</option>
+                                            @foreach($brandInfo as $k=>$v)
+                                                <option value="{{$v->brand_id}}" @if($v->brand_id==$goodsInfo->brand_id) selected @endif >{{$v->brand_name}}</option>
+                                            @endforeach
                                         </select>
                                     </td>
                                 </tr>
@@ -121,12 +128,14 @@
                                 <tr>
                                     <td class="label">上传商品图片：</td>
                                     <td>
-                                        <input type="file" id="file" name="goods_img" onchange="upload(this)" size="35" >
-                                        <img src="{{$goodsInfo->goods_img}}" width="100px" height="50px">
+                                        <input type="file" id="file"  onchange="upload(this)" size="35" >
+                                        @if(!empty($goodsInfo->goods_img))
+                                            <img src="{{$goodsInfo->goods_img}}" id="goods_img" width="100px" height="50px">
+                                            <input type="hidden" name="goods_img" value="{{$goodsInfo->goods_img}}">
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody></table>
-                            <div class="goods_img"></div>
 
                         </div>
                     </div>
@@ -183,22 +192,40 @@
                             </div>
                             </td>
                             </tr>-->
+
                             <tr><td>&nbsp;</td></tr>
-                        @foreach($goodsInfo->goods_imgs as $k=>$v)
-                        <tr>
-                        <td>
-                        <a href="javascript:;" onclick="addSpec(this)">[+]</a>
-                            <input type="file" id='1' name="goods_imgs[]" onchange="upload(this)">
-                            <img src='{{$v}}'  width="100px" height="50px">
-                            </td>
-                            </tr>
+                        @if(!empty($goodsInfo->goods_imgs))
+                            @foreach($goodsInfo->goods_imgs as $k=>$v)
+                            <tr>
+                            <td>
+                            <a href="javascript:;" onclick="addUpload(this)">[+]</a>
+                                <input type="file" id='{{$k}}'  onchange="upload(this)">
+                                    <input type='hidden' name='goods_imgs[{{$k}}]' value='{{$v}}'>
+                                <img src='{{$v}}' class='{{$k}}'  width="100px" height="50px">
+                                </td>
+                                </tr>
+                                    <script>
+                                        num={{$k}}
+                                    </script>
                                 @endforeach
+                        @else
+                            <tr>
+                                <td>
+                                    <a href="javascript:;" onclick="addUpload(this)">[+]</a>
+                                    <input type="file" id='0'  onchange="upload(this)">
+                                </td>
+                            </tr>
+                            <script>
+                                num=0;
+                            </script>
+                        @endif
                             </tbody></table>
 
 
                         </div>
                         <!--商品相册 end-->
                         </div>
+                        <div class="goods_img"></div>
 
                         </form>
 
@@ -231,18 +258,22 @@
                         });
 
                         //追加一行
-                        var num=1;
-                        function addSpec(obj){
+                        function addUpload(obj){
+                            num+=1;
+
                             var newtr="<tr>\n" +
                                 "                        <td>\n" +
-                                "                        <a href=\"javascript:;\" onclick=\"addSpec(this)\">[+]</a>\n" +
-                                "                            <input type=\"file\" id='1' name=\"goods_imgs[]\" onchange=\"upload(this)\">\n" +
+                                "                        <a href=\"javascript:;\" onclick=\"lessSpec(this)\">[ - ]</a>\n" +
+                                "                            <input type=\"file\" id='"+num+"' name=\"goods_imgs[]\" onchange=\"upload(this)\">\n" +
                                 "                            </td>\n" +
                                 "                            </tr>";
-                            num+=1;
-                            console.log(newtr);
+
+                            $(obj).parent().parent().after(newtr);
+                        }
+
+                        function addSpec(obj){
+                            var newtr=$(obj).parent().parent().clone();
                             newtr.find('a').text('[ - ]');
-                            newtr.find('a').next().attr('id',num);
                             newtr.find('a').attr('onclick','lessSpec(this)');
                             $(obj).parent().parent().after(newtr);
                         }
@@ -255,6 +286,7 @@
                         <script>
 
                             function upload(obj){
+                                var _this=$(obj)
                                 var id=$(obj).attr('id');
 
                                 var fileInfo=document.getElementById(id).files[0];
@@ -273,8 +305,25 @@
                                     async : true,
                                     success : function( res ){
                                         if(isNaN(id)) {
+
+                                            if($("[name='goods_img']").length>0){
+                                                var src=$("[name='goods_img']").val();
+                                                $(".goods_img").append("<input type='hidden' name='del_img'  value='" + src + "'>");
+                                                $("#goods_img").attr('src',res.filename);
+                                            }else{
+                                                $("#"+id+"").after("<img src='"+ res.filename +"' width='100px' height='50px'>");
+                                            }
+
                                             $(".goods_img").append("<input type='hidden' name='goods_img'  value='" + res.filename + "'>");
                                         }else{
+
+                                            if($("."+id+"").length>0){
+                                                var src=$("[name='goods_imgs["+id+"]']").val();
+                                                $(".goods_img").append("<input type='hidden' name='del_imgs["+id+"]'  value='" + src + "'>");
+                                                $("."+id+"").attr('src',res.filename);
+                                            }else{
+                                                $("#"+id+"").parent().append("<img src='" + res.filename + "' width='100px' height='50px'>");
+                                            }
                                             $(".goods_img").append("<input type='hidden' name='goods_imgs["+id+"]'  value='" + res.filename + "'>");
                                         }
                                     }
@@ -303,7 +352,7 @@
 
 
 
-                                    var url="goodsAddDo";
+                                    var url="goodsUpdateDo";
                                     $.ajax({
                                         url:url,
                                         type:'post',

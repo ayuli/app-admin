@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>管理员添加-有点</title>
+    <title>优惠券添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -10,6 +10,7 @@
     <script type="text/javascript" src="layui/layui.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 </head>
+
 <body>
 <div id="pageAll">
     <div class="pageTop">
@@ -18,48 +19,36 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">管理员管理</a>
+                <a href="#">优惠券管理</a>
                 &nbsp;-
             </span>
-            &nbsp;角色修改
+            &nbsp;优惠券添加
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         <div class="banneradd bor">
             <div class="baTopNo">
-                <span>角色修改</span>
+                <span>优惠券添加</span>
             </div>
             <div class="baBody">
-
+                <input type="hidden" name="coupon_id" value="{{$couponinfo->coupon_id}}">
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;角色名称：<input type="text" name="role_name" value="{{$roleinfo->role_name}}" id="rolename" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券名称：<input type="text" name="coupon_name" value="{{$couponinfo->coupon_name}}" class="input3" />
+                </div>
+                <div class="bbD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券数量：<input type="text" name="coupon_num" value="{{$couponinfo->coupon_num}}" class="input3" />
+                </div>
+                <div class="bbD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券价格：<input type="text" name="coupon_price" value="{{$couponinfo->coupon_price}}" class="input3" />
                 </div>
                 <br>
-                <input type="hidden" id="roleid" value="{{$roleinfo->role_id}}">
-                <form  class="layui-form">
-                    <div class="layui-form-item">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限：
-                        @foreach($nodeinfo as $v)
-                            @if(in_array($v->node_id,$data))
-                            <input type="checkbox" checked   name="like[write]"  node_id="{{$v->node_id}}"  title="{{$v->node_name}}">
-                            @else
-                            <input type="checkbox" name="like[write]"  node_id="{{$v->node_id}}"  title="{{$v->node_name}}">
-                            @endif
-                        @endforeach
-                    </div>
-                </form>
                 <div class="bbD">
-                    <br>
                     <p class="bbDP">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="layui-btn layui-btn-lg layui-btn-normal" id="btn">修改</button>
-                        <button class="layui-btn layui-btn-primary layui-btn-lg">取消</button>
+                        <button class="btn_ok btn_yes" id="btn" href="#" >提交</button>
+                        <a class="btn_ok btn_no" href="#">取消</a>
                     </p>
                 </div>
-                <br>
-                <br>
-                <br>
             </div>
         </div>
 
@@ -70,27 +59,18 @@
 </html>
 
 <script>
-    layui.use(['layer','form'], function() {
-        var layer = layui.layer;
-        var form = layui.form;
-
-    })
     layui.use('layer', function() {
         var layer = layui.layer;
         $('#btn').click(function(){
-            var role_name = $("input[name='role_name']").val();
-            var role_id = $('#roleid').val();
-            var data = [];
-            $('.layui-unselect').each(function(){
-                if($(this).hasClass("layui-form-checked")){
-                    data.push($(this).prev().attr('node_id'));
-                }
-            })
+            var coupon_id = $("input[name='coupon_id']").val();
+            var coupon_name = $("input[name='coupon_name']").val();
+            var coupon_num = $("input[name='coupon_num']").val();
+            var coupon_price = $("input[name='coupon_price']").val();
 
 
             $.post(
-                'roleUpdateDo',
-                {data:data,role_name:role_name,role_id:role_id},
+                'couponUpdateDo',
+                {coupon_id:coupon_id,coupon_name:coupon_name,coupon_num:coupon_num,coupon_price:coupon_price},
                 function(res){
                     if(res.code==0){
                         layer.open({
@@ -98,10 +78,11 @@
                             content:'修改成功',
                             btn:['返回列表','继续修改'],
                             btn1:function(){
-                                location.href="roleList";
+                                location.href="couponList";
                                 return true;
                             },
                             btn2:function(){
+//                                location.href="adminList";
                                 return true;
                             }
 

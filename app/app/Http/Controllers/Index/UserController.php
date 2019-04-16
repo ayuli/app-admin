@@ -32,9 +32,10 @@ class UserController extends Controller
         $pd = $request->input('pwd');
         $pwd = md5(md5($pd));
         $res = DB::table('app_user')->where(['user_name'=>$name,'user_pwd'=>$pwd])->first();
+        $uid = $res->user_id;
         if($res){
             $request -> session() -> put('user_name',$name);
-            return 1;//登陆成功
+            echo json_encode(['code'=>1,'uid'=>$uid]);
         }else{
             return 2;//登陆失败
         }
@@ -50,13 +51,14 @@ class UserController extends Controller
         }
     }
     //个人中心页面展示数据
-    public function  userCenter(){
-        $user = DB::table('app_user')->first();
+    public function  userCenter(Request $request){
+        $uid = $request->uid;
+        $user = DB::table('app_user')->where('user_id',$uid)->first();
         $username = $user->user_name;
         $userscore = $user->user_score;
-        $pay1 = DB::table('app_order')->where('order_status',1)->count();
-        $pay2 = DB::table('app_order')->where('order_status',2)->count();
-        $pay3 = DB::table('app_order')->where('order_status',3)->count();
+        $pay1 = DB::table('app_order')->where(['user_id'=>$uid],['order_status'=>1])->count();
+        $pay2 = DB::table('app_order')->where(['user_id'=>$uid],['order_status'=>2])->count();
+        $pay3 = DB::table('app_order')->where(['user_id'=>$uid],['order_status'=>3])->count();
         $order = DB::table('app_order')->count();
         $info = array(
                     'username' =>$username,

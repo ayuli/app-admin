@@ -20,6 +20,8 @@ Route::get('adminLogin',"Admin\LoginController@adminLogin");//登录页面
 Route::get('codeImg/{tmp}',"Admin\LoginController@codeImg");//验证码
 Route::post('adminLoginDo',"Admin\LoginController@adminLoginDo");//登录执行
 Route::get('adminInfo',"Admin\LoginController@adminInfo");//获取用户信息
+//退出
+Route::get('quit',"Admin\AdminController@quit");//退出
 
 
 //后台管理员管理
@@ -46,6 +48,14 @@ Route::post('nodeDel',"Admin\AdminController@nodeDel");//权限删除
 Route::get('nodeUpdate',"Admin\AdminController@nodeUpdate");//权限修改页面
 Route::post('nodeUpdataDo',"Admin\AdminController@nodeUpdataDo");//权限执行修改
 
+//后台优惠券管理
+Route::get('couponAdd',"Admin\AdminController@couponAdd");//优惠券添加
+Route::get('couponList',"Admin\AdminController@couponList");//优惠券展示
+Route::post('couponInsert',"Admin\AdminController@couponInsert");//优惠券执行添加
+Route::post('couponDel',"Admin\AdminController@couponDel");//优惠券删除
+Route::get('couponUpdate',"Admin\AdminController@couponUpdate");//优惠券修改
+Route::post('couponUpdateDo',"Admin\AdminController@couponUpdateDo");//优惠券修改执行
+
 
 //后台商品管理
 Route::get('/brand',"Admin\BrandController@brand");     //品牌添加页面
@@ -64,13 +74,31 @@ Route::get('/cateupda',"Admin\CateController@cateUpda");   //分类修改
 Route::post('/cateupdado',"Admin\CateController@cateUpdaDo");   //分类修改执行
 Route::post('/catedel',"Admin\CateController@cateDel");   //分类删除
 
-//商品管理
 Route::get('goodsAdd',"Admin\GoodsController@goodsAdd"); //商品添加页面
 Route::post('goodsAddDo',"Admin\GoodsController@goodsAddDo"); //商品添加页面
 Route::get('changeType',"Admin\GoodsController@changeType"); //选择商品类型
 Route::post('goodsUpload',"Admin\GoodsController@goodsUpload"); //商品文件上传
-Route::get('goodsShow',"Admin\GoodsController@goodsShow"); //商品文件上传
+Route::get('goodsShow',"Admin\GoodsController@goodsShow")->middleware('ExitDos'); //商品文件上传
 Route::get('goodsUpdate',"Admin\GoodsController@goodsUpdate"); //商品修改
+Route::post('goodsUpdateDo',"Admin\GoodsController@goodsUpdateDo"); //商品修改执行
+Route::post('goodsDelete',"Admin\GoodsController@goodsDelete"); //商品删除
+Route::get('productAdd',"Admin\GoodsController@productAdd"); //商品sku
+Route::post('productAddDo',"Admin\GoodsController@productAddDo"); //商品sku执行
+
+Route::get('typeAdd',"Admin\AdminController@typeAdd");//类型添加页面
+Route::get('typeList',"Admin\AdminController@typeList");//类型展示
+Route::post('typeInsert',"Admin\AdminController@typeInsert");//类型执行添加
+Route::post('typeDel',"Admin\AdminController@typeDel");//类型删除
+Route::get('typeUpdate',"Admin\AdminController@typeUpdate");//类型修改页面
+Route::post('typeUpdateDo',"Admin\AdminController@typeUpdateDo");//类型修改页面
+
+Route::get('attrAdd',"Admin\GoodsController@attrAdd"); //商品添加属性页面
+Route::post('attrAddDo',"Admin\GoodsController@attrAddDo"); //商品添加属性执行
+Route::get('attrShow',"Admin\GoodsController@attrShow"); //商品添加属性执行
+Route::get('attrUpdate',"Admin\GoodsController@attrUpdate"); //商品属性修改
+Route::post('attrUpdateDo',"Admin\GoodsController@attrUpdateDo"); //商品属性修改执行
+Route::get('attrDelete',"Admin\GoodsController@attrDelete"); //商品属性修改执行
+
 
 //前台登陆
 Route::post('/register',"Index\UserController@register"); //注册
@@ -80,6 +108,11 @@ Route::get('/outlogin',"Index\UserController@outlogin"); //登陆
 
 //个人中心
 Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页面展示数据
+
+//添加浏览记录
+Route::post('/addhistory','Index\HistoryController@addhistory'); //添加浏览记录
+Route::get('/showhistory','Index\HistoryController@showhistory'); //浏览记录展示
+
 //收货地址
 Route::get('/getregion',"Index\AddressController@getregion");    //三级联动
 Route::get('/selregion',"Index\AddressController@selregion");    //查询三级联动

@@ -2,12 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>管理员修改-有点</title>
+    <title>优惠券添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
-    <script src="layui/layui.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 </head>
+
 <body>
 <div id="pageAll">
     <div class="pageTop">
@@ -16,33 +19,33 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">管理员管理</a>
+                <a href="#">优惠券管理</a>
                 &nbsp;-
             </span>
-            &nbsp;管理员修改
+            &nbsp;优惠券添加
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         <div class="banneradd bor">
             <div class="baTopNo">
-                <span>管理员修改</span>
+                <span>优惠券添加</span>
             </div>
             <div class="baBody">
-
+                <input type="hidden" name="goods_id" value="{{$goods_id}}">
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员名称：<input type="text" name="admin_name" value="{{$admininfo->admin_name}}" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券名称：<input type="text" name="coupon_name" class="input3" />
                 </div>
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员邮箱：<input type="text" name="admin_email" value="{{$admininfo->admin_email}}" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券数量：<input type="text" name="coupon_num" class="input3" />
                 </div>
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理员电话：<input type="text" name="admin_tel" value="{{$admininfo->admin_tel}}" class="input3" />
-                    <input type="hidden"  name="admin_id" value="{{$admininfo->admin_id}}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券价格：<input type="text" name="coupon_price" class="input3" />
                 </div>
+                <br>
                 <div class="bbD">
                     <p class="bbDP">
-                        <button class="btn_ok btn_yes" id="btn" href="#" >修改</button>
+                        <button class="btn_ok btn_yes" id="btn" href="#" >提交</button>
                         <a class="btn_ok btn_no" href="#">取消</a>
                     </p>
                 </div>
@@ -56,42 +59,40 @@
 </html>
 
 <script>
+    layui.use(['layer','form'], function() {
+        var layer = layui.layer;
+        var form = layui.form;
+
+    })
     layui.use('layer', function() {
         var layer = layui.layer;
         $('#btn').click(function(){
-            var admin_name = $("input[name='admin_name']").val();
-            var admin_id = $("input[name='admin_id']").val();
-            var admin_email = $("input[name='admin_email']").val();
-            var admin_tel = $("input[name='admin_tel']").val();
+            var coupon_name = $("input[name='coupon_name']").val();
+            var coupon_num = $("input[name='coupon_num']").val();
+            var coupon_price = $("input[name='coupon_price']").val();
+            var goods_id = $("input[name='goods_id']").val();
 
 
             $.post(
-                'adminUpdataDo',
-                {admin_name:admin_name,admin_id:admin_id,admin_email:admin_email,admin_tel:admin_tel},
+                'couponInsert',
+                {coupon_name:coupon_name,coupon_num:coupon_num,coupon_price:coupon_price,goods_id:goods_id},
                 function(res){
-                    if(res.code==0){
+                    if(res.code==0) {
                         layer.open({
                             type:0,
-                            content:'修改成功',
-                            btn:['返回列表','继续修改'],
-                            btn1:function(){
-                                location.href="adminList";
+                            content:'添加成功',
+                            btn:['添加完成'],
+                            yes:function(index,layero){
+                                location.href="goodsShow";
                                 return true;
                             },
-                            btn2:function(){
-//                                location.href="adminList";
-                                return true;
-                            }
-
                         })
                     }else if(res.code==1){
-                        layer.msg(res.msg)
-                    }else{
-                        layer.msg(res.msg)
+                        layer.msg(res.msg);
                     }
-
                 },'json'
             )
         })
     })
+
 </script>

@@ -135,6 +135,7 @@ class AdminController extends Controller
         $roleinfo = DB::table('app_role')->get();
 
         $role_id = DB::table('app_admin_role')->where('admin_id',$admin_id)->first();
+//        print_r($role_id);exit;
         return view('admin.admin.roledo',['admininfo'=>$admininfo,'roleinfo'=>$roleinfo,'role_id'=>$role_id]);
     }
     //执行赋予
@@ -296,7 +297,7 @@ class AdminController extends Controller
         $nodeinfo = DB::table('app_node')->where('node_id',$node_id)->first();
         return view('admin.node.nodeupdate',['nodeinfo'=>$nodeinfo]);
     }
-    //前线的执行修改
+    //权限的执行修改
     public function nodeUpdataDo(Request $request){
         $node_name = $request->input('node_name');
         $action_name = $request->input('action_name');
@@ -319,5 +320,163 @@ class AdminController extends Controller
         }else{
             return json_encode(['msg'=>'未修改','code'=>1]);
         }
+    }
+    //优惠券添加
+    public function couponAdd(Request $request){
+        $goods_id = $request->input('goods_id');
+        return view('admin.coupon.couponadd',['goods_id'=>$goods_id]);
+    }
+    //优惠券执行添加
+    public function couponInsert(Request $request){
+        $goods_id = $request->input('goods_id');
+        $coupon_name = $request->input('coupon_name');
+        $coupon_num = $request->input('coupon_num');
+        $coupon_price = $request->input('coupon_price');
+
+        if(empty($coupon_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        if(empty($coupon_num)){
+            return json_encode(['msg'=>'数量不能为空','code'=>1]);
+        }
+        if(empty($coupon_price)){
+            return json_encode(['msg'=>'价格不能为空','code'=>1]);
+        }
+
+        $couponinfo = [
+            'goods_id'=>$goods_id,
+            'coupon_name'=>$coupon_name,
+            'coupon_num'=>$coupon_num,
+            'coupon_price'=>$coupon_price
+        ];
+
+        $res = DB::table('app_coupon')->insert($couponinfo);
+        if($res){
+            return json_encode(['msg'=>'添加成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'添加失败','code'=>1]);
+        }
+    }
+    //优惠券展示
+    public function couponList(){
+        $couponinfo = DB::table('app_coupon')->where('coupon_del',0)->paginate(4);
+        return view('admin.coupon.couponlist',['couponinfo'=>$couponinfo]);
+    }
+    //优惠券删除
+    public function couponDel(Request $request){
+        $coupon_id = $request->input('coupon_id');
+        $coupon_del=[
+            'coupon_del'=>1
+        ];
+        $res = DB::table('app_coupon')->where('coupon_id',$coupon_id)->update($coupon_del);
+        if($res){
+            echo json_encode(['msg'=>'删除成功','code'=>0]);
+        }else{
+            echo json_encode(['msg'=>'删除失败','code'=>1]);
+        }
+    }
+    //优惠券修改页面
+    public function couponUpdate(Request $request){
+        $coupon_id = $request->input('coupon_id');
+        $couponinfo = DB::table('app_coupon')->where('coupon_id',$coupon_id)->first();
+        return view('admin.coupon.couponupdate',['couponinfo'=>$couponinfo]);
+    }
+    //优惠券执行修改
+    public function couponUpdateDo(Request $request){
+        $coupon_id = $request->input('coupon_id');
+        $coupon_name = $request->input('coupon_name');
+        $coupon_num = $request->input('coupon_num');
+        $coupon_price = $request->input('coupon_price');
+
+        if(empty($coupon_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        if(empty($coupon_num)){
+            return json_encode(['msg'=>'数量不能为空','code'=>1]);
+        }
+        if(empty($coupon_price)){
+            return json_encode(['msg'=>'价格不能为空','code'=>1]);
+        }
+
+        $couponinfo = [
+            'coupon_name'=>$coupon_name,
+            'coupon_num'=>$coupon_num,
+            'coupon_price'=>$coupon_price
+        ];
+        $res = DB::table('app_coupon')->where('coupon_id',$coupon_id)->update($couponinfo);
+        if($res){
+            return json_encode(['msg'=>'修改成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'未修改','code'=>1]);
+        }
+    }
+    //类型的添加的页面
+    public function typeAdd(){
+        return view('admin.goods.typeadd');
+    }
+    //类型执行添加
+    public function typeInsert(Request $request){
+        $type_name = $request->input('type_name');
+        if(empty($type_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        $typeinfo = [
+            'type_name'=>$type_name,
+            'createtime'=>time()
+        ];
+
+        $res = DB::table('app_type')->insert($typeinfo);
+        if($res){
+            return json_encode(['msg'=>'添加成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'添加失败','code'=>1]);
+        }
+    }
+    //类型展示页面
+    public function typeList(){
+        $typeinfo = DB::table('app_type')->where('is_del',0)->paginate(4);
+        return view('admin.goods.typelist',['typeinfo'=>$typeinfo]);
+    }
+    //类型的删除
+    public function typeDel(Request $request){
+        $type_id = $request->input('type_id');
+        $is_del=[
+            'is_del'=>1
+        ];
+        $res = DB::table('app_type')->where('type_id',$type_id)->update($is_del);
+        if($res){
+            echo json_encode(['msg'=>'删除成功','code'=>0]);
+        }else{
+            echo json_encode(['msg'=>'删除失败','code'=>1]);
+        }
+    }
+    //类型的修改页面
+    public function typeUpdate(Request $request){
+        $type_id = $request->input('type_id');
+        $typeinfo = DB::table('app_type')->where('type_id',$type_id)->first();
+        return view('admin.goods.typeupdate',['typeinfo'=>$typeinfo]);
+    }
+    //类型执行修改
+    public function typeUpdateDo(Request $request){
+        $typeid= $request->input('typeid');
+        $type_name = $request->input('type_name');
+        if(empty($type_name)){
+            return json_encode(['msg'=>'名称不能为空','code'=>1]);
+        }
+        $typeinfo = [
+            'type_name'=>$type_name,
+        ];
+        $res = DB::table('app_type')->where('type_id',$typeid)->update($typeinfo);
+        if($res){
+            return json_encode(['msg'=>'修改成功','code'=>0]);
+        }else{
+            return json_encode(['msg'=>'未修改','code'=>1]);
+        }
+    }
+    //退出
+    public function quit(){
+        session()->pull('admin_id');
+        session()->pull('admin_name');
+        return redirect('adminLogin');
     }
 }
