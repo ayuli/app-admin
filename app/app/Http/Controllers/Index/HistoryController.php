@@ -39,7 +39,7 @@ class HistoryController extends Controller
         $uid = $request->uid;
         $res = DB::table('app_history')->join('app_goods','app_goods.goods_id','=','app_history.goods_id')->where('user_id',$uid)->get();
         foreach($res as $k =>$v){
-            $res[$k]->add_htime=date("Y-m-d H:i:s",$res[$k]->add_htim);
+            $res[$k]->add_htime=date("Y-m-d H:i:s",$res[$k]->add_htime);
         }
         return $res;
     }
