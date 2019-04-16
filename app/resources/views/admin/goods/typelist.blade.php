@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>管理员添加-有点</title>
+    <title>类型添加-有点</title>
     <link rel="stylesheet" type="text/css" href="css/css.css" />
     <script src="layui/layui.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -90,17 +90,17 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">管理员管理</a>
+                <a href="#">类型管理</a>
                 &nbsp;-
             </span>
-            &nbsp;角色展示
+            &nbsp;类型展示
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         {{--<div class="banneradd bor">--}}
         <div class="baTopNo">
-            <span>角色展示</span>
+            <span>类型展示</span>
         </div>
         <div class="baBody">
 
