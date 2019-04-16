@@ -94,8 +94,10 @@ Route::post('typeUpdateDo',"Admin\AdminController@typeUpdateDo");//类型修改�
 
 Route::get('attrAdd',"Admin\GoodsController@attrAdd"); //商品添加属性页面
 Route::post('attrAddDo',"Admin\GoodsController@attrAddDo"); //商品添加属性执行
+Route::get('attrShow',"Admin\GoodsController@attrShow"); //商品添加属性执行
 Route::get('attrUpdate',"Admin\GoodsController@attrUpdate"); //商品属性修改
 Route::post('attrUpdateDo',"Admin\GoodsController@attrUpdateDo"); //商品属性修改执行
+Route::get('attrDelete',"Admin\GoodsController@attrDelete"); //商品属性修改执行
 
 
 //前台登陆

@@ -83,7 +83,7 @@
             $.post(url,form,function(res){
                 alert(res.msg);
                 if(res.code==1){
-                    location.href="attrShow";
+                    location.href="attrShow?type_id="+res.type_id;
                 }
             },'json');
         });

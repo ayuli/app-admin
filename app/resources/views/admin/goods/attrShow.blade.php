@@ -91,38 +91,41 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">管理员管理</a>
+                <a href="#">属性管理</a>
                 &nbsp;-
             </span>
-            &nbsp;角色展示
+            &nbsp;属性展示
         </div>
     </div>
     <div class="page ">
         <!-- 上传广告页面样式 -->
         {{--<div class="banneradd bor">--}}
         <div class="baTopNo">
-            <span>角色展示</span>
+            <span>当前类型：{{$type_name}}</span>
+            <a href="attrAdd?type_id={{$type_id}}" style="float: right;margin-top:10px;"><button class="layui-btn layui-btn-radius">属性添加</button></a>
+
         </div>
         <div class="baBody">
 
             <table border="1" cellspacing="0" cellpadding="0">
                 <tr>
-                <tr>
                     <td width="120px" class="tdColor tdC">序号</td>
                     <td width="400px" class="tdColor">属性名称</td>
-                    <td width="400px" class="tdColor">添加时间</td>
+                    <td width="400px" class="tdColor">录入方式</td>
+                    <td width="400px" class="tdColor">可选值</td>
                     <td width="180px" class="tdColor">操作</td>
                 </tr>
-                @foreach($typeinfo as $v)
                 </tr>
-                <td class="abc" height="60">{{$v->type_id}}</td>
-                <td class="abc">🍖{{$v->type_name}}</td>
-                <td><?php echo date("Y-m-d H:i:s",$v->createtime)?></td>
-                <td type_id={{$v->type_id}}>
-                    <a href="attrShow?type_id={{$v->type_id}}"><button class="layui-btn layui-btn-radius">类型属性</button></a>
-                    <a href="typeUpdate?type_id={{$v->type_id}}"><img class="operation" src="img/update.png"></a>
-                    <img class="operation delban" src="img/delete.png">
-                </td>
+                @foreach($attrInfo as $v)
+                <tr>
+                    <td class="abc" height="60">{{$v->attr_id}}</td>
+                    <td class="abc">🍖{{$v->attr_name}}</td>
+                    <td></td>
+                    <td>{{$v->attr_values}}</td>
+                    <td attr_id={{$v->attr_id}}>
+                        <a href="attrUpdate?attr_id={{$v->attr_id}}"><img class="operation" src="img/update.png"></a>
+                        <img class="operation delban" src="img/delete.png">
+                    </td>
                 </tr>
                 @endforeach
             </table>
@@ -131,7 +134,7 @@
     <div class="paging">
         <div id="pull_right">
             <div class="pull-right">
-                {!! $typeinfo->render() !!}
+                {!! $attrInfo->render() !!}
             </div>
         </div>
     </div>
@@ -146,20 +149,21 @@
         var layer = layui.layer;
         $('.delban').click(function(){
             var _this = $(this);
-//            alert(111)
-            var type_id = $(this).parent().attr('type_id');
-
+            var attr_id = $(this).parent().attr('attr_id');
             layer.open({
                 type:0,
                 content: '是否确认删除？',
                 btn:['确认','取消'],
                 yes:function(index,layero){
-                    $.post(
-                        'typeDel',
-                        {type_id:type_id},
+                    $.get(
+                        'attrDelete',
+                        {attr_id:attr_id},
                         function(res){
+                            console.log(res);
                             layer.msg(res.msg);
-                            _this.parents('tr').remove();
+                            if(res.code==1){
+                                _this.parents('tr').remove();
+                            }
                         },'json'
                     )
                 },
