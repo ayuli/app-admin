@@ -50,8 +50,9 @@ class UserController extends Controller
         }
     }
     //个人中心页面展示数据
-    public function  userCenter(){
-        $user = DB::table('app_user')->first();
+    public function  userCenter(Request $request){
+        $uid = $request->uid;
+        $user = DB::table('app_user')->where('user_name',$uid)->first();
         $username = $user->user_name;
         $userscore = $user->user_score;
         $pay1 = DB::table('app_order')->where('order_status',1)->count();
