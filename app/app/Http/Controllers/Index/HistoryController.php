@@ -16,7 +16,7 @@ class HistoryController extends Controller
         $info = array(
             'user_id'=>$uid,
             'goods_id'=>$goodsis,
-            'add_time'=>$time
+            'add_htime'=>$time
         );
         $data = array(
             'goods_id'=>$goodsis,
@@ -38,7 +38,9 @@ class HistoryController extends Controller
     public function showhistory(Request $request){
         $uid = $request->uid;
         $res = DB::table('app_history')->join('app_goods','app_goods.goods_id','=','app_history.goods_id')->where('user_id',$uid)->get();
-        print_r($res);exit;
+        foreach($res as $k =>$v){
+            $res[$k]->add_htime=date("Y-m-d H:i:s",$res[$k]->add_htim);
+        }
         return $res;
     }
 }
