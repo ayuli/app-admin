@@ -24,7 +24,7 @@ class HistoryController extends Controller
         );
         $selectgoods = DB::table('app_history')->where($data)->first();
         if ($selectgoods){
-            $res = DB::table('app_history')->update($info);
+            $res = DB::table('app_history')->where('goods_id',$goodsis)->update($info);
         }else{
             $res = DB::table('app_history')->insert($info);
         }
