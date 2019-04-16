@@ -115,14 +115,14 @@
                 <table border="1" cellspacing="0" cellpadding="0">
                     <tr>
                         <td width="66px" class="tdColor tdC">id</td>
-                        <td width="130px" class="tdColor">商品名称</td>
+                        <td width="280px" class="tdColor">商品名称</td>
                         <td width="130px" class="tdColor">商品分类</td>
                         <td width="130px" class="tdColor">商品品牌</td>
                         <td width="130px" class="tdColor">商品价格</td>
                         <td width="100px" class="tdColor">是否精品</td>
                         <td width="100px" class="tdColor">是否新品</td>
                         <td width="100px" class="tdColor">是否热卖</td>
-                        <td width="400px" class="tdColor">操作</td>
+                        <td width="300px" class="tdColor">操作</td>
                     </tr>
                     @foreach($goods_info as $k=>$v)
                         <tr goods_id="{{$v->goods_id}}">
@@ -161,8 +161,8 @@
                 </table>
                 <div class="paging">
                     <div id="pull_right">
-                        <div class="pull-right">
-                            {{--{!! $goods_info->render() !!}--}}
+                        <div class="pull-right" >
+                            {!! $goods_info->render() !!}
                         </div>
                     </div>
                 </div>

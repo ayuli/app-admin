@@ -71,10 +71,14 @@
                                 <tr>
                                     <td class="label">商品分类：</td>
                                     <td>
+
                                         <select name="cate_id" class="form-control">
-                                            <option value="0">请选择...</option>
-                                            <option value="1">分类</option>
+                                            <option value="0">--请选择--</option>
+                                            @foreach($cateInfo as $v)
+                                                <option value="{{$v['cate_id']}}">{{$v['level']}}{{$v['cate_name']}}</option>
+                                            @endforeach
                                         </select>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -82,7 +86,9 @@
                                     <td>
                                         <select name="brand_id" class="form-control" >
                                             <option value="0">请选择...</option>
-                                            <option value="1">品牌</option>
+                                            @foreach($brandInfo as $k=>$v)
+                                            <option value="{{$v->brand_id}}">{{$v->brand_name}}</option>
+                                            @endforeach
                                         </select>
                                     </td>
                                 </tr>

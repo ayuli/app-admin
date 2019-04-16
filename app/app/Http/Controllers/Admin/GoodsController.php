@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Model\CateModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -10,8 +11,11 @@ class GoodsController extends Controller
 {
     //商品添加页面
     public function goodsAdd(){
+        $cate_all = CateModel::where(['is_del'=>0])->get();
+        $cateInfo = getCateInfo($cate_all);
+        $brandInfo=DB::table('app_brand')->where('is_del',0)->get();
         $typeInfo=DB::table('app_type')->get();
-        return view('admin.goods.goodsAdd',['typeInfo'=>$typeInfo]);
+        return view('admin.goods.goodsAdd',['cateInfo'=>$cateInfo,'brandInfo'=>$brandInfo,'typeInfo'=>$typeInfo]);
     }
 
     //商品添加执行页面
@@ -160,11 +164,12 @@ class GoodsController extends Controller
 
     //商品展示
     public function goodsShow(){
+        $num=10;
         $goods_info=DB::table('app_goods')
                     ->where('app_goods.is_del',1)
                     ->join('app_cate','app_cate.cate_id','=','app_goods.cate_id')
                     ->join('app_brand','app_brand.brand_id','=','app_goods.brand_id')
-                    ->get();
+                    ->paginate($num);
         foreach($goods_info as $k=>$v){
             if($v->is_hot==1){
                 $goods_info[$k]->is_hot='√';
@@ -196,8 +201,13 @@ class GoodsController extends Controller
         if(!empty($goodsInfo->goods_imgs)){
             $goodsInfo->goods_imgs=explode('|',$goodsInfo->goods_imgs);
         }
+
+        $cate_all = CateModel::where(['is_del'=>0])->get();
+        $cateInfo = getCateInfo($cate_all);
+        $brandInfo=DB::table('app_brand')->where('is_del',0)->get();
         $typeInfo=DB::table('app_type')->get();
-        return view('admin.goods.goodsUpdate',['goodsInfo'=>$goodsInfo,'typeInfo'=>$typeInfo]);
+
+        return view('admin.goods.goodsUpdate',['cateInfo'=>$cateInfo,'goodsInfo'=>$goodsInfo,'brandInfo'=>$brandInfo,'typeInfo'=>$typeInfo]);
     }
 
     //商品修改执行
@@ -261,21 +271,24 @@ class GoodsController extends Controller
         $res=DB::table('app_goods')->where('goods_id',$goods_id)->update($goods_insert);
         if($res){
             if(!empty($data['type_id'])) {
-                if(isset($data['attr_value_list']) && isset($data['attr_price_list'])){
+                    $attrWhere=[];
+                    $attrInsert=[];
                     $attr_price_list=$data['attr_price_list'];
                     $attr_values_list=$data['attr_value_list'];
                     foreach ($attr_values_list as $k => $v) {
                         if (!empty($v)) {
                             if (is_array($v)) {
                                 foreach ($v as $key => $val) {
-                                    $attrWhere[] = [
-                                        'attr_value' => $val,
-                                        'attr_price' => $attr_price_list[$k][$key]
-                                    ];
-                                    $attrInsert[] = [
-                                        'goods_id' => $goods_id,
-                                        'attr_id' => $k
-                                    ];
+                                    if($val!=""){
+                                        $attrWhere[] = [
+                                            'attr_value' => $val,
+                                            'attr_price' => $attr_price_list[$k][$key]
+                                        ];
+                                        $attrInsert[] = [
+                                            'goods_id' => $goods_id,
+                                            'attr_id' => $k
+                                        ];
+                                    }
                                 }
                             } else {
                                 $attrWhere[] = [
@@ -289,10 +302,6 @@ class GoodsController extends Controller
                             }
                         }
                     }
-                }
-
-                $attrInsert=[];
-                $attrWhere=[];
 
             }
             if(!empty($attrWhere)) {
