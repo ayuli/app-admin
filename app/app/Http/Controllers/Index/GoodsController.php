@@ -14,15 +14,23 @@ class GoodsController extends Controller
     public function goods(Request $request)
     {
         $type = $request->input('type');
-        if($type=='all'){
-            $goods = GoodsModel::get();
-            $data = [
-                'code'  => 0,
-                'data'  =>$goods
-            ];
-            if($goods){
+        if($type=='all'){   //流加载
+
+            $page = $request->input('page');
+            $page_num = 6;
+
+            $start = ($page-1)*$page_num;
+//        $start+$page_num-1;
+            $arr = GoodsModel::offset($start)->limit($page_num)->get();
+            $count = count($arr);
+            if($count){
+                $data = ['code'  => 0, 'data'  =>$arr];
+                return json_encode($data,JSON_UNESCAPED_UNICODE);
+            }else{
+                $data = [ 'code'=>1102 , 'msg'=>'没有更多了!'];
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
+
         }else if ($type=='hot'){
             $goods = GoodsModel::where(['is_hot'=>1])->limit(8)->get();
             $data = [
@@ -41,6 +49,17 @@ class GoodsController extends Controller
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
+        }else if($type=='new'){
+            $goods = GoodsModel::where(['is_best'=>1])->limit(8)->get();
+            $data = [
+                'code'  => 0,
+                'data'  =>$goods
+            ];
+            if($goods){
+                return json_encode($data,JSON_UNESCAPED_UNICODE);
+            }
+        }else if($type=='liu'){     //流加载
+
         }
 
 
