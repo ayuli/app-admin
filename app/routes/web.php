@@ -109,7 +109,7 @@ Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页
 
 //添加浏览记录
 Route::post('/addhistory','Index\HistoryController@addhistory'); //添加浏览记录
-Route::post('/addhistory','Index\HistoryController@addhistory'); //浏览记录展示
+Route::post('/showhistory','Index\HistoryController@showhistory'); //浏览记录展示
 
 //收货地址
 Route::get('/getregion',"Index\AddressController@getregion");    //三级联动
