@@ -48,7 +48,7 @@ class GoodsController extends Controller
                 $data = ['code'  => 0, 'data'  =>$arr];
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }else{
-                $data = [ 'code'=>1102 , 'msg'=>'没有更多了!'];
+                $data = [ 'code' =>1102 , 'msg'=>'没有更多了!'];
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
         }else if($type=='best'){
