@@ -36,7 +36,7 @@ class ZhaoController extends Controller
         }
         $price = [];
         foreach($data as $k=>$v){
-            $price[$k]['attr_price']="";
+            $price[$k]['attr_price']=0;
             foreach($v as $kk=>$vv){
                 $price[$k]['attr_price'] += $vv->attr_price;
             }
