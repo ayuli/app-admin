@@ -103,14 +103,4 @@ class GoodsController extends Controller
 
     }
 
-
-    /**
-     * 搜索
-     */
-    public function goodsSearch(Request $request)
-    {
-
-
-
-    }
 }

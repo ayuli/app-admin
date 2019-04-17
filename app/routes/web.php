@@ -147,7 +147,6 @@ Route::post('cartAdd','Index\CartController@cartAdd'); //购物车添加
 Route::get('/cartshow','Index\CartController@cartshow'); //展示购物车列表
 
 Route::get('/indexgoods','Index\GoodsController@goods'); //所有商品列表
-Route::post('/goodssearch','Index\GoodsController@goodsSearch'); //所有商品数据搜索
 
 
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //所有商品列表
