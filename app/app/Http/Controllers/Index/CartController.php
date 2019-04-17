@@ -33,18 +33,23 @@ class CartController extends Controller
         $goods_num=$data['goods_num'];
         $user_id=$data['user_id'];
         $goods_id=$data['goods_id'];
-        $goods_attr=$data['goods_attr'];
-        $attr_price=DB::table('app_goods_attr')->whereIn('goods_attr_id',explode(',',$goods_attr))->pluck('attr_price')->toArray();
-        $attr_price=array_sum($attr_price);
         $goodsInfo=DB::table('app_goods')->where('goods_id',$goods_id)->first();
         $goods_price=$goodsInfo->goods_price;
-        $goods_price=$goods_price+$attr_price;
+        $cartInsert=[];
+        if(isset($data['goods_attr'])){
+            $goods_attr=$data['goods_attr'];
+            $attr_price=DB::table('app_goods_attr')->whereIn('goods_attr_id',explode(',',$goods_attr))->pluck('attr_price')->toArray();
+            $attr_price=array_sum($attr_price);
+            $goods_price=$goods_price+$attr_price;
+            $cartInsert['goods_attr_id']=$goods_attr;
+        }
+
         $total_price=$goods_price*$goods_num;
+
         $cartInsert=[
             'goods_id'=>$goods_id,
             'goods_num'=>$goods_num,
-            'goods_attr_id'=>$goods_attr,
-            'goods_name'=>$goodsInfo->goods_name,
+            'goods_name'=>"$goodsInfo->goods_name",
             'goods_price'=>$goods_price,
             'total_price'=>$total_price,
             'user_id'=>$user_id,
