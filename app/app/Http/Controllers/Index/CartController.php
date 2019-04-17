@@ -37,17 +37,17 @@ class CartController extends Controller
         $goods_price=$goodsInfo->goods_price;
         $cartInsert=[];
         if(isset($data['goods_attr'])){
-            $goods_attr=$data['goods_attr'];
+			$goods_attr=$data['goods_attr'];
             $attr_price=DB::table('app_goods_attr')->whereIn('goods_attr_id',explode(',',$goods_attr))->pluck('attr_price')->toArray();
             $attr_price=array_sum($attr_price);
             $goods_price=$goods_price+$attr_price;
-            $cartInsert['goods_attr_id']=$goods_attr;
-        }
+		}
 
         $total_price=$goods_price*$goods_num;
 
         $cartInsert=[
             'goods_id'=>$goods_id,
+			'goods_attr_id'=>isset($data['goods_attr'])?$goods_attr:"",
             'goods_num'=>$goods_num,
             'goods_name'=>"$goodsInfo->goods_name",
             'goods_price'=>$goods_price,
@@ -56,7 +56,9 @@ class CartController extends Controller
             'is_delete'=>1,
             'add_time'=>time()
         ];
-        $res=DB::table('app_cart')->insert($cartInsert);
+		print_r($cartInsert);
+		die;
+		$res=DB::table('app_cart')->insert($cartInsert);
         if($res){
             echo json_encode(['code'=>1,'msg'=>'加入购物车成功！']);
         }else{
