@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
+    //三级联动
     public function getregion(Request $request){
         $pid = $request->input('pid',1);
         $regin = DB::table('app_region')->where('p_id',$pid)->get();
@@ -15,11 +16,13 @@ class AddressController extends Controller
         return $data;
 
     }
+    //查询所有三级联动id
     public function selregion(){
         $regin = DB::table('app_region')->get();
         $data = json_decode($regin,1);
         return $data;
     }
+    //添加收货地址
     public function address(Request $request){
         $consignee_name = $request->input('consignee_name');
         $detailed_address = $request->input('detailed_address');
@@ -48,6 +51,7 @@ class AddressController extends Controller
             return 2;   //添加失败
         }
     }
+    //修改收获地址
     public function upaddress(Request $request){
         $consignee_name = $request->input('consignee_name');
         $detailed_address = $request->input('detailed_address');
@@ -77,7 +81,8 @@ class AddressController extends Controller
             return 2;   //修改失败
         }
     }
-        public function addressGet(Request $request){
+        //查询收获地址
+    public function addressGet(Request $request){
             $name = $request->session()->get('user_name');
             if($name){
                 $info = DB::table('app_address')->where('user_id',$name)->get();
@@ -87,5 +92,15 @@ class AddressController extends Controller
             }else{
                 return 2;   //请先登陆
             }
+    }
+        //删除收获地址
+    public function deladdress(Request $request){
+        $id = $request->id;
+        $res = DB::table('app_address')->where('id',$id)->delete();
+        if($res){
+            return 1;
+        }else{
+            return 2;
         }
+    }
 }

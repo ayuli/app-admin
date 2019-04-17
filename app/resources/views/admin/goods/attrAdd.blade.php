@@ -19,7 +19,7 @@
                     <select name="type_id" class="form-control">
                         <option value="0" >请选择所属商品类型</option>
                         @foreach($typeInfo as $k=>$v)
-                        <option value="{{$v->type_id}}" @if(!empty(!empty($tid)))  @if($v->type_id == $tid ) selected @endif @endif >{{$v->type_name}}</option>
+                        <option value="{{$v->type_id}}" @if(!empty(!empty($type_id)))  @if($v->type_id == $type_id ) selected @endif @endif >{{$v->type_name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -76,7 +76,7 @@
             $.post(url,form,function(res){
                 alert(res.msg);
                 if(res.code==1){
-                    location.href="attrShow";
+                    location.href="attrShow?type_id="+res.type_id;
                 }
             },'json');
         });

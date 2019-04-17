@@ -359,7 +359,10 @@ class AdminController extends Controller
     }
     //优惠券展示
     public function couponList(){
-        $couponinfo = DB::table('app_coupon')->where('coupon_del',0)->paginate(4);
+        $couponinfo = DB::table('app_coupon')
+            ->join('app_goods','app_coupon.goods_id','=','app_goods.goods_id')
+            ->where('coupon_del',0)
+            ->paginate(4);
         return view('admin.coupon.couponlist',['couponinfo'=>$couponinfo]);
     }
     //优惠券删除
@@ -433,7 +436,7 @@ class AdminController extends Controller
         }
     }
     //类型展示页面
-    public function typeList(Request $request){
+    public function typeList(){
         $typeinfo = DB::table('app_type')->where('is_del',0)->paginate(4);
         return view('admin.goods.typelist',['typeinfo'=>$typeinfo]);
     }
