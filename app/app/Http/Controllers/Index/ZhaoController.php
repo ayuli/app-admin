@@ -13,7 +13,7 @@ class ZhaoController extends Controller
     //前台详情页
     public function indexGoodsDetail(Request $request){
         $goods_id = $request->input('goods_id');
-//        $goods_id = 181;
+//        $goods_id = 186;
         $goodsinfo = DB::table('app_goods')->where('goods_id',$goods_id)->first();
         $goodsinfo->add_time = date('Y-m-d H:i:s',$goodsinfo->add_time);
 
@@ -36,7 +36,7 @@ class ZhaoController extends Controller
         }
         $price = [];
         foreach($data as $k=>$v){
-            $price[$k]['attr_price']=0;
+            $price[$k]['attr_price']="";
             foreach($v as $kk=>$vv){
                 $price[$k]['attr_price'] += $vv->attr_price;
             }
