@@ -78,6 +78,22 @@ class GoodsController extends Controller
                 $data = [ 'code'=>1102 , 'msg'=>'没有更多了!'];
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
+        }else if($type=='search'){
+            $search = $request->input('search');
+
+            $page = $request->input('page');
+            $page_num = 6;
+
+            $start = ($page - 1) * $page_num;
+            $arr = GoodsModel::where('goods_name','like',"%$search%")->offset($start)->limit($page_num)->get();
+            $count = count($arr);
+            if ($count) {
+                $data = ['code' => 0, 'data' => $arr];
+                return json_encode($data, JSON_UNESCAPED_UNICODE);
+            } else {
+                $data = ['code' => 1102, 'msg' => '没有更多了!'];
+                return json_encode($data, JSON_UNESCAPED_UNICODE);
+            }
         }
 
 
@@ -89,21 +105,7 @@ class GoodsController extends Controller
      */
     public function goodsSearch(Request $request)
     {
-        $search = $request->input('search');
 
-        $page = $request->input('page');
-        $page_num = 6;
-
-        $start = ($page - 1) * $page_num;
-        $arr = GoodsModel::where('goods_name','like',"%$search%")->offset($start)->limit($page_num)->get();
-        $count = count($arr);
-        if ($count) {
-            $data = ['code' => 0, 'data' => $arr];
-            return json_encode($data, JSON_UNESCAPED_UNICODE);
-        } else {
-            $data = ['code' => 1102, 'msg' => '没有更多了!'];
-            return json_encode($data, JSON_UNESCAPED_UNICODE);
-        }
 
 
     }
