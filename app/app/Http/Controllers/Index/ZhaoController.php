@@ -17,22 +17,27 @@ class ZhaoController extends Controller
         $goodsinfo = DB::table('app_goods')->where('goods_id',$goods_id)->first();
         $goodsinfo->add_time = date('Y-m-d H:i:s',$goodsinfo->add_time);
 
-//        print_r($goodsinfo);exit;
-        $goods_attr = DB::table('app_product')->where('goods_id',$goods_id)->get();
+        $goods_attr = DB::table('app_product')->where('goods_id',$goods_id)->pluck('goods_attr');
 
         $data = [];
         foreach($goods_attr as $v){
             $data[] = DB::table('app_goods_attr')
-                ->whereIn('goods_attr_id',explode(',',$v->goods_attr))
+                ->whereIn('goods_attr_id',explode(',',$v))
                 ->get();
         }
         $arr=[];
         foreach($data as $k=>$v){
-            $arr[$k]="";
+            $arr[$k]='';
+            $arr[$k]['attr_value']="";
+            $arr[$k]['attr_price']="";
+            $arr[$k]['goods_attr']="";
             foreach($v as $kk=>$vv){
-                $arr[$k] .= $vv->attr_value.' ';
+                $arr[$k]['attr_value'] .= $vv->attr_value.' ';
+                $arr[$k]['attr_price'] += $vv->attr_price;
+                $arr[$k]['goods_attr']  = $goods_attr[$k];
             }
         }
+//        print_r($arr);exit;
         return json_encode(['goodsInfo'=>$goodsinfo,'attrInfo'=>$arr]);
     }
 
