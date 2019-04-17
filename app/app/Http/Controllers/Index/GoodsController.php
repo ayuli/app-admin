@@ -57,7 +57,7 @@ class GoodsController extends Controller
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
-        }else if($type=='price'){
+        }else if($type=='price'){   //价格
             $page = $request->input('page');
             $page_num = 6;
 
