@@ -169,6 +169,7 @@ class GoodsController extends Controller
                     ->where('app_goods.is_del',1)
                     ->join('app_cate','app_cate.cate_id','=','app_goods.cate_id')
                     ->join('app_brand','app_brand.brand_id','=','app_goods.brand_id')
+                    ->orderBy('goods_id','asc')
                     ->paginate($num);
         foreach($goods_info as $k=>$v){
             if($v->is_hot==1){
