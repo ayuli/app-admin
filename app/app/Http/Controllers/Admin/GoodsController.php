@@ -374,6 +374,7 @@ class GoodsController extends Controller
         $product_number=$data['product_number'];
         $count=count($data['product_number']);
         $goods_info=DB::table('app_goods')->where('goods_id',$goods_id)->first();
+        $goods_num=$goods_info->goods_number;
         $goods_sn=$goods_info->goods_sn;
         for($i=0;$i<$count;$i++){
 
@@ -389,7 +390,7 @@ class GoodsController extends Controller
 
             }
         }
-        $goods_num=array_sum($product_number);
+        $goods_num+=array_sum($product_number);
 
         $res=DB::table('app_goods')->where('goods_id',$goods_id)->update(['goods_number'=>$goods_num]);
         if($res){
