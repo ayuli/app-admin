@@ -33,11 +33,14 @@ class ZhaoController extends Controller
             $arr[$k]['attr_value']="";
             $arr[$k]['attr_price']="";
             $arr[$k]['goods_attr']="";
-            foreach($data[$k] as $kk=>$vv){
-                $arr[$k]['attr_value'] .= $vv->attr_value.' ';
-                $arr[$k]['attr_price'] += $vv->attr_price;
-                $arr[$k]['goods_attr']  = $goods_attr[$k];
+            if(is_array($data[$k])){
+                foreach($data[$k] as $kk=>$vv){
+                    $arr[$k]['attr_value'] .= $vv->attr_value.' ';
+                    $arr[$k]['attr_price'] += $vv->attr_price;
+                    $arr[$k]['goods_attr']  = $goods_attr[$k];
+                }
             }
+
         }
 
 //        print_r($arr);exit;
