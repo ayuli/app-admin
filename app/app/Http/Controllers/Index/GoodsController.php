@@ -14,6 +14,7 @@ class GoodsController extends Controller
     public function goods(Request $request)
     {
         $type = $request->input('type','all');
+        $search = $request->input('search');
         if($type=='all'){   //流加载
 
             $page = $request->input('page');
@@ -37,7 +38,11 @@ class GoodsController extends Controller
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
         }else if($type=='new'){
-            $goods = GoodsModel::where(['is_new'=>1])->limit(8)->get();
+            $page = $request->input('page');
+            $page_num = 6;
+
+            $start = ($page-1)*$page_num;
+            $goods = GoodsModel::where(['is_new'=>1])->offset($start)->limit($page_num)->get();
             $data = ['code'  => 0, 'data'  =>$goods];
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
@@ -79,11 +84,8 @@ class GoodsController extends Controller
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
         }else if($type=='search'){
-            $search = $request->input('search');
-
             $page = $request->input('page');
             $page_num = 6;
-
             $start = ($page - 1) * $page_num;
             $arr = GoodsModel::where('goods_name','like',"%$search%")->offset($start)->limit($page_num)->get();
             $count = count($arr);
