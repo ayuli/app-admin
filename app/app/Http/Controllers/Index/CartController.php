@@ -56,8 +56,6 @@ class CartController extends Controller
             'is_delete'=>1,
             'add_time'=>time()
         ];
-		print_r($cartInsert);
-		die;
 		$res=DB::table('app_cart')->insert($cartInsert);
         if($res){
             echo json_encode(['code'=>1,'msg'=>'加入购物车成功！']);
