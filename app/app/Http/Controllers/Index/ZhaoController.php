@@ -12,46 +12,47 @@ class ZhaoController extends Controller
 {
     //前台详情页
     public function indexGoodsDetail(Request $request){
-        $info=getGoodsAttr(181,"11,13");
-        print_r($info);
 
-        die;
         $goods_id = $request->input('goods_id');
         $goodsinfo = DB::table('app_goods')->where('goods_id',$goods_id)->first();
         $goodsinfo->add_time = date('Y-m-d H:i:s',$goodsinfo->add_time);
 
         $goods_attr = DB::table('app_product')->where('goods_id',$goods_id)->pluck('goods_attr');
 
-        $data = [];
-        foreach($goods_attr as $v){
-            $data[] = DB::table('app_goods_attr')
-                ->whereIn('goods_attr_id',explode(',',$v))
-                ->get();
-        }
-
-        $arr=[];
-        foreach($data as $k=>$v){
-            $arr[$k]="";
-            foreach($v as $kk=>$vv){
-                $arr[$k] .= $vv->attr_value.' ';
-
-            }
-        }
-        $price = [];
-        foreach($data as $k=>$v){
-            $price[$k]=0;
-            foreach($v as $kk=>$vv){
-                $price[$k] += $vv->attr_price;
+        if(count($goods_attr)!=0){
+            $data = [];
+            foreach($goods_attr as $v){
+                $data[] = DB::table('app_goods_attr')
+                    ->whereIn('goods_attr_id',explode(',',$v))
+                    ->get();
             }
 
-        }
+            $arr=[];
+            foreach($data as $k=>$v){
+                $arr[$k]="";
+                foreach($v as $kk=>$vv){
+                    $arr[$k] .= $vv->attr_value.' ';
 
-        $info=[];
+                }
+            }
+            $price = [];
+            foreach($data as $k=>$v){
+                $price[$k]=0;
+                foreach($v as $kk=>$vv){
+                    $price[$k] += $vv->attr_price;
+                }
 
-        foreach($data as $k=>$v){
-            $info[$k]['attr_price']=$price[$k];
-            $info[$k]['goods_attr']=$goods_attr[$k];
-            $info[$k]['attr_value']=$arr[$k];
+            }
+
+            $info=[];
+
+            foreach($data as $k=>$v){
+                $info[$k]['attr_price']=$price[$k];
+                $info[$k]['goods_attr']=$goods_attr[$k];
+                $info[$k]['attr_value']=$arr[$k];
+            }
+        }else{
+            $info="";
         }
 
         return json_encode(['goodsInfo'=>$goodsinfo,'attrInfo'=>$info]);
