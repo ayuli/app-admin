@@ -18,4 +18,11 @@ function getCateInfo($data,$p_id=0,$level=0){
     return $info;
 }
 
+
+    //返回json格式
+    function returnJson($data)
+    {
+        return json_encode($data,JSON_UNESCAPED_UNICODE);
+    }
+
 ?>
