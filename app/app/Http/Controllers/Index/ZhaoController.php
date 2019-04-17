@@ -25,18 +25,21 @@ class ZhaoController extends Controller
                 ->whereIn('goods_attr_id',explode(',',$v))
                 ->get();
         }
+
         $arr=[];
-        foreach($data as $k=>$v){
-//            $arr[$k]='';
+
+        for($k=0;$k<count($data);$k++){
+            $arr[$k]='';
             $arr[$k]['attr_value']="";
             $arr[$k]['attr_price']="";
             $arr[$k]['goods_attr']="";
-            foreach($v as $kk=>$vv){
+            foreach($data[$k] as $kk=>$vv){
                 $arr[$k]['attr_value'] .= $vv->attr_value.' ';
                 $arr[$k]['attr_price'] += $vv->attr_price;
                 $arr[$k]['goods_attr']  = $goods_attr[$k];
             }
         }
+
 //        print_r($arr);exit;
         return json_encode(['goodsInfo'=>$goodsinfo,'attrInfo'=>$arr]);
     }
