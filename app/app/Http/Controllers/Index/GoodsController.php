@@ -16,10 +16,8 @@ class GoodsController extends Controller
         $type = $request->input('type','all');
         $search = $request->input('search');
         if($type=='all'){   //流加载
-
             $page = $request->input('page');
             $page_num = 6;
-
             $start = ($page-1)*$page_num;
             $arr = GoodsModel::offset($start)->limit($page_num)->get();
             $count = count($arr);

@@ -19,10 +19,13 @@ function getCateInfo($data,$p_id=0,$level=0){
 }
 
 
-    //返回json格式
-    function returnJson($data)
+
+    //成功信息
+    function returnJson($code,$msg)
     {
+        $data =  ['code'  => $code, 'msg'   => $msg];
         return json_encode($data,JSON_UNESCAPED_UNICODE);
+
     }
 
 ?>
