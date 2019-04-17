@@ -28,21 +28,30 @@ class ZhaoController extends Controller
 
         $arr=[];
         foreach($data as $k=>$v){
-            $arr[$k]['attr_value']="";
+            $arr[$k]="";
             foreach($v as $kk=>$vv){
-                $arr[$k]['attr_value'] .= $vv->attr_value.' ';
+                $arr[$k] .= $vv->attr_value.' ';
 
             }
         }
         $price = [];
         foreach($data as $k=>$v){
-            $price[$k]['attr_price']=0;
+            $price[$k]=0;
             foreach($v as $kk=>$vv){
-                $price[$k]['attr_price'] += $vv->attr_price;
+                $price[$k] += $vv->attr_price;
             }
 
         }
-        return json_encode(['goodsInfo'=>$goodsinfo,'attrInfo'=>$arr,'price'=>$price,'goods_attr'=>$goods_attr]);
+
+        $info=[];
+
+        foreach($data as $k=>$v){
+            $info[$k]['attr_price']=$price[$k];
+            $info[$k]['goods_attr']=$goods_attr[$k];
+            $info[$k]['attr_value']=$arr[$k];
+        }
+
+        return json_encode(['goodsInfo'=>$goodsinfo,'attrInfo'=>$info]);
     }
 
 //    //前台搜索
