@@ -144,4 +144,6 @@ Route::get('/collectionget','Index\CollController@collGet'); //展示收藏
 Route::get('/cartshow','Index\CartController@cartshow'); //展示购物车列表
 
 Route::get('/indexgoods','Index\GoodsController@goods'); //所有商品列表
-Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //所有商品列表
+Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //前台详情页
+Route::post('/goodsSearch','Index\ZhaoController@goodsSearch'); //前台搜索
+Route::any('/indexCartDel','Index\ZhaoController@indexCartDel'); //前台订单页单删批删
