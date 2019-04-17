@@ -111,7 +111,7 @@ Route::get('/userCenter',"Index\UserController@userCenter");   //个人中心页
 Route::post('/addhistory','Index\HistoryController@addhistory'); //添加浏览记录
 Route::get('/showhistory','Index\HistoryController@showhistory'); //浏览记录展示
 Route::get('/delhistory','Index\HistoryController@delhistory'); //浏览记录展示
-Route::get('/delahistory','Index\HistoryController@dealhistory'); //浏览记录展示
+Route::get('/delahistory','Index\HistoryController@delahistory'); //浏览记录展示
 
 //收货地址
 Route::get('/getregion',"Index\AddressController@getregion");    //三级联动

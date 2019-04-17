@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "doctrine/instantiator": "1.0.x-dev",
         "fideloper/proxy": "~3.3",
         "gregwar/captcha": "1.*",
         "laravel/framework": "5.5.*",
