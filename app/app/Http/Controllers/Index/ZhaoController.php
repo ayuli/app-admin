@@ -12,8 +12,8 @@ class ZhaoController extends Controller
 {
     //前台详情页
     public function indexGoodsDetail(Request $request){
-        $goods_id = $request->input('goods_id');
-//        $goods_id = 186;
+//        $goods_id = $request->input('goods_id');
+        $goods_id = 186;
         $goodsinfo = DB::table('app_goods')->where('goods_id',$goods_id)->first();
         $goodsinfo->add_time = date('Y-m-d H:i:s',$goodsinfo->add_time);
 
@@ -27,24 +27,23 @@ class ZhaoController extends Controller
         }
 
         $arr=[];
+        foreach($data as $k=>$v){
+            $arr[$k]['attr_value']="";
+            foreach($v as $kk=>$vv){
+                $arr[$k]['attr_value'] .= $vv->attr_value.' ';
 
-        for($k=0;$k<count($data);$k++){
-            $arr[$k]='';
-            $arr[$k]->attr_value="";
-            $arr[$k]->attr_price="";
-            $arr[$k]->goods_attr="";
-            if(is_array($data[$k])){
-                foreach($data[$k] as $kk=>$vv){
-                    $arr[$k]->attr_value .= $vv->attr_value.' ';
-                    $arr[$k]->attr_price += $vv->attr_price;
-                    $arr[$k]->goods_attr  = $goods_attr[$k];
-                }
+            }
+        }
+        $price = [];
+        foreach($data as $k=>$v){
+            $price[$k]['attr_price']="";
+            foreach($v as $kk=>$vv){
+                $price[$k]['attr_price'] += $vv->attr_price;
             }
 
         }
-
-//        print_r($arr);exit;
-        return json_encode(['goodsInfo'=>$goodsinfo,'attrInfo'=>$arr]);
+        print_r($goods_attr);exit;
+        return json_encode(['goodsInfo'=>$goodsinfo,'attrInfo'=>$arr,'price'=>$price,'goods_attr'=>$goods_attr]);
     }
 
 //    //前台搜索
@@ -60,14 +59,11 @@ class ZhaoController extends Controller
 //    }
 
     //前台订单页单删批删
-    public function indexCartDel(Request $request){
-//        $goods_id=$request->input('goods_id');
-//        $user_id=$request->session()->get('user_id');
+//    public function indexCartDel(Request $request){
+////        $goods_id=$request->input('goods_id');
+////        $user_id=$request->session()->get('user_id');
 //        $user_id = 4;
-//        $goods_id =[
-//            [0]=>1,
-//            [1]=>2
-//        ];
+//        $goods_id = '1';
 //
 //        $cartUpdate=[
 //        'order_status'=>2,
@@ -80,5 +76,5 @@ class ZhaoController extends Controller
 //        }else{
 //            return json_encode(['code'=>2,'msg'=>'删除失败']);
 //        }
-    }
+//    }
 }
