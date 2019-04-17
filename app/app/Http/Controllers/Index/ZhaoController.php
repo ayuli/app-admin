@@ -27,7 +27,7 @@ class ZhaoController extends Controller
         }
         $arr=[];
         foreach($data as $k=>$v){
-            $arr[$k]='';
+//            $arr[$k]='';
             $arr[$k]['attr_value']="";
             $arr[$k]['attr_price']="";
             $arr[$k]['goods_attr']="";
@@ -57,19 +57,22 @@ class ZhaoController extends Controller
     public function indexCartDel(Request $request){
 //        $goods_id=$request->input('goods_id');
 //        $user_id=$request->session()->get('user_id');
-        $user_id = 4;
-        $goods_id = '1';
-
-        $cartUpdate=[
-        'order_status'=>2,
-        'total'=>0
-        ];
-        $res = CartModel::where('user_id',$user_id)->whereIn('goods_id',$goods_id)->update($cartUpdate);
-             print_r($res);exit;
-        if($res){
-            return json_encode(['code'=>1,'msg'=>'删除成功']);
-        }else{
-            return json_encode(['code'=>2,'msg'=>'删除失败']);
-        }
+//        $user_id = 4;
+//        $goods_id =[
+//            [0]=>1,
+//            [1]=>2
+//        ];
+//
+//        $cartUpdate=[
+//        'order_status'=>2,
+//        'total'=>0
+//        ];
+//        $res = CartModel::where('user_id',$user_id)->whereIn('goods_id',$goods_id)->update($cartUpdate);
+//             print_r($res);exit;
+//        if($res){
+//            return json_encode(['code'=>1,'msg'=>'删除成功']);
+//        }else{
+//            return json_encode(['code'=>2,'msg'=>'删除失败']);
+//        }
     }
 }
