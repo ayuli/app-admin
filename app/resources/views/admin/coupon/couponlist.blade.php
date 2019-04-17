@@ -112,6 +112,7 @@
                     <td width="250px" class="tdColor">优惠券名称</td>
                     <td width="250px" class="tdColor">优惠券数量</td>
                     <td width="250px" class="tdColor">优惠券抵用价格</td>
+                    <td width="250px" class="tdColor">商品名称</td>
                     <td width="250px" class="tdColor">操作</td>
                 </tr>
                 @foreach($couponinfo as $v)
@@ -120,6 +121,7 @@
                 <td class="abc">{{$v->coupon_name}}</td>
                 <td class="abc">{{$v->coupon_num}}</td>
                 <td>{{$v->coupon_price}}</td>
+                <td>{{$v->goods_name}}</td>
                 <td coupon_id={{$v->coupon_id}}>
                     <a href="couponUpdate?coupon_id={{$v->coupon_id}}"><img class="operation" src="img/update.png"></a>
                     <img class="operation delban" src="img/delete.png"></td>

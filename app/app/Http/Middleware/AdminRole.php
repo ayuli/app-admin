@@ -35,7 +35,7 @@ class AdminRole
             }
             echo '您未拥有该权限';exit;
         }
-
-        return $next($request); //提示未登录
+//        echo '未登录';exit;
+        return $next($request);
     }
 }
