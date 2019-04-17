@@ -14,7 +14,7 @@ class CartController extends Controller
      */
     public function cartshow(){
         $where=[
-            'status'=>1
+            'is_detele'=>1
         ];
         $data=CartModel::where($where)
             ->join('app_goods','app_cart.goods_id','=','app_goods.goods_id')
