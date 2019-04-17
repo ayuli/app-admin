@@ -150,3 +150,6 @@ Route::post('/goodssearch','Index\GoodsController@goodsSearch'); //所有商品�
 
 
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //所有商品列表
+Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //前台详情页
+Route::any('/indexCartDel','Index\ZhaoController@indexCartDel'); //前台订单页单删批删
+
