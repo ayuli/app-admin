@@ -67,22 +67,25 @@ class ZhaoController extends Controller
 //    }
 
     //前台订单页单删批删
-//    public function indexCartDel(Request $request){
-////        $goods_id=$request->input('goods_id');
-////        $user_id=$request->session()->get('user_id');
+    public function indexCartDel(Request $request){
+        $goods_id=$request->input('goods_id');
+        $user_id=$request->session()->get('user_id');
 //        $user_id = 4;
-//        $goods_id = '1';
-//
-//        $cartUpdate=[
-//        'order_status'=>2,
-//        'total'=>0
+//        $goods_id = [
+//            0=>1,
+//            1=>2
 //        ];
-//        $res = CartModel::where('user_id',$user_id)->whereIn('goods_id',$goods_id)->update($cartUpdate);
+
+        $cartUpdate=[
+        'is_detele'=>2,
+        'total'=>0
+        ];
+        $res = CartModel::where('user_id',$user_id)->whereIn('goods_id',$goods_id)->update($cartUpdate);
 //             print_r($res);exit;
-//        if($res){
-//            return json_encode(['code'=>1,'msg'=>'删除成功']);
-//        }else{
-//            return json_encode(['code'=>2,'msg'=>'删除失败']);
-//        }
-//    }
+        if($res){
+            return json_encode(['code'=>1,'msg'=>'删除成功']);
+        }else{
+            return json_encode(['code'=>2,'msg'=>'删除失败']);
+        }
+    }
 }
