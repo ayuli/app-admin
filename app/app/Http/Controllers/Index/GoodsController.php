@@ -13,7 +13,7 @@ class GoodsController extends Controller
      */
     public function goods(Request $request)
     {
-        $type = $request->input('type');
+        $type = $request->input('type','all');
         if($type=='all'){   //流加载
 
             $page = $request->input('page');
@@ -32,28 +32,19 @@ class GoodsController extends Controller
 
         }else if ($type=='hot'){
             $goods = GoodsModel::where(['is_hot'=>1])->limit(8)->get();
-            $data = [
-                'code'  => 0,
-                'data'  =>$goods
-            ];
+            $data = ['code'  => 0, 'data'  =>$goods];
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
         }else if($type=='new'){
             $goods = GoodsModel::where(['is_new'=>1])->limit(8)->get();
-            $data = [
-                'code'  => 0,
-                'data'  =>$goods
-            ];
+            $data = ['code'  => 0, 'data'  =>$goods];
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
         }else if($type=='best'){
             $goods = GoodsModel::where(['is_best'=>1])->limit(8)->get();
-            $data = [
-                'code'  => 0,
-                'data'  =>$goods
-            ];
+            $data = ['code'  => 0, 'data'  =>$goods ];
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
