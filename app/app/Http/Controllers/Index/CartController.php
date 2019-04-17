@@ -34,7 +34,7 @@ class CartController extends Controller
         $user_id=$data['user_id'];
         $goods_id=$data['goods_id'];
         $goods_attr=$data['goods_attr'];
-        $attr_price=DB::table('app_goods_attr')->whereIn('goods_attr_id',explode(',',$goods_attr))->pluck('attr_price');
+        $attr_price=DB::table('app_goods_attr')->whereIn('goods_attr_id',explode(',',$goods_attr))->pluck('attr_price')->toArray();
         $attr_price=array_sum($attr_price);
         $goodsInfo=DB::table('app_goods')->where('goods_id',$goods_id)->first();
         $goods_price=$goodsInfo->goods_price;
