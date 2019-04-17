@@ -54,7 +54,7 @@ class HistoryController extends Controller
         }
     }
     //删除所有浏览记录
-    public function delahistory(){
+    public function dealhistory(){
         $res = DB::table('app_history')->delete();
         if($res){
             return 1;
