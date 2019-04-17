@@ -119,6 +119,8 @@ Route::get('/selregion',"Index\AddressController@selregion");    //查询三级�
 Route::post('/address',"Index\AddressController@address");   //添加收货地址
 Route::post('/upaddress',"Index\AddressController@upaddress");   //修改收货地址
 Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址展示
+Route::get('/deladdress',"Index\AddressController@deladdress");   //删除收货地址
+
 
 //订单展示
 Route::get('/orderget',"Admin\OrderController@orderGet");
