@@ -43,6 +43,7 @@ class CartController extends Controller
         $cartInsert=[
             'goods_id'=>$goods_id,
             'goods_num'=>$goods_num,
+            'goods_attr_id'=>$goods_attr,
             'goods_name'=>$goodsInfo->goods_name,
             'goods_price'=>$goods_price,
             'total_price'=>$total_price,
