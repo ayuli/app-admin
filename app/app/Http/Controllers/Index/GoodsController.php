@@ -48,17 +48,27 @@ class GoodsController extends Controller
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
-        }else if($type=='price'){   //价格
-            $arrows = $request->input('arrows');
+        }else if($type=='pricex'){   //价格 降序
             $page = $request->input('page');
             $page_num = 6;
 
             $start = ($page-1)*$page_num;
-            if($arrows=='上'){
-                $arr = GoodsModel::offset($start)->orderBy('goods_price','desc')->limit($page_num)->get();
-            }else if($arrows=='下'){
-                $arr = GoodsModel::offset($start)->orderBy('goods_price','asc')->limit($page_num)->get();
+            $arr = GoodsModel::offset($start)->orderBy('goods_price','desc')->limit($page_num)->get();
+
+            $count = count($arr);
+            if($count){
+                $data = ['code'  => 0, 'data'  =>$arr];
+                return json_encode($data,JSON_UNESCAPED_UNICODE);
+            }else{
+                $data = [ 'code'=>1102 , 'msg'=>'没有更多了!'];
+                return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
+        }else if($type=='prices'){   //价格 升序
+            $page = $request->input('page');
+            $page_num = 6;
+
+            $start = ($page-1)*$page_num;
+                $arr = GoodsModel::offset($start)->orderBy('goods_price','asc')->limit($page_num)->get();
 
             $count = count($arr);
             if($count){
