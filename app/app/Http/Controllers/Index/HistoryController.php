@@ -46,7 +46,7 @@ class HistoryController extends Controller
     //删除浏览记录
     public function delhistory(Request $request){
         $id = $request->id;
-        $res = DB::table('app_history')->where('id',$id)->delete();
+        $res = DB::table('app_history')->where('history_id',$id)->delete();
         if($res){
             return 1;
         }else{
