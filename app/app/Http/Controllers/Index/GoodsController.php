@@ -49,11 +49,17 @@ class GoodsController extends Controller
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
         }else if($type=='price'){   //价格
+            $arrows = $request->input('arrows');
             $page = $request->input('page');
             $page_num = 6;
 
             $start = ($page-1)*$page_num;
-            $arr = GoodsModel::offset($start)->orderBy('goods_price','desc')->limit($page_num)->get();
+            if($arrows=='↑'){
+                $arr = GoodsModel::offset($start)->orderBy('goods_price','desc')->limit($page_num)->get();
+            }else if($arrows=='↓'){
+                $arr = GoodsModel::offset($start)->orderBy('goods_price','asc')->limit($page_num)->get();
+            }
+
             $count = count($arr);
             if($count){
                 $data = ['code'  => 0, 'data'  =>$arr];
