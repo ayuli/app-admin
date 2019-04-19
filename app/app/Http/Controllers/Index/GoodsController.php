@@ -30,7 +30,7 @@ class GoodsController extends Controller
             }
 
         }else if ($type=='hot'){
-            $goods = GoodsModel::where(['is_hot'=>1])->limit(8)->get();
+            $goods = GoodsModel::where(['is_hot'=>1])->limit(6)->get();
             $data = ['code'  => 0, 'data'  =>$goods];
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
@@ -50,7 +50,7 @@ class GoodsController extends Controller
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
             }
         }else if($type=='best'){
-            $goods = GoodsModel::where(['is_best'=>1])->limit(8)->get();
+            $goods = GoodsModel::where(['is_best'=>1])->limit(6)->get();
             $data = ['code'  => 0, 'data'  =>$goods ];
             if($goods){
                 return json_encode($data,JSON_UNESCAPED_UNICODE);
