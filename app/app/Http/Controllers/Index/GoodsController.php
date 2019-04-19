@@ -123,7 +123,7 @@ class GoodsController extends Controller
 
         $count = count($arr);
         if ($count) {
-            $data = ['code' => 0, 'data' => $arr];
+            $data = ['code' => 0, 'data' => $arr['data']];
             return json_encode($data, JSON_UNESCAPED_UNICODE);
         } else {
             $data = ['code' => 1102, 'msg' => '没有更多了!'];
