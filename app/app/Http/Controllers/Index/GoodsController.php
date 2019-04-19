@@ -111,8 +111,8 @@ class GoodsController extends Controller
             $column="goods_price";
             $order="desc";
         }else{
-            $column="add_time";
-            $order="desc";
+            $column="goods_id";
+            $order="asc";
             $where=[
                 "$type"=>1
             ];
