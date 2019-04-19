@@ -120,7 +120,7 @@ class GoodsController extends Controller
 
 
         $arr = GoodsModel::where('goods_name','like',"%$search%")->where($where)->orderBy($column,$order)->paginate(6);
-        print_r($arr);die;
+
         $count = count($arr);
         if ($count) {
             $data = ['code' => 0, 'data' => $arr];
