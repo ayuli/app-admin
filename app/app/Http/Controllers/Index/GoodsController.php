@@ -99,31 +99,28 @@ class GoodsController extends Controller
 //                return json_encode($data, JSON_UNESCAPED_UNICODE);
 //            }
 //        }
-
         $type=$request->input('type');
-        $search=$request->input('search');
+        $search=$request->input('search'," ");
 
         $where=[];
 
         if($type=="pricex"){
-            $order=[
-                'goods_price'=>"asc"
-            ];
+            $column="goods_price";
+            $order="asc";
         }else if($type=="prices"){
-            $order=[
-                'goods_price'=>"desc"
-            ];
+            $column="goods_price";
+            $order="desc";
         }else{
-            $order=[
-                'add_time'=>'desc'
-            ];
+            $column="add_time";
+            $order="desc";
             $where=[
                 "$type"=>1
             ];
         }
 
-        $arr = GoodsModel::where('goods_name','like',"%$search%")->where($where)->orderBy($order)->paginate(6);
 
+        $arr = GoodsModel::where('goods_name','like',"%$search%")->where($where)->orderBy($column,$order)->paginate(6);
+        print_r($arr);die;
         $count = count($arr);
         if ($count) {
             $data = ['code' => 0, 'data' => $arr];

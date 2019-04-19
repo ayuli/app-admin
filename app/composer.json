@@ -6,7 +6,9 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "aliyun/aliyun-tablestore-sdk-php": "^4.1",
         "doctrine/instantiator": "1.0.x-dev",
+        "emmetltd/aliyun-php-sdk": "^1.0",
         "fideloper/proxy": "~3.3",
         "gregwar/captcha": "1.*",
         "laravel/framework": "5.5.*",
