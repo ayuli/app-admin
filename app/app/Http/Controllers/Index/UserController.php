@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
+use App\Model\UserModel;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cookie;
+
 class UserController extends Controller
 {
     //注册
@@ -92,4 +96,58 @@ class UserController extends Controller
             return 2;//未退出
         }
     }
+
+
+    /**
+     * 忘记密码  点击确认忘记密码
+     * 参数  user_name user_pwd user_pwd2 user_code
+     * return 1000 验证码以失效 1001 参数不能为空
+     *  1002 用户不存在 1003密码不一致 1004 验证码有误
+     * return 0  修改成功
+     */
+    public function forget(Request $request)
+    {
+        $user_name = $request->input('user_name');
+        $user_pwd = $request->input('user_pwd');
+        $user_pwd2 = $request->input('user_pwd2');
+        $user_code = $request->input('user_code');
+        $code = $request->cookie($user_name);
+        if($code==''){return returnJson('1000','验证码已失效');}
+        $user_info = UserModel::where(['user_name'=>$user_name])->first();
+        if($user_name==''||$user_pwd==''||$user_pwd2==''||$user_code=='')
+        {return returnJson('1001','参数不能为空');}
+        if(!$user_info){return returnJson('1002','用户不存在');}
+        if($user_pwd!=$user_pwd2){return returnJson('1003','密码输入不一致');}
+        if($user_code != $code){return returnJson('1004','验证码有误');}
+        $res = UserModel::where(['user_name'=>$user_name])->update(['user_pwd'=>md5($user_pwd)]); //存数据库
+        if($res)
+        {setcookie($user_name,'',-1); return returnJson('0','修改成功');}
+    }
+
+    /**
+     * 获取验证码
+     * 参数 user_name
+     * return 0 ,code
+     */
+    public function getVerCode(Request $request)
+    {
+        $user_name = $request->input('user_name');
+        $user_info = UserModel::where(['user_name'=>$user_name])->first();
+        if(!$user_info){
+            return returnJson('1001','用户不存在');
+        }
+        //生成验证码
+        $rand1 = rand(0,4);
+        $rand = rand(1000,9999);
+        $str_rand = str_shuffle($rand.$user_name);
+        $code = substr($str_rand,$rand1,6);
+        // 存数据库 或者缓存
+//        Redis::set('code',$code); //存缓存
+        Cookie::queue($user_name,$code,1); //存cookie
+//        UserModel::where(['user_name'=>$user_name])->update(['user_code'=>$code]); //存数据库
+        return returnJson('0','验证码为:'.$code);
+
+    }
+
+
 }

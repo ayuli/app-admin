@@ -153,3 +153,5 @@ Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //所�
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //前台详情页
 Route::any('/indexCartDel','Index\ZhaoController@indexCartDel'); //前台订单页单删批删
 
+Route::get('/getvercode','Index\UserController@getVerCode'); //获取验证码
+Route::post('/forget','Index\UserController@forget'); //点击修改密码
