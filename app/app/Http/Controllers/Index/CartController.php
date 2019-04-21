@@ -33,34 +33,43 @@ class CartController extends Controller
         $goods_num=$data['goods_num'];
         $user_id=$data['user_id'];
         $goods_id=$data['goods_id'];
-        $goodsInfo=DB::table('app_goods')->where('goods_id',$goods_id)->first();
-        $goods_price=$goodsInfo->goods_price;
-        $cartInsert=[];
-        if(isset($data['goods_attr'])){
-			$goods_attr=$data['goods_attr'];
-            $attr_price=DB::table('app_goods_attr')->whereIn('goods_attr_id',explode(',',$goods_attr))->pluck('attr_price')->toArray();
-            $attr_price=array_sum($attr_price);
-            $goods_price=$goods_price+$attr_price;
-		}
 
-        $total_price=$goods_price*$goods_num;
+        $cartInfo=DB::table('app_cart')->where(['goods_id'=>$goods_id,'user_id'=>$user_id])->first();
 
-        $cartInsert=[
-            'goods_id'=>$goods_id,
-			'goods_attr_id'=>isset($data['goods_attr'])?$goods_attr:"",
-            'goods_num'=>$goods_num,
-            'goods_name'=>"$goodsInfo->goods_name",
-            'goods_price'=>$goods_price,
-            'total_price'=>$total_price,
-            'user_id'=>$user_id,
-            'is_delete'=>1,
-            'add_time'=>time()
-        ];
-		$res=DB::table('app_cart')->insert($cartInsert);
-        if($res){
-            echo json_encode(['code'=>1,'msg'=>'加入购物车成功！']);
+        if(count($cartInfo)>0){
+            echo json_encode(['code'=>1,'msg'=>'该商品已在购物车，确认去查看！']);
         }else{
-            echo json_encode(['code'=>0,'msg'=>'请稍后重试！']);
+            $goodsInfo=DB::table('app_goods')->where('goods_id',$goods_id)->first();
+            $goods_price=$goodsInfo->goods_price;
+            $cartInsert=[];
+            if(isset($data['goods_attr'])){
+                $goods_attr=$data['goods_attr'];
+                $attr_price=DB::table('app_goods_attr')->whereIn('goods_attr_id',explode(',',$goods_attr))->pluck('attr_price')->toArray();
+                $attr_price=array_sum($attr_price);
+                $goods_price=$goods_price+$attr_price;
+            }
+
+            $total_price=$goods_price*$goods_num;
+
+            $cartInsert=[
+                'goods_id'=>$goods_id,
+                'goods_attr_id'=>isset($data['goods_attr'])?$goods_attr:"",
+                'goods_num'=>$goods_num,
+                'goods_name'=>"$goodsInfo->goods_name",
+                'goods_price'=>$goods_price,
+                'total_price'=>$total_price,
+                'user_id'=>$user_id,
+                'is_delete'=>1,
+                'add_time'=>time()
+            ];
+            $res=DB::table('app_cart')->insert($cartInsert);
+            if($res){
+                echo json_encode(['code'=>1,'msg'=>'加入购物车成功！']);
+            }else{
+                echo json_encode(['code'=>0,'msg'=>'请稍后重试！']);
+            }
         }
+
+
     }
 }
