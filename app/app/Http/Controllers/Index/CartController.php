@@ -32,21 +32,27 @@ class CartController extends Controller
             $num=DB::table('app_cart')->whereIn('cart_id',$cart_id)->count();
         }
 
-        $goodsInfo=[];
-        foreach ($data as $k=>$v){
-            if(!empty($v->goods_attr_id)){
-                $arr=getGoodsAttr($v->goods_id,$v->goods_attr_id);
-                $arr->cart_id=$v->cart_id;
-                $goodsInfo[]=$arr;
-            }else{
-                $goodsInfo[]=$v;
+        if(count($data)>0){
+            $goodsInfo=[];
+            foreach ($data as $k=>$v){
+                if(!empty($v->goods_attr_id)){
+                    $arr=getGoodsAttr($v->goods_id,$v->goods_attr_id);
+                    $arr->cart_id=$v->cart_id;
+                    $goodsInfo[]=$arr;
+                }else{
+                    $goodsInfo[]=$v;
+                }
             }
+
+            $info['data']=$goodsInfo;
+            $info['count']=$num;
+            $arr=json_encode($info);
+            return $arr;
+        }else{
+            echo json_encode(['code'=>2,'msg'=>'暂无数据！']);
         }
 
-        $info['data']=$goodsInfo;
-        $info['count']=$num;
-        $arr=json_encode($info);
-        return $arr;
+
 
     }
 
