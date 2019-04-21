@@ -24,7 +24,9 @@ class CartController extends Controller
         $goodsInfo=[];
         foreach ($data as $k=>$v){
             if(!empty($v->goods_attr_id)){
-                $goodsInfo[]=getGoodsAttr($v->goods_id,$v->goods_attr_id);
+                $arr=getGoodsAttr($v->goods_id,$v->goods_attr_id);
+                $arr['cart_id']=$v->cart_id;
+                $goodsInfo[]=$arr;
             }else{
                 $goodsInfo[]=$v;
             }
