@@ -85,12 +85,23 @@ class AddressController extends Controller
     public function addressGet(Request $request){
             $user_id=$request->input('user_id');
             if($user_id){
-                $info = DB::table('app_address')->where('user_id',$user_id)->get();
-                if($info){
-                    return $info;   //查询成功
+                $info = DB::table('app_address')->where(['user_id'=>$user_id])->get();
+                if(count($info)>0){
+                    $arr=[];
+                    foreach($info as $k=>$v){
+                        $province=DB::table('app_region')->where('region_id',$v->province)->value('region_name');
+                        $city=DB::table('app_region')->where('region_id',$v->city)->value('region_name');
+                        $district=DB::table('app_region')->where('region_id',$v->district)->value('region_name');
+                        $arr['addressInfo']=$province.$city.$district.$v->detailed_address;
+                        $arr['userInfo']=$v->consignee_name." ".$v->consignee_tel;
+                    }
+                    echo json_encode(['code'=>1,'data'=>$arr]);
+                }else{
+                    echo json_encode(['code'=>0,'msg'=>'暂无地址！','data'=>'']);
                 }
+
             }else{
-                return 2;   //请先登陆
+                echo json_encode(['code'=>0,'msg'=>'请先登录！','data'=>'']);
             }
     }
         //删除收获地址
