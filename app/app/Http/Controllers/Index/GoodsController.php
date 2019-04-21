@@ -99,7 +99,7 @@ class GoodsController extends Controller
 //                return json_encode($data, JSON_UNESCAPED_UNICODE);
 //            }
 //        }
-        $type=$request->input('type');
+        $type=$request->input('type','is_del');
         $search=$request->input('search'," ");
 
         $where=[];
