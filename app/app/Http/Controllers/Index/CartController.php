@@ -30,8 +30,9 @@ class CartController extends Controller
             }
         }
         $num = DB::table('app_cart')->count();
-        $goodsInfo['count']=$num;
-        $arr=json_encode($goodsInfo);
+        $info['data']=$goodsInfo;
+        $info['count']=$num;
+        $arr=json_encode($info);
         return $arr;
     }
 
