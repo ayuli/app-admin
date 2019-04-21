@@ -26,6 +26,7 @@ class CartController extends Controller
                 ->get();
             $num = DB::table('app_cart')->count();
         }else{
+            $cart_id=rtrim($cart_id,',');
             $cart_id=explode(',',$cart_id);
             $data=DB::table('app_cart')->whereIn('cart_id',$cart_id)
                 ->join('app_goods','app_cart.goods_id','=','app_goods.goods_id')
