@@ -83,9 +83,9 @@ class AddressController extends Controller
     }
         //查询收获地址
     public function addressGet(Request $request){
-            $name = $request->session()->get('user_name');
-            if($name){
-                $info = DB::table('app_address')->where('user_id',$name)->get();
+            $user_id=$request->input('user_id');
+            if($user_id){
+                $info = DB::table('app_address')->where('user_id',$user_id)->get();
                 if($info){
                     return $info;   //查询成功
                 }
