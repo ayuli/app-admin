@@ -16,6 +16,7 @@ class ZhaoController extends Controller
         $goods_id = $request->input('goods_id');
         $goodsinfo = DB::table('app_goods')->where('goods_id',$goods_id)->first();
 
+        
         $goodsinfo->goods_imgs=explode('|',$goodsinfo->goods_imgs);
 
         $goodsinfo->add_time = date('Y-m-d H:i:s',$goodsinfo->add_time);
