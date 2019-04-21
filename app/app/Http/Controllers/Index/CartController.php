@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Index;
 
+use App\Model\CateModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\CartModel;
@@ -14,13 +15,23 @@ class CartController extends Controller
      */
     public function cartshow(Request $request){
         $user_id=$request->input('user_id');
-        $where=[
-            'user_id'=>$user_id,
-            'is_delete'=>1
-        ];
-        $data=CartModel::where($where)
-            ->join('app_goods','app_cart.goods_id','=','app_goods.goods_id')
-            ->get();
+        $cart_id=$request->input('goods_id','');
+        if($cart_id==''){
+            $where=[
+                'user_id'=>$user_id,
+                'is_delete'=>1
+            ];
+            $data=CartModel::where($where)
+                ->join('app_goods','app_cart.goods_id','=','app_goods.goods_id')
+                ->get();
+            $num = DB::table('app_cart')->count();
+        }else{
+            $data=CateModel::whereIn('cart_id',$cart_id)
+                ->join('app_goods','app_cart.goods_id','=','app_goods.goods_id')
+                ->get();
+            $num=DB::table('app_cart')->whereIn('cart_id',$cart_id)->count();
+        }
+
         $goodsInfo=[];
         foreach ($data as $k=>$v){
             if(!empty($v->goods_attr_id)){
@@ -31,11 +42,12 @@ class CartController extends Controller
                 $goodsInfo[]=$v;
             }
         }
-        $num = DB::table('app_cart')->count();
+
         $info['data']=$goodsInfo;
         $info['count']=$num;
         $arr=json_encode($info);
         return $arr;
+
     }
 
     //添加购物车
