@@ -15,7 +15,7 @@ class CartController extends Controller
      */
     public function cartshow(Request $request){
         $user_id=$request->input('user_id');
-        $cart_id=$request->input('goods_id','');
+        $cart_id=$request->input('cart_id','');
         if($cart_id==''){
             $where=[
                 'user_id'=>$user_id,
