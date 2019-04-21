@@ -53,7 +53,7 @@ function getGoodsAttr($goods_id,$goods_attr){
     $goodsinfo->attr_value=$info['attr_value'];
     $goodsinfo->attr_price=$info['attr_price'];
 
-    return json_encode(['goodsInfo'=>$goodsinfo]);
+    return $goodsinfo;
 }
 
 ?>
