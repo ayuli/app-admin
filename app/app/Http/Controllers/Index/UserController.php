@@ -148,6 +148,27 @@ class UserController extends Controller
         return returnJson('0','验证码为:'.$code);
 
     }
+		//注册验证码
+	    public function getCode(Request $request)
+    {
+        $user_name = $request->input('user_name');
+        $user_info = UserModel::where(['user_name'=>$user_name])->first();
+        if(!$user_info){
+			//生成验证码
+			$rand1 = rand(0,4);
+			$rand = rand(1000,9999);
+			$str_rand = str_shuffle($rand.$user_name);
+			$code = substr($str_rand,$rand1,6);
+			// 存数据库 或者缓存
+	//        Redis::set('code',$code); //存缓存
+			Cookie::queue($user_name,$code,1); //存cookie
+	//        UserModel::where(['user_name'=>$user_name])->update(['user_code'=>$code]); //存数据库
+        }else{
+			return returnJson('1001','用户已存在');
+		}
+        return returnJson('0','验证码为:'.$code);
+
+    }
 
 
 }
