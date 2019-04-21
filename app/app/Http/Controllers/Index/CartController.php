@@ -12,17 +12,26 @@ class CartController extends Controller
      * 购物车接口
      * @return false|string
      */
-    public function cartshow(){
+    public function cartshow(Request $request){
+        $user_id=$request->input('user_id');
         $where=[
+            'user_id'=>$user_id,
             'is_delete'=>1
         ];
         $data=CartModel::where($where)
             ->join('app_goods','app_cart.goods_id','=','app_goods.goods_id')
-            ->paginate(100)
-            ->toArray();
+            ->get();
+        $goodsInfo=[];
+        foreach ($data as $k=>$v){
+            if(!empty($v->goods_attr_id)){
+                $goodsInfo[]=getGoodsAttr($v->goods_id,$v->goods_attr_id);
+            }else{
+                $goodsInfo[]=$v;
+            }
+        }
         $num = DB::table('app_cart')->count();
-        $data['count']=$num;
-        $arr=json_encode($data);
+        $goodsInfo['count']=$num;
+        $arr=json_encode($goodsInfo);
         return $arr;
     }
 
