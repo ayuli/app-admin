@@ -46,9 +46,9 @@ class CartController extends Controller
                 }
             }
 
+            $info['code']=1;
             $info['data']=$goodsInfo;
             $info['count']=$num;
-            $info['code']=1;
             $arr=json_encode($info);
             return $arr;
         }else{
