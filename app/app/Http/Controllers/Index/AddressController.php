@@ -95,11 +95,12 @@ class AddressController extends Controller
                         $city=DB::table('app_region')->where('region_id',$v->city)->value('region_name');
                         $district=DB::table('app_region')->where('region_id',$v->district)->value('region_name');
                         $arr[$k]['addressInfo']=$province.$city.$district.$v->detailed_address;
+                        $arr[$k]['address_id']=$v->address_id;
                         $arr[$k]['userInfo']=$v->consignee_name." ".$v->consignee_tel;
                     }
                     echo json_encode(['code'=>1,'data'=>$arr]);
                 }else{
-                    echo json_encode(['code'=>0,'msg'=>'暂无地址！','data'=>'']);
+                    echo json_encode(['code'=>0,'msg'=>'暂无地址，请添加！','data'=>'']);
                 }
 
             }else{
