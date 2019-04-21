@@ -36,7 +36,7 @@ class CartController extends Controller
 
         $cartInfo=DB::table('app_cart')->where(['goods_id'=>$goods_id,'user_id'=>$user_id])->first();
 
-        if(count($cartInfo)>0){
+        if($cartInfo){
             echo json_encode(['code'=>1,'msg'=>'该商品已在购物车，确认去查看！']);
         }else{
             $goodsInfo=DB::table('app_goods')->where('goods_id',$goods_id)->first();
