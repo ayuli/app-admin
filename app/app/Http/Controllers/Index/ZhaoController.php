@@ -101,6 +101,7 @@ class ZhaoController extends Controller
         DB::beginTransaction();
         $user_id = $request->input('user_id');
         $cart_id = $request->input('cart_id');
+        $cart_id = explode(',',rtrim($cart_id));
         $address_id = $request->input('address_id');
         $total = $request->input('total');
         $way = $request->input('way');
