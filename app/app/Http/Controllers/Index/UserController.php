@@ -138,8 +138,8 @@ class UserController extends Controller
             return returnJson('1001','用户不存在');
         }
         //生成验证码
-        $rand1 = rand(0,4);
-        $rand = rand(1000,9999);
+        $rand1 = rand(0,8);
+        $rand = md5(rand(10000,99999));
         $str_rand = str_shuffle($rand.$user_name);
         $code = substr($str_rand,$rand1,6);
         // 存数据库 或者缓存
