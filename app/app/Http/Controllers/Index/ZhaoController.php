@@ -92,7 +92,7 @@ class ZhaoController extends Controller
             'total'=>0
 >>>>>>> 99a75a8ab90b62b35a6f65e0ac9d1e3aa96f6d54
         ];
-        $res = CartModel::where('user_id',$user_id)->whereIn('goods_id',$goods_id)->update($cartUpdate);
+        $res = CartModel::where('user_id',$user_id)->whereIn('cart_id',$goods_id)->update($cartUpdate);
 //             print_r($res);exit;
         if($res){
             return json_encode(['code'=>1,'msg'=>'删除成功']);
