@@ -98,6 +98,7 @@ class AddressController extends Controller
                         $arr[$k]['addressInfo']=$province.$city.$district.$v->detailed_address;
                         $arr[$k]['userInfo']=$v->consignee_name." ".$v->consignee_tel;
                     }
+                    print_r($arr);die;
                     echo json_encode(['code'=>1,'data'=>$arr]);
                 }else{
                     echo json_encode(['code'=>0,'msg'=>'暂无地址，请添加！','data'=>'']);
