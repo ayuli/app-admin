@@ -95,4 +95,88 @@ class ZhaoController extends Controller
             return json_encode(['code'=>2,'msg'=>'删除失败']);
         }
     }
+
+    //生成订单
+    public function createOrder(Request $request){
+        DB::beginTransaction();
+        $user_id = $request->input('user_id');
+        $cart_id = $request->input('cart_id');
+        $address_id = $request->input('address_id');
+        $total = $request->input('total');
+        $way = $request->input('way');
+
+        if(empty($user_id)){
+            return json_encode(['msg'=>'未登录','code'=>2]);
+        }
+        if(empty($cart_id)){
+            return json_encode(['msg'=>'未选择商品','code'=>2]);
+        }
+        $order_sn = date("YmdHis",time()).rand(1000,9999);
+        $orderdata=[
+            'user_id'=>$user_id,
+            'order_sn'=>$order_sn,
+            'add_time'=>time(),
+            'order_amount'=>$total,
+            'pay_amount'=>$total,
+            'order_status'=>3,
+            'pay_way'=>$way,
+            'is_pay'=>2
+        ];
+        $res = DB::table('app_order')->insert($orderdata);
+        $orderInfoId = DB::table('app_order')->where('order_sn',$order_sn)->first();
+        if(!$orderInfoId){
+            DB::rollBack();
+            return json_encode(['msg'=>'添加失败','code'=>3]);
+        }
+        $order_id=$orderInfoId->order_id;
+
+        //修改购物车状态
+        $wherecart = [
+            'is_delete'=>2
+        ];
+        $cartRes = CartModel::where('user_id',$user_id)->whereIn('cart_id',$cart_id)->update($wherecart);
+
+        //生成订单详情
+        $goods_id = CartModel::where('user_id',$user_id)->whereIn('cart_id',$cart_id)->pluck('goods_id');
+        $goodsInfo = CartModel::join('app_goods','app_cart.goods_id','=','app_goods.goods_id')
+            ->whereIn('app_cart.goods_id',$goods_id)
+            ->get();
+        foreach($goodsInfo as $k=>$v){
+            $dataInfo = [
+                'order_id'=>$order_id,
+                'order_no'=>$order_sn,
+                'goods_attr_id'=>"$v->goods_attr_id",
+                'goods_id'=>"$v->goods_id",
+                'buy_number'=>"$v->goods_num",
+                'goods_price'=>"$v->goods_price",
+                'goods_name'=>"$v->goods_name",
+                'goods_img'=>"$v->goods_img",
+                'ctime'=>time()
+            ];
+            DB::table('app_order_goods')->insert($dataInfo);
+        }
+
+        //生成订单地址
+        $addressData = DB::table('app_address')->where('id',$address_id)->first();
+        $addressInfo = [
+            'order_id'=>$order_id,
+            'province'=>$addressData->province,
+            'city'=>$addressData->city,
+            'district'=>$addressData->district,
+            'address_name'=>$addressData->consignee_name,
+            'address_tel'=>$addressData->consignee_tel,
+            'address_detail'=>$addressData->detailed_address,
+            'ctime'=>time()
+        ];
+        $resaddress = DB::table('app_order_address')->insert($addressInfo);
+        if($resaddress){
+            DB::commit();
+            return json_encode(['msg'=>'添加成功','code'=>1,'order_id'=>$order_id]);
+        }else{
+            DB::rollBack();
+            return json_encode(['msg'=>'添加失败','code'=>2]);
+        }
+    }
+
+
 }
