@@ -96,6 +96,7 @@ class AddressController extends Controller
                         $district=DB::table('app_region')->where('region_id',$v->district)->value('region_name');
                         $arr[$k]['addressInfo']=$province.$city.$district.$v->detailed_address;
                         $arr[$k]['address_id']=$v->id;
+                        $arr[$k]['is_address']=$v->is_address;
                         $arr[$k]['userInfo']=$v->consignee_name." ".$v->consignee_tel;
                     }
                     echo json_encode(['code'=>1,'data'=>$arr]);
