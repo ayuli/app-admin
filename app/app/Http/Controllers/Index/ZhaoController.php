@@ -68,7 +68,7 @@ class ZhaoController extends Controller
 
     //前台订单页单删批删
     public function indexCartDel(Request $request){
-        $goods_id=$request->input('goods_id');
+        $goods_id=$request->input('cart_id');
         $user_id=$request->session()->get('user_id');
 //        $user_id = 4;
 //        $goods_id = [
@@ -78,7 +78,7 @@ class ZhaoController extends Controller
 
         $cartUpdate=[
         'is_detele'=>2,
-        'total'=>0
+        'total_price'=>0
         ];
         $res = CartModel::where('user_id',$user_id)->whereIn('goods_id',$goods_id)->update($cartUpdate);
 //             print_r($res);exit;
