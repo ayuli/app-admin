@@ -15,17 +15,23 @@ class UserController extends Controller
     //注册
     public function register(Request $request){
         $name = $request->input('name');
-        $pd = $request->input('pwd');
-        $pwd = md5(md5($pd));
-        $time = time();
-        $res = DB::table('app_user')->insert(['user_name'=>$name,'user_pwd'=>$pwd,'add_time'=>$time]);
-        $res1 = DB::table('app_user')->where(['user_name'=>$name,'user_pwd'=>$pwd])->first();
-        $uid = $res1->user_id;
-        if($res){
-            $request -> session() -> put('user_name',$name);
-            echo json_encode(['code'=>1,'uid'=>$uid]);
+        $yzm = $request->input('yzm');
+        $code = $request->cookie($name);
+        if($yzm==$code){
+            $pd = $request->input('pwd');
+            $pwd = md5(md5($pd));
+            $time = time();
+            $res = DB::table('app_user')->insert(['user_name'=>$name,'user_pwd'=>$pwd,'add_time'=>$time]);
+            $res1 = DB::table('app_user')->where(['user_name'=>$name,'user_pwd'=>$pwd])->first();
+            $uid = $res1->user_id;
+            if($res){
+                $request -> session() -> put('user_name',$name);
+                echo json_encode(['code'=>1,'uid'=>$uid]);
+            }else{
+                return 2;//注册失败
+            }
         }else{
-            return 2;//注册失败
+            return 3;
         }
     }
     //登陆
