@@ -155,6 +155,7 @@ Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //所�
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //前台详情页
 Route::any('/indexCartDel','Index\ZhaoController@indexCartDel'); //前台订单页单删批删
 Route::post('/createOrder','Index\ZhaoController@createOrder'); //生成订单
+Route::get('/orderShow','Index\ZhaoController@orderShow'); //订单详情
 
 Route::get('/getcode','Index\UserController@getCode'); //获取注册验证码
 Route::get('/getvercode','Index\UserController@getVerCode'); //获取忘记密码验证码
