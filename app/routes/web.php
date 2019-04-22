@@ -132,6 +132,8 @@ Route::get('/advget',"Admin\AdvController@advget");     //广告展示
 Route::post('/advdel',"Admin\AdvController@advDel");     //广告删除
 Route::get('/advupda',"Admin\AdvController@advUpda");     //广告修改展示
 Route::post('/advupdado',"Admin\AdvController@advUpdaDo");     //广告修改执行
+Route::get('/advdefault',"Admin\AdvController@advDefault");     //设为默认
+Route::get('/appadvget',"Admin\AdvController@appAdvGet");     //app广告展示
 
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
@@ -144,13 +146,20 @@ Route::get('/collectionget','Index\CollController@collGet'); //展示收藏
 
 //购物车
 Route::post('cartAdd','Index\CartController@cartAdd'); //购物车添加
-Route::get('/cartshow','Index\CartController@cartshow'); //展示购物车列表
+Route::any('/cartshow','Index\CartController@cartshow'); //展示购物车列表
 
 Route::get('/indexgoods','Index\GoodsController@goods'); //所有商品列表
-Route::post('/goodssearch','Index\GoodsController@goodsSearch'); //所有商品数据搜索
+
+
+Route::get('/slide','Index\GoodsController@slide'); //前台 轮播图
 
 
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //所有商品列表
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //前台详情页
 Route::any('/indexCartDel','Index\ZhaoController@indexCartDel'); //前台订单页单删批删
+Route::post('/createOrder','Index\ZhaoController@createOrder'); //生成订单
+Route::get('/orderShow','Index\ZhaoController@orderShow'); //订单详情
 
+Route::get('/getcode','Index\UserController@getCode'); //获取注册验证码
+Route::get('/getvercode','Index\UserController@getVerCode'); //获取忘记密码验证码
+Route::post('/forget','Index\UserController@forget'); //点击修改密码

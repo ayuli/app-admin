@@ -37,13 +37,23 @@
                 <div class="bbD" style="margin-left: 24px;">
                     广告图片：
                     <div class="bbDd">
-
                         <div class="bbDImg" >+</div>
                         <input type="file" style="cursor:pointer" class="file" id="file" name="file"/>
                     </div>
-
                 </div>
 
+                <div class="bbD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    是否前台展示：
+                    <label>
+                        <input type="radio" checked="checked" value="1" name="is_show"/>
+                        &nbsp;是
+                    </label>
+                    <label>
+                        <input type="radio" value="2" name="is_show" />
+                        &nbsp;否
+                    </label>
+                </div>
                 <div class="bbD">
                     <p class="bbDP">
                         <button class="btn_ok btn_yes" href="#" id="addbtn">提交</button>
@@ -98,10 +108,16 @@
     $("#addbtn").click(function(){
         var logo = $("#logo").prop('src');
         var name = $("#name").val();
+        $("[name='is_show']").each(function(){
+                if($(this).prop('checked')==true){
+                    is_show =$(this).val()
+                }
+        });
 
         var data = {};
         data.name = name;
         data.logo = logo;
+        data.is_show = is_show;
 
         $.ajax({
             url : '/advadd',

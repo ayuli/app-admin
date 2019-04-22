@@ -24,6 +24,7 @@ class AddressController extends Controller
     }
     //添加收货地址
     public function address(Request $request){
+        $user_id=$request->input('user_id');
         $consignee_name = $request->input('consignee_name');
         $detailed_address = $request->input('detailed_address');
         $province = $request->input('province');
@@ -35,6 +36,7 @@ class AddressController extends Controller
             DB::table('app_address')->update(['is_address'=>0]);
         }
         $info = array(
+            'user_id'=>$user_id,
             'consignee_name'=>$consignee_name,
             'detailed_address'=>$detailed_address,
             'province'=>$province,
@@ -83,14 +85,26 @@ class AddressController extends Controller
     }
         //查询收获地址
     public function addressGet(Request $request){
-            $name = $request->session()->get('user_name');
-            if($name){
-                $info = DB::table('app_address')->where('user_id',$name)->get();
-                if($info){
-                    return $info;   //查询成功
+            $user_id=$request->input('user_id');
+            if($user_id){
+                $info = DB::table('app_address')->where(['user_id'=>$user_id])->get();
+                if(count($info)>0){
+                    $arr=[];
+                    foreach($info as $k=>$v){
+                        $arr[$k][]=$v;
+                        $province=DB::table('app_region')->where('region_id',$v->province)->value('region_name');
+                        $city=DB::table('app_region')->where('region_id',$v->city)->value('region_name');
+                        $district=DB::table('app_region')->where('region_id',$v->district)->value('region_name');
+                        $arr[$k]['addressInfo']=$province.$city.$district.$v->detailed_address;
+                        $arr[$k]['userInfo']=$v->consignee_name." ".$v->consignee_tel;
+                    }
+                    echo json_encode(['code'=>1,'data'=>$arr]);
+                }else{
+                    echo json_encode(['code'=>0,'msg'=>'暂无地址，请添加！','data'=>'']);
                 }
+
             }else{
-                return 2;   //请先登陆
+                echo json_encode(['code'=>0,'msg'=>'请先登录！','data'=>'']);
             }
     }
         //删除收获地址

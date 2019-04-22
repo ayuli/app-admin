@@ -122,26 +122,17 @@
                     @foreach($data as $v)
                     <tr cate_id="{{$v['cate_id']}}" class="p_id" p_id="{{$v['p_id']}}">
                         <td height="60px;">
-                            <b class="flag" style="cursor:pointer">+</b>
-                            {{$v['cate_id']}}
+                            <b class="flag" style="cursor:pointer">+</b>{{$v['cate_id']}}
                         </td>
+                        <td>{{$v['level']}}{{$v['cate_name']}}</td>
                         <td>
-                            {{$v['level']}}
-                            {{$v['cate_name']}}
-                        </td>
-
-                        <td>
-                            @if($v['show_in_nav']==1)
-                                是
-                            @elseif($v['show_in_nav']==2)
-                                否
+                            @if($v['show_in_nav']==1)是
+                            @elseif($v['show_in_nav']==2)否
                             @endif
                         </td>
                         <td>
-                            @if($v['is_show']==1)
-                            是
-                            @elseif($v['is_show']==2)
-                            否
+                            @if($v['is_show']==1)是
+                            @elseif($v['is_show']==2)否
                             @endif
                         </td>
                         <td>
@@ -212,7 +203,7 @@
             _tr.hide();
             _tr.find('td').find("a[class='flag']").text('+');
 
-            for(var i=0;i<_tr.length;i++){
+            for(var i=0;i < _tr.length;i++){
                 var c_id=_tr.eq(i).attr('cate_id');
                 trHide(c_id);
 
@@ -221,7 +212,17 @@
 
     })
     // 广告弹出框
-    $(".delban").click(function(){
+    $(".delban").click(function(){  //删除
+        var cate_id=$(this).parents('tr').attr('cate_id');
+
+        if($("tbody>tr[p_id="+cate_id+"]").length>0){
+            $(".banDel").show();$(".delP1").text('分类下有子类');
+            $(".delP2").html("<a class='ok no'>确定</a>");
+            $(".no").click(function(){
+                $(".banDel").hide();
+            });
+        }
+
         _cate_id= $(this).parents('tr').attr('cate_id')
         $(".banDel").show();
 
@@ -236,18 +237,14 @@
                 success: function(d){
                     if(d.code==0){
                         // 广告弹出框
-                        $(".banDel").show();
-                        $(".delP1").text(d.msg);
-                        $(".delP2").html("<a class='ok no'>确定</a>");
+                        $(".banDel").show();$(".delP1").text(d.msg);$(".delP2").html("<a class='ok no'>确定</a>");
                         $(".no").click(function(){
                             $(".banDel").hide();
                             location.href='/categet'
                         });
                     }else{
                         // 广告弹出框
-                        $(".banDel").show();
-                        $(".delP1").text(d.msg);
-                        $(".delP2").html("<a class='ok no'>确定</a>");
+                        $(".banDel").show(); $(".delP1").text(d.msg); $(".delP2").html("<a class='ok no'>确定</a>");
                         $(".no").click(function(){
                             $(".banDel").hide();
                             location.href='/categet'
@@ -258,14 +255,8 @@
 
         });
     });
-    $(".close").click(function(){
-        $(".banDel").hide();
-    });
-
-
-    $(".no").click(function(){
-        $(".banDel").hide();
-    });
+    $(".close").click(function(){$(".banDel").hide();});
+    $(".no").click(function(){$(".banDel").hide();});
     // 广告弹出框 end
 </script>
 </html>

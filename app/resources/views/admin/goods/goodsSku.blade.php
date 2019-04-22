@@ -54,7 +54,7 @@
 
             <tr>
                 <td align="center" colspan="6">
-                    <input type="button" class="button" value=" 保存 " >
+                    <input type="button" class="submit" value=" 保存 " >
                 </td>
             </tr>
             </tbody></table>
@@ -77,7 +77,7 @@
 </script>
 <script>
     $(function(){
-        $(".button").click(function(){
+        $(".submit").click(function(){
             var form=$("#addForm").serialize();
 
             var url="productAddDo";

@@ -19,10 +19,41 @@ function getCateInfo($data,$p_id=0,$level=0){
 }
 
 
-    //返回json格式
-    function returnJson($data)
-    {
-        return json_encode($data,JSON_UNESCAPED_UNICODE);
+
+//成功信息
+function returnJson($code,$msg)
+{
+    $data =  ['code'  => $code, 'msg'   => $msg];
+    return json_encode($data,JSON_UNESCAPED_UNICODE);
+
+}
+
+//查询商品属性
+function getGoodsAttr($goods_id,$goods_attr){
+    $goodsinfo = DB::table('app_goods')->where('goods_id',$goods_id)->first();
+
+    $data= DB::table('app_goods_attr')
+        ->whereIn('goods_attr_id',explode(',',$goods_attr))
+        ->select('attr_value','attr_price')
+        ->get();
+
+    $info=[];
+
+    foreach($data as $k=>$v){
+        $info['attr_value']="";
+        $info['attr_price']=0;
     }
+
+    foreach($data as $k=>$v){
+        $info['attr_value'].=$v->attr_value.',';
+        $info['attr_price']+=$v->attr_price;
+    }
+    $info['attr_value']=trim($info['attr_value'],',');
+
+    $goodsinfo->attr_value=$info['attr_value'];
+    $goodsinfo->attr_price=$info['attr_price'];
+
+    return $goodsinfo;
+}
 
 ?>
