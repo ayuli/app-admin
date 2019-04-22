@@ -120,7 +120,7 @@ class UserController extends Controller
         if(!$user_info){return returnJson('1002','用户不存在');}
         if($user_pwd!=$user_pwd2){return returnJson('1003','密码输入不一致');}
         if($user_code != $code){return returnJson('1004','验证码有误');}
-        $res = UserModel::where(['user_name'=>$user_name])->update(['user_pwd'=>md5($user_pwd)]); //存数据库
+        $res = UserModel::where(['user_name'=>$user_name])->update(['user_pwd'=>md5(md5($user_pwd))]); //存数据库
         if($res)
         {setcookie($user_name,'',-1); return returnJson('0','修改成功');}
     }
