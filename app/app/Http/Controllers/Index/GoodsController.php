@@ -133,4 +133,13 @@ class GoodsController extends Controller
         }
     }
 
+
+    //轮播图
+    public function slide()
+    {
+        $goods = GoodsModel::where(['is_hot'=>1])->orderBy('goods_price','asc')->limit(6)->get();
+        $data = ['code'=>0,'msg'=>'success','data'=>$goods];
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
 }
