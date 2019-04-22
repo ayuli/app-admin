@@ -115,6 +115,7 @@
                         <td width="66px" class="tdColor tdC">序号</td>
                         <td width="355px" class="tdColor">广告标题</td>
                         <td width="460px" class="tdColor">广告信息</td>
+                        <td width="260px" class="tdColor">前台展示</td>
                         <td width="260px" class="tdColor">添加时间</td>
                         <td width="130px" class="tdColor">操作</td>
                     </tr>
@@ -129,9 +130,16 @@
                             <img src="{{$v['ad_img']}}" width="75px;" height="75px;">
                             </div>
                         </td>
+                        <td>
+                            @if($v['is_show']==2)
+                                <span class="default" style="color: red;cursor:pointer" >设为默认</span>
+                            @else
+                                <span style="color: blue;">已展示</span>
+                            @endif
+                        </td>
                         <td>{{date('Y-m-d H:i:s',$v['add_time'])}}</td>
                         <td>
-                            <a href="/advupda?ad_id={{$v['ad_id']}}">
+                            <a href="/advupda?ad_id={{$v['ad_id']}}" >
                                 <img class="operation" src="img/update.png">
                             </a>
                             <img class="operation delban" src="img/delete.png">
@@ -172,6 +180,37 @@
 
 <script type="text/javascript">
     // 广告弹出框
+    $(".default").click(function(){
+        _ad_id= $(this).parents('tr').attr('ad_id')
+        $.ajax({
+            url : '/advdefault',
+            type: 'get',
+            data : {ad_id:_ad_id},
+            dataType: 'json',
+            success: function(d){
+                if(d.code==0){
+                    // 广告弹出框
+                    $(".banDel").show();
+                    $(".delP1").text(d.msg);
+                    $(".delP2").html("<a class='ok no'>确定</a>");
+                    $(".no").click(function(){
+                        $(".banDel").hide();
+                        location.href='/advget'
+                    });
+                }else{
+                    // 广告弹出框
+                    $(".banDel").show();
+                    $(".delP1").text(d.msg);
+                    $(".delP2").html("<a class='ok no'>确定</a>");
+                    $(".no").click(function(){
+                        $(".banDel").hide();
+                        location.href='/advget'
+                    });
+                }
+            }
+        })
+    })
+
     $(".delban").click(function(){
         _ad_id= $(this).parents('tr').attr('ad_id')
         $(".banDel").show();

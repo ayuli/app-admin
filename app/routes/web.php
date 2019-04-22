@@ -133,6 +133,7 @@ Route::post('/advdel',"Admin\AdvController@advDel");     //广告删除
 Route::get('/advupda',"Admin\AdvController@advUpda");     //广告修改展示
 Route::post('/advupdado',"Admin\AdvController@advUpdaDo");     //广告修改执行
 
+
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
 Route::post('/uncollection','Index\CollController@uncoll'); //取消收藏
