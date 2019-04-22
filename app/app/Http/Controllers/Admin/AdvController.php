@@ -42,7 +42,7 @@ class AdvController extends Controller
     public function appAdvGet()
     {
         $adv = AdvModel::where(['is_del'=>0,'is_show'=>1])->first();
-        $data = ['code'=>0,'msg'=>'success','data' => $adv];
+        $data = ['code'=>0,'msg'=>'success','img' => $adv['ad_img']];
         return  json_encode($data,JSON_UNESCAPED_UNICODE);
     }
 
