@@ -104,7 +104,7 @@ class ZhaoController extends Controller
         $cart_id = explode(',',rtrim($cart_id));
         $address_id = $request->input('address_id');
         $total = $request->input('total');
-        $way = $request->input('way');
+        $way = $request->input('pay_way');
 
         if(empty($user_id)){
             return json_encode(['msg'=>'未登录','code'=>2]);
