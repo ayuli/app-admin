@@ -179,4 +179,18 @@ class ZhaoController extends Controller
     }
 
 
+    //订单详情
+    public function orderShow(Request $request){
+        $order_id = $request->input('order_id');
+        $data = DB::table('app_order')->where('order_id',$order_id)->first();
+        $dataInfo = [
+            'order_sn'=>"$data->order_sn",
+            'add_time'=>"$data->add_time",
+            'order_amount'=>"$data->order_amount",
+            'del_time'=>$data->add_time+86400
+        ];
+       return json_encode(['data'=>$dataInfo]);
+    }
+
+
 }
