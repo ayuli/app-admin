@@ -91,8 +91,7 @@ class AddressController extends Controller
                 if(count($info)>0){
                     $arr=[];
                     foreach($info as $k=>$v){
-                        $arr[$k][]=$v;
-                        print_r($v);die;
+                        $arr[$k]=$v;
                         $province=DB::table('app_region')->where('region_id',$v->province)->value('region_name');
                         $city=DB::table('app_region')->where('region_id',$v->city)->value('region_name');
                         $district=DB::table('app_region')->where('region_id',$v->district)->value('region_name');
