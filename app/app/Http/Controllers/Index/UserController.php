@@ -140,7 +140,7 @@ class UserController extends Controller
         $rand1 = rand(0,4);
         $rand = rand(1000,9999);
         $str_rand = str_shuffle($rand.$user_name);
-        $code = substr($str_rand,$rand1,4);
+        $code = substr($str_rand,$rand1,6);
         // 存数据库 或者缓存
 //        Redis::set('code',$code); //存缓存
         Cookie::queue($user_name,$code,1); //存cookie
@@ -158,7 +158,7 @@ class UserController extends Controller
 			$rand1 = rand(0,4);
 			$rand = rand(1000,9999);
 			$str_rand = str_shuffle($rand.$user_name);
-			$code = substr($str_rand,$rand1,4);
+			$code = substr($str_rand,$rand1,6);
 			// 存数据库 或者缓存
 	//        Redis::set('code',$code); //存缓存
 			Cookie::queue($user_name,$code,1); //存cookie
