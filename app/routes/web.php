@@ -132,7 +132,8 @@ Route::get('/advget',"Admin\AdvController@advget");     //广告展示
 Route::post('/advdel',"Admin\AdvController@advDel");     //广告删除
 Route::get('/advupda',"Admin\AdvController@advUpda");     //广告修改展示
 Route::post('/advupdado',"Admin\AdvController@advUpdaDo");     //广告修改执行
-
+Route::get('/advdefault',"Admin\AdvController@advDefault");     //设为默认
+Route::get('/appadvget',"Admin\AdvController@appAdvGet");     //app广告展示
 
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
