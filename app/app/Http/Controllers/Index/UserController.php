@@ -40,6 +40,7 @@ class UserController extends Controller
 
         if($res){
             $request -> session() -> put('user_name',$name);
+            
             echo json_encode(['code'=>1,'uid'=>$uid]);
         }else{
             return 2;//登陆失败
