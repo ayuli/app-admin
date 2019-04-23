@@ -64,6 +64,9 @@ class CollController extends Controller
     {
         $user_id = $request->input('user_id');
         $data = CollModel::join('app_goods','app_collection.goods_id','=','app_goods.goods_id')->where(['app_collection.user_id'=>$user_id])->get();
+		foreach($data as $k =>$v){
+            $data[$k]->add_time=date("Y-m-d H:i:s",$data[$k]->add_time);
+        }
 		$num=count($data);
 		if($num!==0){
 			$result = [ 'code'=>0 , 'data'=>$data ,'num'=>$num];
