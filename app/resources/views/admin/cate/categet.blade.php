@@ -90,7 +90,7 @@
             <span>
                 <a href="#">首页</a>
                 &nbsp;-&nbsp;
-                <a href="#">商品管理</a>
+                <a href="#">商品分类管理</a>
                 &nbsp;-
             </span>
             &nbsp;分类展示
@@ -216,7 +216,7 @@
         var cate_id=$(this).parents('tr').attr('cate_id');
 
         if($("tbody>tr[p_id="+cate_id+"]").length>0){
-            $(".banDel").show();$(".delP1").text('分类下有子类');
+            $(".banDel").show();$(".delP1").text('分类下有子类,不允许删除');
             $(".delP2").html("<a class='ok no'>确定</a>");
             $(".no").click(function(){
                 $(".banDel").hide();
