@@ -106,22 +106,33 @@
         <div class="baBody">
 
             <table border="1" cellspacing="0" cellpadding="0">
+                <a href="couponAdd"><button class="layui-btn layui-btn-sm layui-btn-normal">添加优惠券</button></a>
+                <br>
+                <br>
                 <tr>
                 <tr>
                     <td width="100px" class="tdColor tdC">序号</td>
                     <td width="250px" class="tdColor">优惠券名称</td>
+                    <td width="250px" class="tdColor">优惠券类型</td>
                     <td width="250px" class="tdColor">优惠券数量</td>
-                    <td width="250px" class="tdColor">优惠券抵用价格</td>
-                    <td width="250px" class="tdColor">商品名称</td>
+                    <td width="250px" class="tdColor">优惠券规格</td>
                     <td width="250px" class="tdColor">操作</td>
                 </tr>
                 @foreach($couponinfo as $v)
                 </tr>
                 <td class="abc" height="60">{{$v->coupon_id}}</td>
                 <td class="abc">{{$v->coupon_name}}</td>
+                <td class="abc">
+                            @if( $v->coupon_type==1)
+                                满减券
+                            @elseif($v->coupon_type==2)
+                                立减券
+                            @else
+                                折扣券
+                            @endif
+                </td>
                 <td class="abc">{{$v->coupon_num}}</td>
-                <td>{{$v->coupon_price}}</td>
-                <td>{{$v->goods_name}}</td>
+                <td>{{$v->coupon_attr}}</td>
                 <td coupon_id={{$v->coupon_id}}>
                     <a href="couponUpdate?coupon_id={{$v->coupon_id}}"><img class="operation" src="img/update.png"></a>
                     <img class="operation delban" src="img/delete.png"></td>

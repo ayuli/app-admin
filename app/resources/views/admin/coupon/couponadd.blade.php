@@ -32,15 +32,30 @@
                 <span>优惠券添加</span>
             </div>
             <div class="baBody">
-                <input type="hidden" name="goods_id" value="{{$goods_id}}">
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券名称：<input type="text" name="coupon_name" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <form  class="layui-form">
+                        <div class="layui-inline" >
+                            <label class="layui-form-label" style="width:100px;margin-left:0;">优惠券类型：</label>
+                                <div class="layui-input-inline">
+
+                                <select name="modules" class="selects" lay-verify="required" lay-search="">
+                                    <option value="">选择优惠券类型</option>
+                                    <option value="1">满减券</option>
+                                    <option value="2">立减券</option>
+                                    <option value="3">折扣券</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券数量：<input type="text" name="coupon_num" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券名称：<input type="text" name="coupon_name" class="input3" />
                 </div>
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券价格：<input type="text" name="coupon_price" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券数量：<input type="text" name="coupon_num" class="input3" />
+                </div>
+                <div class="bbD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券规格：<input type="text" name="coupon_attr" class="input3" />
                 </div>
                 <br>
                 <div class="bbD">
@@ -67,15 +82,15 @@
     layui.use('layer', function() {
         var layer = layui.layer;
         $('#btn').click(function(){
+            var select = $("select[name='modules']").val();
             var coupon_name = $("input[name='coupon_name']").val();
             var coupon_num = $("input[name='coupon_num']").val();
-            var coupon_price = $("input[name='coupon_price']").val();
-            var goods_id = $("input[name='goods_id']").val();
+            var coupon_attr = $("input[name='coupon_attr']").val();
 
 
             $.post(
                 'couponInsert',
-                {coupon_name:coupon_name,coupon_num:coupon_num,coupon_price:coupon_price,goods_id:goods_id},
+                {coupon_name:coupon_name,coupon_num:coupon_num,coupon_attr:coupon_attr,select:select},
                 function(res){
                     if(res.code==0) {
                         layer.open({
@@ -83,7 +98,7 @@
                             content:'添加成功',
                             btn:['添加完成'],
                             yes:function(index,layero){
-                                location.href="goodsShow";
+                                location.href="couponList";
                                 return true;
                             },
                         })

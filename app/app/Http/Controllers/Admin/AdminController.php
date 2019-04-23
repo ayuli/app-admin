@@ -328,26 +328,28 @@ class AdminController extends Controller
     }
     //优惠券执行添加
     public function couponInsert(Request $request){
-        $goods_id = $request->input('goods_id');
+        $select = $request->input('select');
         $coupon_name = $request->input('coupon_name');
         $coupon_num = $request->input('coupon_num');
-        $coupon_price = $request->input('coupon_price');
-
+        $coupon_attr = $request->input('coupon_attr');
+        if(empty($select)){
+            return json_encode(['msg'=>'类型不能为空','code'=>1]);
+        }
         if(empty($coupon_name)){
             return json_encode(['msg'=>'名称不能为空','code'=>1]);
         }
         if(empty($coupon_num)){
             return json_encode(['msg'=>'数量不能为空','code'=>1]);
         }
-        if(empty($coupon_price)){
-            return json_encode(['msg'=>'价格不能为空','code'=>1]);
+        if(empty($coupon_attr)){
+            return json_encode(['msg'=>'规格不能为空','code'=>1]);
         }
 
         $couponinfo = [
-            'goods_id'=>$goods_id,
+            'coupon_type'=>$select,
             'coupon_name'=>$coupon_name,
             'coupon_num'=>$coupon_num,
-            'coupon_price'=>$coupon_price
+            'coupon_attr'=>$coupon_attr
         ];
 
         $res = DB::table('app_coupon')->insert($couponinfo);
@@ -360,7 +362,6 @@ class AdminController extends Controller
     //优惠券展示
     public function couponList(){
         $couponinfo = DB::table('app_coupon')
-            ->join('app_goods','app_coupon.goods_id','=','app_goods.goods_id')
             ->where('coupon_del',0)
             ->paginate(4);
         return view('admin.coupon.couponlist',['couponinfo'=>$couponinfo]);
