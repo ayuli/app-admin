@@ -44,8 +44,6 @@ class CollController extends Controller
     {
         $user_id = $request->input('user_id');
         $rec_id = $request->input('rec_id');
-        echo $user_id;
-        echo $rec_id;
         $res = CollModel::where(['user_id'=>$user_id,'rec_id'=>$rec_id])->delete();
 
         if($res){
