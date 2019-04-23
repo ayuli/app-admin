@@ -40,11 +40,9 @@
             <div class="conShow" style="float: left; margin-left: 20px;">
                 <table border="1" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="120px" class="tdColor tdC">序号</td>
-                        <td width="340px">{{$v['order_id']}}</td>
+                        <td width="120px" class="tdColor">订单号</td>
+                        <td width="340px">{{$v['order_sn']}}</td>
                     </tr>
-                        <td width="100px" class="tdColor">订单号</td>
-                        <td>{{$v['order_sn']}}</td>
                     <tr>
                         <td width="100px" class="tdColor">用户</td>
                         <td>{{$v['user_name']}}</td>
