@@ -233,6 +233,10 @@ class ZhaoController extends Controller
                     $coupon_attr=explode('-',$v->coupon_attr);
                     $couponInfo[$k]->max=$coupon_attr[0];
                     $couponInfo[$k]->price=$coupon_attr[1];
+                }else if($v->coupon_type==2){
+                    $couponInfo[$k]->price=$v->coupon_attr;
+                }else{
+                    $couponInfo[$k]->discount=$v->coupon_attr;
                 }
             }
             echo json_encode(['code'=>1,'data'=>$couponInfo]);
