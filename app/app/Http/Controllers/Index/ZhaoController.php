@@ -189,9 +189,9 @@ class ZhaoController extends Controller
         if(!empty($data)){
             $dataInfo = [
                 'order_sn'=>"$data->order_sn",
-                'add_time'=>date('Y-m-d H:i:s',$data->add_time),
+                'add_time'=>date('Y-m-d',$data->add_time),
                 'order_amount'=>"$data->order_amount",
-                'del_time'=>date('Y-m-d H:i:s',$data->add_time+86400)
+                'del_time'=>date('Y-m-d',"$data->add_time+86400")
             ];
             return json_encode(['code'=>1,'data'=>$dataInfo]);
         }else{
