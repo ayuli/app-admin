@@ -42,6 +42,7 @@ class CartController extends Controller
                     $arr=getGoodsAttr($v->goods_id,$v->goods_attr_id);
                     $arr->cart_id=$v->cart_id;
                     $arr->goods_num=$v->goods_num;
+                    $arr->total_price=$v->total_price;
                     $goodsInfo[]=$arr;
                 }else{
                     $goodsInfo[]=$v;
