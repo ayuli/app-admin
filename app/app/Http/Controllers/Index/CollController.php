@@ -62,9 +62,10 @@ class CollController extends Controller
      *  url collectionget
      *  get
      */
-    public function collGet()
+    public function collGet(Request $request)
     {
-        $data = CollModel::get();
+        $user_id = $request->input('user_id');
+        $data = CollModel::where(['user_id'=>$user_id])->get();
         $result = [ 'code'=>0 , 'data'=>$data ];
         return json_encode($result,JSON_UNESCAPED_UNICODE);
 
