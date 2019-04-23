@@ -15,7 +15,7 @@ class AdvController extends Controller
     //轮播图
     public function slide()
     {
-        $goods = AdvModel::where(['slide_show'=>1])->orderBy('add_time','desc')->limit(6)->get();
+        $goods = AdvModel::where(['slide_show'=>1,'is_del'=>0])->orderBy('add_time','desc')->limit(6)->get();
         $data = ['code'=>0,'msg'=>'success','data'=>$goods];
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
