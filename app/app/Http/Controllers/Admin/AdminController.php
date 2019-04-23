@@ -161,6 +161,17 @@ class AdminController extends Controller
         $roleinfo = DB::table('app_node')->get();
         return view('admin.admin.roleadd',['roleinfo'=>$roleinfo]);
     }
+    //角色的权限查询
+    public function roleNodeDo(Request $request){
+        $names = $request->input('names');
+        $data = DB::table('app_node')->where('node_name','like',"%$names%")->get();
+//        print_r($data);exit;
+        $objview =view('admin.admin.rolenodedo',['info'=>$data,'names'=>$names]);
+        $content = response($objview)->getContent();
+
+        return json_encode(['data'=>$content,'code'=>1]);
+
+    }
     //角色执行添加
     public function roleInsert(Request $request){
         $data = $request->input('data');
@@ -215,7 +226,22 @@ class AdminController extends Controller
         $data = json_decode($role_node);
 
 //        print_r($role_node);exit;
-        return view('admin.admin.roleupdate',['roleinfo'=>$roleinfo,'nodeinfo'=>$nodeinfo,'data'=>$data]);
+        return view('admin.admin.roleupdate',['roleinfo'=>$roleinfo]);
+    }
+
+
+    public function roleUpdateNodeDo(Request $request){
+        $role_id = $request->input('role_id');
+        $names = $request->input('names');
+        $info = DB::table('app_node')->where('node_name','like',"%$names%")->get();
+//        print_r($names);exit;
+        $role_node = DB::table('app_role_node')->where('role_id',$role_id)->pluck('node_id');
+
+        $data = json_decode($role_node);
+//        print_r($data);exit;
+        $objview =view('admin.admin.roleupdatenodedo',['info'=>$info,'data'=>$data,'names'=>$names]);
+        $content = response($objview)->getContent();
+        return json_encode(['data'=>$content,'code'=>1,'names'=>$names]);
     }
     //角色执行修改
     public function roleUpdateDo(Request $request){

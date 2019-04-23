@@ -39,6 +39,8 @@ Route::get('roleUpdate',"Admin\AdminController@roleUpdate")->middleware('AdminRo
 Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
 Route::get('roleDo',"Admin\AdminController@roleDo");//赋予角色页面
 Route::post('adminrole',"Admin\AdminController@adminrole");//执行赋予角色
+Route::post('roleNodeDo',"Admin\AdminController@roleNodeDo");//角色的权限查询
+Route::post('roleUpdateNodeDo',"Admin\AdminController@roleUpdateNodeDo");//角色修改的权限查询
 
 //后台权限管理
 Route::get('nodeAdd',"Admin\AdminController@nodeAdd");//权限添加
