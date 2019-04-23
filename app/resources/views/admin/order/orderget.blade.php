@@ -113,24 +113,31 @@
                 <table border="1" cellspacing="0" cellpadding="0">
                     <tr>
                         <td width="66px" class="tdColor tdC">序号</td>
-                        <td width="355px" class="tdColor">购买用户</td>
-                        <td width="355px" class="tdColor">订单名称</td>
-                        <td width="275px" class="tdColor">商品数量</td>
-                        <td width="275px" class="tdColor">商品价格</td>
+                        <td width="355px" class="tdColor">订单号</td>
+                        <td width="355px" class="tdColor">用户</td>
                         <td width="275px" class="tdColor">支付状态</td>
                         <td width="275px" class="tdColor">支付平台</td>
+                        <td width="275px" class="tdColor">操作</td>
                     </tr>
                     @foreach($data as $v)
                     <tr barnd_id="">
                         <td height="60px;">{{$v['order_id']}}</td>
+                        <td>{{$v['order_sn']}}</td>
+                        <td>{{$v['user_name']}}</td>
                         <td>
-                            {{$v['user_id']}}
+                            @if($v['is_pay']==1)
+                                已支付
+                            @elseif($v['is_pay']==2)
+                                未支付
+                            @endif
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            @if($v['pay_way']==1)
+                                微信
+                            @else
+                                支付宝
+                            @endif</td>
+                        <td><a href="/orderdetails?order_id={{$v['order_id']}}">点击查看详情</a></td>
 
                     </tr>
                     @endforeach

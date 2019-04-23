@@ -72,23 +72,16 @@ class ZhaoController extends Controller
 ////        print_r($goodsinfo);exit;
 //        return json_encode(['goodsInfo'=>$goodsinfo]);
 //    }
+
     //前台订单页单删批删
 
     public function indexCartDel(Request $request){
-        $goods_id=$request->input('cart_id');
-        $user_id=$request->session()->get('user_id');
-//        $user_id = 4;
-//        $goods_id = [
-//            0=>1,
-//            1=>2
-//        ];
-
+        $cart_id=$request->input('cart_id');
+        $user_id=$request->input('user_id');
         $cartUpdate=[
-        'is_detele'=>2,
-        'total_price'=>0
+            'is_detele'=>2,
         ];
-        $res = CartModel::where('user_id',$user_id)->whereIn('cart_id',$goods_id)->update($cartUpdate);
-//             print_r($res);exit;
+        $res = CartModel::where('user_id',$user_id)->whereIn('cart_id',$cart_id)->update($cartUpdate);
         if($res){
             return json_encode(['code'=>1,'msg'=>'删除成功']);
         }else{
@@ -180,18 +173,18 @@ class ZhaoController extends Controller
         }
     }
 
-
     //订单详情
     public function orderShow(Request $request){
         date_default_timezone_set('prc');
         $order_id = $request->input('order_id');
         $data = DB::table('app_order')->where('order_id',$order_id)->first();
         if(!empty($data)){
+            $del_time=$data->add_time+86400;
             $dataInfo = [
                 'order_sn'=>"$data->order_sn",
-                'add_time'=>date('Y-m-d H:i:s',$data->add_time),
+                'add_time'=>date('Y-m-d',$data->add_time),
                 'order_amount'=>"$data->order_amount",
-                'del_time'=>date('Y-m-d H:i:s',$data->add_time+86400)
+                'del_time'=>date('Y-m-d',$del_time)
             ];
             return json_encode(['code'=>1,'data'=>$dataInfo]);
         }else{
@@ -200,5 +193,30 @@ class ZhaoController extends Controller
 
     }
 
-
+    //领取优惠券
+    public function drawCoupon(Request $request){
+        $user_id = $request->input('user_id');
+        $coupon_id = $request->input('coupon_id');
+        $where = [
+            'user_id'=>$user_id,
+            'coupon_id'=>$coupon_id
+        ];
+        $data = DB::table('app_user_coupon')->where($where)->first();
+//        print_r($data);exit;
+        if(empty($data)){
+            $wheres = [
+                'user_id'=>$user_id,
+                'coupon_id'=>$coupon_id,
+                'createtime'=>time()
+            ];
+            $res = DB::table('app_user_coupon')->insert($wheres);
+            if($res){
+                return json_encode(['msg'=>'领取成功','code'=>1]);
+            }else{
+                return json_encode(['msg'=>'领取失败','code'=>3]);
+            }
+        }else{
+            return json_encode(['msg'=>'只可领取一张','code'=>2]);
+        }
+    }
 }
