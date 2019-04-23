@@ -107,4 +107,19 @@ class CartController extends Controller
 
 
     }
+
+    //修改购物车信息
+    public function cartUpdate(Request $request){
+        $cart_id=$request->input('cart_id');
+        $goods_num=$request->input('goods_num');
+        $total_price=$request->input('total_price');
+        $update=[
+            'goods_num'=>$goods_num,
+            'total_price'=>$total_price
+        ];
+        $res=DB::table('app_cart')->where(['cart_id'=>$cart_id])->update($update);
+        if(!$res){
+            echo json_encode(['code'=>1,'msg'=>'请稍后再试！']);
+        }
+    }
 }
