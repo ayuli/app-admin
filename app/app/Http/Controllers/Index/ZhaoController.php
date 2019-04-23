@@ -256,6 +256,25 @@ class ZhaoController extends Controller
         return json_encode($data,JSON_UNESCAPED_UNICODE);
     }
 
-
-
+    /**
+     * 执行领取优惠卷
+     */
+    public function couponDo(Request $request)
+    {
+        $coupon_id = $request->input('coupon_id');
+        $user_id = $request->input('user_id');
+        // 先判断该用户是否领取该优惠卷
+        $coupon_user = DB::table('app_user_coupon')->where(['user_id'=>$user_id,'coupon_id'=>$coupon_id])->get();
+        if(count($coupon_user)>0){ return returnJson('1022','该用户已领取该优惠卷');}
+        //优惠卷 -1
+        $coupon_num = DB::table('app_coupon')->where(['coupon_id'=>$coupon_id])->value('coupon_num');
+        $coupon_num = $coupon_num-1;
+        $res_num = DB::table('app_coupon')->where(['coupon_id'=>$coupon_id])->update(['coupon_num'=>$coupon_num]);
+        if(!$res_num){ return returnJson('1023','领取失败');}
+        // 用户加优惠卷
+        $data= ['user_id'=>$user_id,'coupon_id'=>$coupon_id,'createtime'=>time()];
+        $res_insert = DB::table('app_user_coupon')->insert($data);
+        if(!$res_insert){ return returnJson('1023','领取失败');}
+        return returnJson('0','领取成功');
+    }
 }

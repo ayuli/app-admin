@@ -174,4 +174,5 @@ Route::post('/forget','Index\UserController@forget'); //点击修改密码
 
 Route::get('/getUserCoupon','Index\ZhaoController@getUserCoupon');//获取用户优惠券
 
-Route::get('/getcoupon','Index\ZhaoController@getCoupon');//领取优惠券
+Route::get('/getcoupon','Index\ZhaoController@getCoupon');// 展示领取优惠券
+Route::get('/coupondo','Index\ZhaoController@couponDo');// 执行领取优惠券
