@@ -45,7 +45,7 @@ class HistoryController extends Controller
             'res'=>$res,
             'num'=>count($res),
         );
-        return $res;
+        return $data;
     }
     //删除浏览记录
     public function delhistory(Request $request){
