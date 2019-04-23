@@ -72,37 +72,16 @@ class ZhaoController extends Controller
 ////        print_r($goodsinfo);exit;
 //        return json_encode(['goodsInfo'=>$goodsinfo]);
 //    }
-<<<<<<< HEAD
 
-    /**
-     * 购物车删除和批删
-     * @param Request $request
-     * @return false|string
-     */
-    public function cartdel(Request $request){
-        $goods_id=$request->input('id');
-        $user_id=$request->input('user_id');
-        $goodsId=explode(',',$goods_id);
-        $where=[
-            'user_id'=>$user_id
-=======
     //前台订单页单删批删
 
     public function indexCartDel(Request $request){
-        $goods_id=$request->input('cart_id');
-        $user_id=$request->session()->get('user_id');
-//        $user_id = 4;
-//        $goods_id = [
-//            0=>1,
-//            1=>2
-//        ];
-
+        $cart_id=$request->input('cart_id');
+        $user_id=$request->input('user_id');
         $cartUpdate=[
-        'is_detele'=>2,
-        'total_price'=>0
->>>>>>> 92124673d6071905748319eebbece3026227b247
+            'is_detele'=>2,
         ];
-        $res = CartModel::where($where)->whereIn('goods_id',$goodsId)->update($cartupdate);
+        $res = CartModel::where('user_id',$user_id)->whereIn('cart_id',$cart_id)->update($cartUpdate);
         if($res){
             return json_encode(['code'=>1,'msg'=>'删除成功']);
         }else{
