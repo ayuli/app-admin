@@ -187,11 +187,12 @@ class ZhaoController extends Controller
         $order_id = $request->input('order_id');
         $data = DB::table('app_order')->where('order_id',$order_id)->first();
         if(!empty($data)){
+            $del_time=$data->add_time+86400;
             $dataInfo = [
                 'order_sn'=>"$data->order_sn",
                 'add_time'=>date('Y-m-d',$data->add_time),
                 'order_amount'=>"$data->order_amount",
-                'del_time'=>date('Y-m-d',"$data->add_time+86400")
+                'del_time'=>date('Y-m-d',$del_time)
             ];
             return json_encode(['code'=>1,'data'=>$dataInfo]);
         }else{
