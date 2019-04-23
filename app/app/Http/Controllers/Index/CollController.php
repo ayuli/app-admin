@@ -63,10 +63,15 @@ class CollController extends Controller
     public function collGet(Request $request)
     {
         $user_id = $request->input('user_id');
-        $data = CollModel::join('app_user','app_collection.user_id','=','app_user.user_id')->where(['app_collection.user_id'=>$user_id])->get();
-        $result = [ 'code'=>0 , 'data'=>$data ];
-        return json_encode($result,JSON_UNESCAPED_UNICODE);
-
+        $data = CollModel::join('app_goods','app_collection.goods_id','=','app_goods.goods_id')->where(['app_collection.user_id'=>$user_id])->get();
+		$num=count($data);
+		if($num!==0){
+			$result = [ 'code'=>0 , 'data'=>$data ,'num'=>$num];
+			return json_encode($result,JSON_UNESCAPED_UNICODE);
+		}else{
+			$result = [ 'code'=>110 , 'msg'=>'查询失败' ];
+            return json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
     }
 
 
