@@ -33,9 +33,10 @@ class AdvController extends Controller
         $name = $request->input('name');
         $logo = $request->input('logo');
         $is_show = $request->input('is_show');
+        $slide_show = $request->input('slide_show');
         if($name==''|| $logo==''){return returnJson('111','请填写完整');}
         if($is_show==1){DB::table('app_ad')->update(['is_show'=>2]);}
-        $data = ['ad_title'=>$name,'ad_img'=>$logo,'add_time'=>time(),'is_show'=>$is_show];
+        $data = ['ad_title'=>$name,'ad_img'=>$logo,'add_time'=>time(),'is_show'=>$is_show,'slide_show'=>$slide_show];
         $res = AdvModel::insert($data);
         if($res){return returnJson('0','添加成功');
         }else{
