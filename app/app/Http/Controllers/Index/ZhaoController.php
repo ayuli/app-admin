@@ -72,8 +72,8 @@ class ZhaoController extends Controller
 ////        print_r($goodsinfo);exit;
 //        return json_encode(['goodsInfo'=>$goodsinfo]);
 //    }
-
     //前台订单页单删批删
+
     public function indexCartDel(Request $request){
         $goods_id=$request->input('cart_id');
         $user_id=$request->session()->get('user_id');
@@ -95,6 +95,7 @@ class ZhaoController extends Controller
             return json_encode(['code'=>2,'msg'=>'删除失败']);
         }
     }
+
 
     //生成订单
     public function createOrder(Request $request){
@@ -185,7 +186,7 @@ class ZhaoController extends Controller
         date_default_timezone_set('prc');
         $order_id = $request->input('order_id');
         $data = DB::table('app_order')->where('order_id',$order_id)->first();
-        if(count($data)>0){
+        if(!empty($data)){
             $dataInfo = [
                 'order_sn'=>"$data->order_sn",
                 'add_time'=>date('Y-m-d H:i:s',$data->add_time),
