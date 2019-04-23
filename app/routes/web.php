@@ -140,6 +140,7 @@ Route::get('/appadvget',"Admin\AdvController@appAdvGet");     //app广告展示
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
 Route::post('/uncollection','Index\CollController@uncoll'); //取消收藏
+Route::post('/delconllection','Index\CollController@delconllection'); //删除全部收藏
 Route::get('/collectionget','Index\CollController@collGet'); //展示收藏
 
 
