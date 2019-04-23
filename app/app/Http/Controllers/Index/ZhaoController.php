@@ -180,7 +180,6 @@ class ZhaoController extends Controller
         }
     }
 
-
     //订单详情
     public function orderShow(Request $request){
         date_default_timezone_set('prc');
@@ -200,5 +199,30 @@ class ZhaoController extends Controller
 
     }
 
-
+    //领取优惠券
+    public function drawCoupon(Request $request){
+        $user_id = $request->input('user_id');
+        $coupon_id = $request->input('coupon_id');
+        $where = [
+            'user_id'=>$user_id,
+            'coupon_id'=>$coupon_id
+        ];
+        $data = DB::table('app_user_coupon')->where($where)->first();
+//        print_r($data);exit;
+        if(empty($data)){
+            $wheres = [
+                'user_id'=>$user_id,
+                'coupon_id'=>$coupon_id,
+                'createtime'=>time()
+            ];
+            $res = DB::table('app_user_coupon')->insert($wheres);
+            if($res){
+                return json_encode(['msg'=>'领取成功','code'=>1]);
+            }else{
+                return json_encode(['msg'=>'领取失败','code'=>3]);
+            }
+        }else{
+            return json_encode(['msg'=>'只可领取一张','code'=>2]);
+        }
+    }
 }
