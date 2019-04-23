@@ -11,6 +11,7 @@ class CollController extends Controller
 {
     /**
      *  收藏 url :  collection
+     *  post
      *  参数 user_id  goods_id
      *  return  'code'=>0 , 'msg'=>'收藏成功'
      */
@@ -62,7 +63,7 @@ class CollController extends Controller
     public function collGet(Request $request)
     {
         $user_id = $request->input('user_id');
-        $data = CollModel::where(['user_id'=>$user_id])->get();
+        $data = CollModel::join('app_user','app_collection.user_id','=','app_user.user_id')->where(['app_collection.user_id'=>$user_id])->get();
         $result = [ 'code'=>0 , 'data'=>$data ];
         return json_encode($result,JSON_UNESCAPED_UNICODE);
 
