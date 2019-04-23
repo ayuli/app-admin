@@ -124,6 +124,8 @@ Route::get('/deladdress',"Index\AddressController@deladdress");   //删除收货
 
 //订单展示
 Route::get('/orderget',"Admin\OrderController@orderGet");
+Route::get('/orderdetails',"Admin\OrderController@orderDetails"); //后台订单详情
+
 
 //广告管理
 Route::get('/adv',"Admin\AdvController@adv");     //广告添加展示

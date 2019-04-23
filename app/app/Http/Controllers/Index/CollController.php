@@ -11,13 +11,11 @@ class CollController extends Controller
 {
     /**
      *  收藏 url :  collection
+     *  post
      *  参数 user_id  goods_id
      *  return  'code'=>0 , 'msg'=>'收藏成功'
      */
     public function coll(Request $request){
-        $result = [ 'code'=>0 , 'msg'=>'收藏成功' ];
-        return json_encode($result,JSON_UNESCAPED_UNICODE);
-        
         $user_id = $request->input('user_id');
         $goods_id = $request->input('goods_id');
         $add_time = time();
@@ -44,9 +42,6 @@ class CollController extends Controller
      */
     public function uncoll(Request $request)
     {
-        $result = [ 'code'=>0 , 'msg'=>'已取消收藏' ];
-        return json_encode($result,JSON_UNESCAPED_UNICODE);
-
         $user_id = $request->input('user_id');
         $goods_id = $request->input('goods_id');
 
@@ -65,12 +60,21 @@ class CollController extends Controller
      *  url collectionget
      *  get
      */
-    public function collGet()
+    public function collGet(Request $request)
     {
-        $data = CollModel::get();
-        $result = [ 'code'=>0 , 'data'=>$data ];
-        return json_encode($result,JSON_UNESCAPED_UNICODE);
-
+        $user_id = $request->input('user_id');
+        $data = CollModel::join('app_goods','app_collection.goods_id','=','app_goods.goods_id')->where(['app_collection.user_id'=>$user_id])->get();
+		foreach($data as $k =>$v){
+            $data[$k]->add_time=date("Y-m-d H:i:s",$data[$k]->add_time);
+        }
+		$num=count($data);
+		if($num!==0){
+			$result = [ 'code'=>0 , 'data'=>$data ,'num'=>$num];
+			return json_encode($result,JSON_UNESCAPED_UNICODE);
+		}else{
+			$result = [ 'code'=>110 , 'msg'=>'查询失败' ];
+            return json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
     }
 
 
