@@ -244,4 +244,18 @@ class ZhaoController extends Controller
             echo json_encode(['code'=>0,'data'=>'']);
         }
     }
+
+
+    /**
+     * 领取优惠卷 展示所有优惠卷
+     */
+    public function getCoupon()
+    {
+        $coupon = DB::table('app_coupon')->get();
+        $data = ['code'=>0,'msg'=>'success','data'=>$coupon];
+        return json_encode($data,JSON_UNESCAPED_UNICODE);
+    }
+
+
+
 }
