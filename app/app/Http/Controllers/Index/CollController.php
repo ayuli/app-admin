@@ -25,6 +25,11 @@ class CollController extends Controller
             'goods_id'  => $goods_id,
             'add_time'  =>$add_time
         ];
+        $arr = CollModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->get();
+        if(count($arr)>0){
+            $result = [ 'code'=>100 , 'msg'=>'该商品已收藏' ];
+            return json_encode($result,JSON_UNESCAPED_UNICODE);
+        }
         $res = CollModel::insert($data);
         if($res){
             $result = [ 'code'=>0 , 'msg'=>'收藏成功' ];
