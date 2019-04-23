@@ -55,7 +55,7 @@
                     </tr>
                     <tr>
                         <td width="100px" class="tdColor">商品图片</td>
-                        <td><img src="{{$v['goods_img']}}" width="80px" alt=""></td>
+                        <td><img src="{{$v['goods_img']}}" width="100px" height="100px" alt=""></td>
                     </tr>
                     <tr>
                         <td width="100px" class="tdColor">购买数量</td>
