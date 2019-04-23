@@ -81,6 +81,8 @@ Route::post('goodsUpload',"Admin\GoodsController@goodsUpload"); //商品文件�
 Route::get('goodsShow',"Admin\GoodsController@goodsShow"); //商品文件上传
 Route::get('goodsUpdate',"Admin\GoodsController@goodsUpdate"); //商品修改
 Route::post('goodsUpdateDo',"Admin\GoodsController@goodsUpdateDo"); //商品修改执行
+Route::post('attrAddDo',"Admin\GoodsController@attrAddDo"); //商品添加属性执行
+Route::get('attrUpdate',"Admin\GoodsController@attrUpdate"); //商品属性修改
 Route::post('goodsDelete',"Admin\GoodsController@goodsDelete"); //商品删除
 Route::get('productAdd',"Admin\GoodsController@productAdd"); //商品sku
 Route::post('productAddDo',"Admin\GoodsController@productAddDo"); //商品sku执行
@@ -93,8 +95,6 @@ Route::get('typeUpdate',"Admin\AdminController@typeUpdate");//类型修改页面
 Route::post('typeUpdateDo',"Admin\AdminController@typeUpdateDo");//类型修改页面
 
 Route::get('attrAdd',"Admin\GoodsController@attrAdd"); //商品添加属性页面
-Route::post('attrAddDo',"Admin\GoodsController@attrAddDo"); //商品添加属性执行
-Route::get('attrUpdate',"Admin\GoodsController@attrUpdate"); //商品属性修改
 Route::post('attrUpdateDo',"Admin\GoodsController@attrUpdateDo"); //商品属性修改执行
 
 
