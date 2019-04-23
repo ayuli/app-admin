@@ -41,6 +41,7 @@ class HistoryController extends Controller
         foreach($res as $k =>$v){
             $res[$k]->add_htime=date("Y-m-d H:i:s",$res[$k]->add_htime);
         }
+        $res['num']=count($res);
         return $res;
     }
     //删除浏览记录
