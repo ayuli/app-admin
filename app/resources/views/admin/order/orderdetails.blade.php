@@ -87,12 +87,14 @@
                 </table>
             </div>
             @endforeach
+
             <!-- banner 表格 显示 end-->
         </div>
         <!-- banner页面样式end -->
     </div>
 
 </div>
+<div style="margin-bottom:60px; "></div>
 
 </body>
 
