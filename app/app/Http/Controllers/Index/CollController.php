@@ -15,9 +15,6 @@ class CollController extends Controller
      *  return  'code'=>0 , 'msg'=>'收藏成功'
      */
     public function coll(Request $request){
-        $result = [ 'code'=>0 , 'msg'=>'收藏成功' ];
-        return json_encode($result,JSON_UNESCAPED_UNICODE);
-        
         $user_id = $request->input('user_id');
         $goods_id = $request->input('goods_id');
         $add_time = time();
