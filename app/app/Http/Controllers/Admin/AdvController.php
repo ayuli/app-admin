@@ -7,9 +7,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 use App\Model\AdvModel;
+use App\Model\GoodsModel;
 
 class AdvController extends Controller
 {
+
+    //轮播图
+    public function slide()
+    {
+        $goods = AdvModel::where(['slide_show'=>1])->orderBy('add_time','desc')->limit(6)->get();
+        $data = ['code'=>0,'msg'=>'success','data'=>$goods];
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+
     //广告添加展示
     public function adv()
     {
@@ -96,4 +107,7 @@ class AdvController extends Controller
         DB::table('app_ad')->where(['ad_id'=>$ad_id])->update(['is_show'=>1]);
         return returnJson('0','已设为默认');
     }
+
+
+
 }

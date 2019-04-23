@@ -153,7 +153,7 @@ Route::any('/cartshow','Index\CartController@cartshow'); //展示购物车列表
 Route::get('/indexgoods','Index\GoodsController@goods'); //所有商品列表
 
 
-Route::get('/slide','Index\GoodsController@slide'); //前台 轮播图
+Route::get('/slide','Admin\AdvController@slide'); //前台 轮播图
 
 
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //所有商品列表
