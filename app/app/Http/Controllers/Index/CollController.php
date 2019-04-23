@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Index;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 use App\Model\CollModel;
 
@@ -76,6 +77,13 @@ class CollController extends Controller
             return json_encode($result,JSON_UNESCAPED_UNICODE);
 		}
     }
-
+    public function delconllection(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $res = DB::table('app_collection')->where('user_id',$user_id)->delete();
+        if ($res){
+            return 1;
+        }
+    }
 
 }
