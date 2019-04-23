@@ -77,10 +77,12 @@ class CollController extends Controller
             return json_encode($result,JSON_UNESCAPED_UNICODE);
 		}
     }
+    //删除全部收藏
     public function delconllection(Request $request)
     {
         $user_id = $request->input('user_id');
         $res = DB::table('app_collection')->where('user_id',$user_id)->delete();
+        var_dump($res);
         if ($res){
             return 1;
         }
