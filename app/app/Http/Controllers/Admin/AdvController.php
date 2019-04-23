@@ -51,7 +51,7 @@ class AdvController extends Controller
     {
         $ad_id = $request->input('ad_id');
         $arr = AdvModel::where(['ad_id'=>$ad_id])->first();
-        if($arr['is_show']){ return returnJson('120','该广告已展示,不允许删除');}
+        if($arr['is_show']==1){ return returnJson('120','该广告已展示,不允许删除');}
         $res = AdvModel::where(['ad_id'=>$ad_id])->update(['is_del'=>1]);
         if($res)
         {return returnJson('0','删除成功');}
