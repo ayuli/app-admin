@@ -72,6 +72,20 @@ class ZhaoController extends Controller
 ////        print_r($goodsinfo);exit;
 //        return json_encode(['goodsInfo'=>$goodsinfo]);
 //    }
+<<<<<<< HEAD
+
+    /**
+     * 购物车删除和批删
+     * @param Request $request
+     * @return false|string
+     */
+    public function cartdel(Request $request){
+        $goods_id=$request->input('id');
+        $user_id=$request->input('user_id');
+        $goodsId=explode(',',$goods_id);
+        $where=[
+            'user_id'=>$user_id
+=======
     //前台订单页单删批删
 
     public function indexCartDel(Request $request){
@@ -86,9 +100,14 @@ class ZhaoController extends Controller
         $cartUpdate=[
         'is_detele'=>2,
         'total_price'=>0
+>>>>>>> 92124673d6071905748319eebbece3026227b247
         ];
-        $res = CartModel::where('user_id',$user_id)->whereIn('cart_id',$goods_id)->update($cartUpdate);
-//             print_r($res);exit;
+        $cartupdate=[
+            'cart_status'=>2,
+            'buy_number'=>0,
+            'update_time'=>time()
+        ];
+        $res = CartModel::where($where)->whereIn('goods_id',$goodsId)->update($cartupdate);
         if($res){
             return json_encode(['code'=>1,'msg'=>'删除成功']);
         }else{
@@ -187,11 +206,12 @@ class ZhaoController extends Controller
         $order_id = $request->input('order_id');
         $data = DB::table('app_order')->where('order_id',$order_id)->first();
         if(!empty($data)){
+            $del_time=$data->add_time+86400;
             $dataInfo = [
                 'order_sn'=>"$data->order_sn",
                 'add_time'=>date('Y-m-d',$data->add_time),
                 'order_amount'=>"$data->order_amount",
-                'del_time'=>date('Y-m-d',"$data->add_time+86400")
+                'del_time'=>date('Y-m-d',$del_time)
             ];
             return json_encode(['code'=>1,'data'=>$dataInfo]);
         }else{
