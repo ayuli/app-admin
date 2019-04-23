@@ -82,7 +82,6 @@ class CollController extends Controller
     {
         $user_id = $request->input('user_id');
         $res = DB::table('app_collection')->where('user_id',$user_id)->delete();
-        var_dump($res);
         if ($res){
             return 1;
         }
