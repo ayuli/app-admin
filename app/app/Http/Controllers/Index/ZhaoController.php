@@ -72,8 +72,8 @@ class ZhaoController extends Controller
 ////        print_r($goodsinfo);exit;
 //        return json_encode(['goodsInfo'=>$goodsinfo]);
 //    }
-
     //前台订单页单删批删
+
     public function indexCartDel(Request $request){
         $goods_id=$request->input('cart_id');
         $user_id=$request->session()->get('user_id');
@@ -95,6 +95,7 @@ class ZhaoController extends Controller
             return json_encode(['code'=>2,'msg'=>'删除失败']);
         }
     }
+
 
     //生成订单
     public function createOrder(Request $request){
