@@ -185,7 +185,7 @@ class ZhaoController extends Controller
         date_default_timezone_set('prc');
         $order_id = $request->input('order_id');
         $data = DB::table('app_order')->where('order_id',$order_id)->first();
-        if(count($data)>0){
+        if(!empty($data)){
             $dataInfo = [
                 'order_sn'=>"$data->order_sn",
                 'add_time'=>date('Y-m-d H:i:s',$data->add_time),
