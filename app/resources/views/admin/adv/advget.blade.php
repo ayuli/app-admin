@@ -116,6 +116,7 @@
                         <td width="355px" class="tdColor">广告标题</td>
                         <td width="460px" class="tdColor">广告信息</td>
                         <td width="260px" class="tdColor">前台展示</td>
+                        <td width="260px" class="tdColor">轮播图展示</td>
                         <td width="260px" class="tdColor">添加时间</td>
                         <td width="130px" class="tdColor">操作</td>
                     </tr>
@@ -135,6 +136,13 @@
                                 <span class="default" style="color: red;cursor:pointer" >设为默认</span>
                             @else
                                 <span style="color: blue;">已展示</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($v['slide_show']==1)
+                                是
+                            @else
+                                否
                             @endif
                         </td>
                         <td>{{date('Y-m-d H:i:s',$v['add_time'])}}</td>
