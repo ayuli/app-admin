@@ -43,9 +43,9 @@ class CollController extends Controller
     public function uncoll(Request $request)
     {
         $user_id = $request->input('user_id');
-        $goods_id = $request->input('goods_id');
+        $red_id = $request->input('red_id');
 
-        $res = CollModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->delete();
+        $res = CollModel::where(['user_id'=>$user_id,'rec_id'=>$red_id])->delete();
         if($res){
             $result = [ 'code'=>0 , 'msg'=>'已取消收藏' ];
             return json_encode($result,JSON_UNESCAPED_UNICODE);
