@@ -231,8 +231,8 @@ class ZhaoController extends Controller
             foreach ($couponInfo as $k=>$v){
                 if($v->coupon_type==1){
                     $coupon_attr=explode('-',$v->coupon_attr);
-                    $couponInfo[$k]['max']=$coupon_attr[0];
-                    $couponInfo[$k]['price']=$coupon_attr[1];
+                    $couponInfo[$k]->max=$coupon_attr[0];
+                    $couponInfo[$k]->price=$coupon_attr[1];
                 }
             }
             echo json_encode(['code'=>1,'data'=>$couponInfo]);
