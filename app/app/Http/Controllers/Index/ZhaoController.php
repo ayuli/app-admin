@@ -219,4 +219,25 @@ class ZhaoController extends Controller
             return json_encode(['msg'=>'只可领取一张','code'=>2]);
         }
     }
+
+    //获取优惠券
+    public function getUserCoupon(Request $request){
+        $user_id=$request->input('user_id');
+        $couponInfo=DB::table('app_user_coupon')
+                        ->where(['user_id'=>$user_id,'is_del'=>1,'coupon_del'=>0])
+                        ->join('app_coupon','app_user_coupon.coupon_id','=','app_coupon.coupon_id')
+                        ->get();
+        if(count($couponInfo)>0){
+            foreach ($couponInfo as $k=>$v){
+                if($v->coupon_type==1){
+                    $coupon_attr=explode('-',$v->coupon_attr);
+                    $couponInfo[$k]['max']=$coupon_attr[0];
+                    $couponInfo[$k]['price']=$coupon_attr[1];
+                }
+            }
+            echo json_encode(['code'=>1,'data'=>$couponInfo]);
+        }else{
+            echo json_encode(['code'=>0,'data'=>'']);
+        }
+    }
 }

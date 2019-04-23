@@ -167,3 +167,6 @@ Route::get('/drawCoupon','Index\ZhaoController@drawCoupon'); //订单详情
 Route::get('/getcode','Index\UserController@getCode'); //获取注册验证码
 Route::get('/getvercode','Index\UserController@getVerCode'); //获取忘记密码验证码
 Route::post('/forget','Index\UserController@forget'); //点击修改密码
+
+
+Route::get('/getUserCoupon','Index\ZhaoController@getUserCoupon');//获取用户优惠券
