@@ -102,11 +102,6 @@ class ZhaoController extends Controller
         'total_price'=>0
 >>>>>>> 92124673d6071905748319eebbece3026227b247
         ];
-        $cartupdate=[
-            'cart_status'=>2,
-            'buy_number'=>0,
-            'update_time'=>time()
-        ];
         $res = CartModel::where($where)->whereIn('goods_id',$goodsId)->update($cartupdate);
         if($res){
             return json_encode(['code'=>1,'msg'=>'删除成功']);
