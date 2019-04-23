@@ -227,16 +227,19 @@ class ZhaoController extends Controller
                         ->where(['user_id'=>$user_id,'is_del'=>1,'coupon_del'=>0])
                         ->join('app_coupon','app_user_coupon.coupon_id','=','app_coupon.coupon_id')
                         ->get();
-        print_r($couponInfo);
-        die;
         if(count($couponInfo)>0){
             foreach ($couponInfo as $k=>$v){
                 if($v->coupon_type==1){
                     $coupon_attr=explode('-',$v->coupon_attr);
                     $couponInfo[$k]->max=$coupon_attr[0];
                     $couponInfo[$k]->price=$coupon_attr[1];
+                }else if($v->coupon_type==2){
+                    $couponInfo[$k]->price=$v->coupon_attr;
+                }else{
+                    $couponInfo[$k]->discount=$v->coupon_attr;
                 }
             }
+            print_r(['code'=>1,'data'=>$couponInfo]);die;
             echo json_encode(['code'=>1,'data'=>$couponInfo]);
         }else{
             echo json_encode(['code'=>0,'data'=>'']);
