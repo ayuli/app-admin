@@ -235,6 +235,7 @@ class ZhaoController extends Controller
                     $couponInfo[$k]['price']=$coupon_attr[1];
                 }
             }
+            print_r($couponInfo);die;
             echo json_encode(['code'=>1,'data'=>$couponInfo]);
         }else{
             echo json_encode(['code'=>0,'data'=>'']);
