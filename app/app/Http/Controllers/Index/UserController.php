@@ -179,15 +179,23 @@ class UserController extends Controller
 
     }
         public function adduserinfo(Request $request){
-            $uid=$request->uid;
-            $nickname=$request->nickname;
-            $age=$request->age;
-            $sex=$request->sex;
+            $uid=$request->input('uid');
+            $nickname=$request->input('nickname');
+            $age=$request->input('age');
+            $sex=$request->input('sex');
+            if($sex=='保密'){
+                $sex='0';
+            }elseif ($sex=='男'){
+                $sex='1';
+            }elseif ($sex=='女'){
+                $sex='2';
+            }
             $data = array(
               'nickname'=>$nickname,
                 'age'=>$age,
                 'sex'=>$sex,
             );
+            print_r($data);
             $res=DB::table('user_info')->where('user_id',$uid)->update($data);
             if($res){
                 return 1;
