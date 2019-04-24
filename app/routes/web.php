@@ -172,6 +172,7 @@ Route::get('/drawCoupon','Index\ZhaoController@drawCoupon'); //订单详情
 Route::get('/orderDel','Index\ZhaoController@orderDel'); //
 Route::get('/cartDel','Index\ZhaoController@cartDel'); //
 Route::get('/couponDel','Index\ZhaoController@couponDel'); //
+Route::get('/couponStatus','Index\ZhaoController@couponStatus'); //
 
 Route::get('/getcode','Index\UserController@getCode'); //获取注册验证码
 Route::get('/getvercode','Index\UserController@getVerCode'); //获取忘记密码验证码
