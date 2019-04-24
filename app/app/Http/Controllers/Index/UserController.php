@@ -178,6 +178,7 @@ class UserController extends Controller
         return returnJson('0','验证码为:'.$code);
 
     }
+        //添加修改个人资料
         public function adduserinfo(Request $request){
             $uid=$request->input('uid');
             $nickname=$request->input('nickname');
@@ -195,7 +196,12 @@ class UserController extends Controller
                 'age'=>$age,
                 'sex'=>$sex,
             );
-            $res=DB::table('user_info')->where('user_id',$uid)->update($data);
+            $res1=DB::table('user_info')->where('user_id',$uid)->first();
+            if($res1){
+                $res=DB::table('user_info')->where('user_id',$uid)->update($data);
+            }else{
+                $res=DB::table('user_info')->insert(['user_id'=>$uid,'nickname'=>$nickname,'age'=>$age,'sex'=>$sex,]);
+            }
             if($res){
                 return 1;
             }else{
