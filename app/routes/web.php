@@ -185,4 +185,4 @@ Route::get('/coupondo','Index\ZhaoController@couponDo');// 执行领取优惠券
 Route::get('/couponcon','Index\ZhaoController@couponContent');// 个人中心优惠券展示
 
 //我的资料
-Route::get('/adduserinfo','Index\UserController@adduserinfo');// 我的资料修改
+Route::post('/adduserinfo','Index\UserController@adduserinfo');// 我的资料修改

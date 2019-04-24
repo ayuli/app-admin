@@ -179,9 +179,20 @@ class UserController extends Controller
 
     }
         public function adduserinfo(Request $request){
+            $uid=$request->uid;
             $nickname=$request->nickname;
             $age=$request->age;
             $sex=$request->sex;
-            
+            $data = array(
+              'nickname'=>$nickname,
+                'age'=>$age,
+                'sex'=>$sex,
+            );
+            $res=DB::table('user_info')->where('user_id',$uid)->update($data);
+            if($res){
+                return 1;
+            }else{
+                return 2;
+            }
         }
 }
