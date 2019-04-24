@@ -181,7 +181,11 @@ class UserController extends Controller
         public function  showuserinfo(Request $request){
             $uid=$request->input('uid');
             $res=DB::table('user_info')->where('user_id',$uid)->first();
-            $nickname=$res->nickname;
+            if($res){
+                return $res;
+            }else{
+                return 2;
+            }
         }
         //添加修改个人资料
         public function adduserinfo(Request $request){
