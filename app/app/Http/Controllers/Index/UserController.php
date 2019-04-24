@@ -219,4 +219,24 @@ class UserController extends Controller
                 return 2;
             }
         }
+
+
+    //用户头像上传
+    public function uploadPortrait(Request $request){
+        $user_id=$request->input('user_id');
+        $imgInfo=$request->input('imgInfo');
+        $name=date('Ymd',time()).rand(1,100);
+        $file_name="user/".$user_id."/".$name;
+        $res=file_put_contents($file_name,$imgInfo,FILE_APPEND);
+        $touxiangurl=DB::table('user_info')->where('user_id',$user_id)->value('touxiangurl');
+        if(!empty($touxiangurl)){
+            @unlink($file_name);
+        }
+        $res=DB::table('user_info')->where('user_id',$user_id)->update(['touxiangurl'=>$file_name]);
+        if($res){
+            echo json_encode(['code'=>1,'msg'=>'上传成功！']);
+        }else{
+            echo json_encode(['code'=>1,'msg'=>'请稍后再试！']);
+        }
+    }
 }

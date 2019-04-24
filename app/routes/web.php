@@ -188,3 +188,4 @@ Route::get('/couponcon','Index\ZhaoController@couponContent');// 个人中心优
 //我的资料
 Route::post('/adduserinfo','Index\UserController@adduserinfo');// 我的资料修改
 Route::get('/showuserinfo','Index\UserController@showuserinfo');// 我的资料展示
+Route::post('/uploadPortrait','Index\UserController@uploadPortrait');// 上传头像
