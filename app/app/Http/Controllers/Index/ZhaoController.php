@@ -277,4 +277,17 @@ class ZhaoController extends Controller
         if(!$res_insert){ return returnJson('1023','领取失败');}
         return returnJson('0','领取成功');
     }
+
+    /**
+     *  个人中心展示优惠卷
+     */
+    public function couponContent(Request $request)
+    {
+        $user_id=$request->input('user_id');
+        $couponInfo=DB::table('app_user_coupon')
+            ->where(['user_id'=>$user_id,'is_del'=>1,'coupon_del'=>0])
+            ->join('app_coupon','app_user_coupon.coupon_id','=','app_coupon.coupon_id')
+            ->get();
+    }
+
 }
