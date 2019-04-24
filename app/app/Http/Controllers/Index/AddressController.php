@@ -121,14 +121,12 @@ class AddressController extends Controller
     //设为默认
     public function is_address(Request $request){
         $id=$request->input('id');
+
         $user_id=$request->input('user_id');
+        
         $res=DB::table('app_address')->where('user_id',$user_id)->update(['is_address'=>0]);
-        if($res){
-            $res=DB::table('app_address')->where('id',$id)->update(['is_address'=>1]);
-            if(!$res){
-                echo json_encode(['code'=>0,'msg'=>'请稍后再试！']);
-            }
-        }else{
+        $res=DB::table('app_address')->where('id',$id)->update(['is_address'=>1]);
+        if(!$res){
             echo json_encode(['code'=>0,'msg'=>'请稍后再试！']);
         }
     }
