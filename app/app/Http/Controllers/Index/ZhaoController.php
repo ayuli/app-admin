@@ -290,7 +290,7 @@ class ZhaoController extends Controller
         if(!$res_insert){ return returnJson('1023','领取失败');}
         return returnJson('0','领取成功');
     }
-    
+
     /**
      *  个人中心展示优惠卷
      */
