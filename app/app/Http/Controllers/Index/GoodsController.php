@@ -125,7 +125,7 @@ class GoodsController extends Controller
         $arr = GoodsModel::where('goods_name','like',"%$search%")->where($where)->orderBy($column,$order)->offset($start)->limit($page_num)->get();
         $count = count($arr);
         if ($count) {
-            $data = ['code' => 0, 'data' => $arr];
+            $data = ['code' => 0, 'data' => $arr,'count'=>$count];
             return json_encode($data, JSON_UNESCAPED_UNICODE);
         } else {
             $data = ['code' => 1102, 'msg' => '没有更多了!'];
