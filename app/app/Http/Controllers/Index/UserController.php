@@ -224,7 +224,9 @@ class UserController extends Controller
     //用户头像上传
     public function uploadPortrait(Request $request){
         $user_id=$request->input('user_id');
-        $imgInfo=$request->input('imgInfo');
+        $imgInfo=$request->input('data');
+        print_r($imgInfo);
+        die;
         $name=date('Ymd',time()).rand(1,100);
         $file_name="user/".$user_id."/".$name;
         $res=file_put_contents($file_name,$imgInfo,FILE_APPEND);
