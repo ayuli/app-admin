@@ -225,9 +225,8 @@ class UserController extends Controller
     public function uploadPortrait(Request $request){
         $user_id=$request->input('user_id');
         $imgInfo=$request->input('data');
-        print_r($imgInfo);
-        die;
-        $name=date('Ymd',time()).rand(1,100);
+        $name=$request->input('name');
+        $imgInfo=substr($imgInfo,17);
         $file_name="user/".$user_id."/".$name;
         $res=file_put_contents($file_name,$imgInfo,FILE_APPEND);
         $touxiangurl=DB::table('user_info')->where('user_id',$user_id)->value('touxiangurl');
