@@ -14,6 +14,7 @@ class ZhaoController extends Controller
     public function indexGoodsDetail(Request $request){
 
         $goods_id = $request->input('goods_id');
+        $user_id  = $request->input('user_id');
         $goodsinfo = DB::table('app_goods')->where('goods_id',$goods_id)->first();
 
         $goodsinfo->goods_imgs=explode('|',$goodsinfo->goods_imgs);
@@ -58,7 +59,14 @@ class ZhaoController extends Controller
             $info="";
         }
 
-        return json_encode(['goodsInfo'=>$goodsinfo,'attrInfo'=>$info]);
+        //判断是否收藏
+        $res=DB::table('app_collection')->where(['user_id'=>$user_id,'goods_id'=>$goods_id])->first();
+        if($res){
+            $code=1;
+        }else{
+            $code=0;
+        }
+        return json_encode(['goodsInfo'=>$goodsinfo,'attrInfo'=>$info,'code'=>$code]);
     }
 
 //    //前台搜索
