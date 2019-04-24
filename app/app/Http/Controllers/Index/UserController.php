@@ -246,4 +246,19 @@ class UserController extends Controller
             echo json_encode(['code'=>1,'msg'=>'请稍后再试！']);
         }
     }
+    /**
+     *  前台个人中心订单展示
+     */
+    public function orderGet(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $type = $request->input('type');
+        $arr=DB::table('app_order')
+            ->join('app_order_goods','app_order.order_id','=','app_order_goods.order_id')
+            ->where(['user_id'=>$user_id,'order_status'=>$type])
+            ->get();
+        $data = ['code'=>0,'msg'=>'success','data'=>$arr];
+        return json_encode($data,JSON_UNESCAPED_UNICODE);
+    }
+
 }
