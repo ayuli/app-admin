@@ -7,9 +7,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 use App\Model\AdvModel;
+use App\Model\GoodsModel;
 
 class AdvController extends Controller
 {
+
+    //轮播图
+    public function slide()
+    {
+        $goods = AdvModel::where(['slide_show'=>1,'is_del'=>0])->orderBy('add_time','desc')->limit(6)->get();
+        $data = ['code'=>0,'msg'=>'success','data'=>$goods];
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
+
     //广告添加展示
     public function adv()
     {
@@ -22,9 +33,10 @@ class AdvController extends Controller
         $name = $request->input('name');
         $logo = $request->input('logo');
         $is_show = $request->input('is_show');
+        $slide_show = $request->input('slide_show');
         if($name==''|| $logo==''){return returnJson('111','请填写完整');}
         if($is_show==1){DB::table('app_ad')->update(['is_show'=>2]);}
-        $data = ['ad_title'=>$name,'ad_img'=>$logo,'add_time'=>time(),'is_show'=>$is_show];
+        $data = ['ad_title'=>$name,'ad_img'=>$logo,'add_time'=>time(),'is_show'=>$is_show,'slide_show'=>$slide_show];
         $res = AdvModel::insert($data);
         if($res){return returnJson('0','添加成功');
         }else{
@@ -75,10 +87,11 @@ class AdvController extends Controller
         $logo = $request->input('logo');
         $ad_id = $request->input('ad_id');
         $is_show = $request->input('is_show');
+        $slide_show = $request->input('slide_show');
         if($ad_id==''){echo "非法操作";}
         if($name==''|| $logo==''){return returnJson('100','请填写完整');}
         if($is_show==1){DB::table('app_ad')->update(['is_show'=>2]);}
-        $data = ['ad_title'=>$name,'ad_img'=>$logo,'add_time'=>time(),'is_show'=>$is_show];
+        $data = ['ad_title'=>$name,'ad_img'=>$logo,'is_show'=>$is_show,'slide_show'=>$slide_show];
         $res = AdvModel::where(["ad_id"=>$ad_id])->update($data);
         if($res!==false){
             $json = ['code'  => 0, 'msg'   => '修改成功'];
@@ -96,4 +109,7 @@ class AdvController extends Controller
         DB::table('app_ad')->where(['ad_id'=>$ad_id])->update(['is_show'=>1]);
         return returnJson('0','已设为默认');
     }
+
+
+
 }

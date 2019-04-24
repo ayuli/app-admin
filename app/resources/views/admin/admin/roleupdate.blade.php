@@ -38,15 +38,49 @@
                 <br>
                 <input type="hidden" id="roleid" value="{{$roleinfo->role_id}}">
                 <form  class="layui-form">
-                    <div class="layui-form-item">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限：
-                        @foreach($nodeinfo as $v)
-                            @if(in_array($v->node_id,$data))
-                            <input type="checkbox" checked   name="like[write]"  node_id="{{$v->node_id}}"  title="{{$v->node_name}}">
-                            @else
-                            <input type="checkbox" name="like[write]"  node_id="{{$v->node_id}}"  title="{{$v->node_name}}">
-                            @endif
-                        @endforeach
+                    <div class="layui-collapse"style="width:900px;" lay-filter="test">
+                        <div class="layui-colla-item" style="width:900px;">
+                            <h2 class="layui-colla-title  layui-bg-blue" name="管理员">管理员管理</h2>
+                            <div class="layui-colla-content">
+                            </div>
+                        </div>
+                        <div class="layui-colla-item"style="width:900px;">
+                            <h2 class="layui-colla-title layui-bg-gray" name="角色">角色管理</h2>
+                            <div class="layui-colla-content">
+
+                            </div>
+                        </div>
+                        <div class="layui-colla-item"style="width:900px;">
+                            <h2 class="layui-colla-title layui-bg-blue" name="权限">权限管理</h2>
+                            <div class="layui-colla-content">
+
+                            </div>
+                        </div>
+                        <div class="layui-colla-item"style="width:900px;">
+                            <h2 class="layui-colla-title layui-bg-gray" name="品牌">品牌管理</h2>
+                            <div class="layui-colla-content">
+                            </div>
+                        </div>
+                        <div class="layui-colla-item"style="width:900px;">
+                            <h2 class="layui-colla-title layui-bg-blue" name="分类">分类管理</h2>
+                            <div class="layui-colla-content">
+                            </div>
+                        </div>
+                        <div class="layui-colla-item"style="width:900px;">
+                            <h2 class="layui-colla-title layui-bg-gray" name="订单">订单管理</h2>
+                            <div class="layui-colla-content">
+                            </div>
+                        </div>
+                        <div class="layui-colla-item"style="width:900px;">
+                            <h2 class="layui-colla-title layui-bg-blue" name="广告">广告管理</h2>
+                            <div class="layui-colla-content">
+                            </div>
+                        </div>
+                        <div class="layui-colla-item"style="width:900px;">
+                            <h2 class="layui-colla-title layui-bg-gray" name="优惠券">优惠券管理</h2>
+                            <div class="layui-colla-content">
+                            </div>
+                        </div>
                     </div>
                 </form>
                 <div class="bbD">
@@ -68,11 +102,59 @@
 </div>
 </body>
 </html>
+<script>
+//    $(function(){
+//        $('.layui-colla-title').each(function(){
+////            return false;
+//            var _this = $(this)
+//            var names = _this.attr('name')
+//            var role_id = $('#roleid').val();
+//            $.ajax({
+//                url:'roleUpdateNodeDo',
+//                type:'post',
+//                dataType:'json',
+//                data:{names:names,role_id:role_id},
+//                async:false,
+//                success:function(msg){
+//                    var name = msg.names;
+//                    $('[name='+name+']').next().html(msg.data);
+//                }
+//            })
+////            $.post(
+////                'roleUpdateNodeDo',
+////                {names:names,role_id:role_id},
+////                function(res){
+////                    var name = res.names;
+////                    $('[name='+name+']').next().html(res.data);
+////                },'json'
+////            )
+//        })
+//    })
+</script>
+
 
 <script>
-    layui.use(['layer','form'], function() {
+    layui.use(['element','layer','form'], function() {
+        var element = layui.element;
         var layer = layui.layer;
         var form = layui.form;
+
+
+
+        $(".layui-colla-title").click(function(){
+            var _this = $(this)
+            var names = _this.attr('name');
+            var role_id = $('#roleid').val();
+            $.post(
+                'roleUpdateNodeDo',
+                {names:names,role_id:role_id},
+                function(res){
+                    var name = res.names
+//                    $('#'+name+'')
+                    _this.next().html(res.data);
+                },'json'
+            )
+        })
 
     })
     layui.use('layer', function() {

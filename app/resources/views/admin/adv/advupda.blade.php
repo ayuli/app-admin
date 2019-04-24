@@ -67,6 +67,29 @@
                         @endif
                 </div>
                 <div class="bbD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    轮播图展示：
+                    @if($arr['slide_show']==1)
+                    <label>
+                        <input type="radio" checked="checked" value="1" name="slide_show"/>
+                        &nbsp;是
+                    </label>
+                    <label>
+                        <input type="radio" value="2" name="slide_show" />
+                        &nbsp;否
+                    </label>
+                        @else
+                        <label>
+                            <input type="radio"  value="1" name="slide_show"/>
+                            &nbsp;是
+                        </label>
+                        <label>
+                            <input type="radio"  checked="checked" value="2" name="slide_show" />
+                            &nbsp;否
+                        </label>
+                    @endif
+                </div>
+                <div class="bbD">
                     <p class="bbDP">
                         <button class="btn_ok btn_yes" href="#" id="addbtn">修改</button>
                         <a class="btn_ok btn_no" href="#">取消</a>
@@ -125,12 +148,18 @@
                 is_show =$(this).val()
             }
         });
+        $("[name='slide_show']").each(function(){
+            if($(this).prop('checked')==true){
+                slide_show =$(this).val()
+            }
+        });
         var ad_id = "{{$arr['ad_id']}}";
         var data = {};
         data.name = name;
         data.logo = logo;
         data.ad_id = ad_id;
         data.is_show = is_show;
+        data.slide_show = slide_show;
 
 
         $.ajax({

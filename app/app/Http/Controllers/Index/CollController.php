@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Index;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 use App\Model\CollModel;
 
@@ -24,6 +25,11 @@ class CollController extends Controller
             'goods_id'  => $goods_id,
             'add_time'  =>$add_time
         ];
+        $arr = CollModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->get();
+        if(count($arr)>0){
+            $result = [ 'code'=>100 , 'msg'=>'该商品已收藏' ];
+            return json_encode($result,JSON_UNESCAPED_UNICODE);
+        }
         $res = CollModel::insert($data);
         if($res){
             $result = [ 'code'=>0 , 'msg'=>'收藏成功' ];
@@ -43,9 +49,9 @@ class CollController extends Controller
     public function uncoll(Request $request)
     {
         $user_id = $request->input('user_id');
-        $goods_id = $request->input('goods_id');
+        $rec_id = $request->input('rec_id');
+        $res = CollModel::where(['user_id'=>$user_id,'rec_id'=>$rec_id])->delete();
 
-        $res = CollModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->delete();
         if($res){
             $result = [ 'code'=>0 , 'msg'=>'已取消收藏' ];
             return json_encode($result,JSON_UNESCAPED_UNICODE);
@@ -76,6 +82,14 @@ class CollController extends Controller
             return json_encode($result,JSON_UNESCAPED_UNICODE);
 		}
     }
-
+    //删除全部收藏
+    public function delconllection(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $res = DB::table('app_collection')->where('user_id',$user_id)->delete();
+        if ($res){
+            return 1;
+        }
+    }
 
 }

@@ -39,6 +39,8 @@ Route::get('roleUpdate',"Admin\AdminController@roleUpdate")->middleware('AdminRo
 Route::post('roleUpdateDo',"Admin\AdminController@roleUpdateDo");//角色修改页面
 Route::get('roleDo',"Admin\AdminController@roleDo");//赋予角色页面
 Route::post('adminrole',"Admin\AdminController@adminrole");//执行赋予角色
+Route::post('roleNodeDo',"Admin\AdminController@roleNodeDo");//角色的权限查询
+Route::post('roleUpdateNodeDo',"Admin\AdminController@roleUpdateNodeDo");//角色修改的权限查询
 
 //后台权限管理
 Route::get('nodeAdd',"Admin\AdminController@nodeAdd");//权限添加
@@ -81,6 +83,8 @@ Route::post('goodsUpload',"Admin\GoodsController@goodsUpload"); //商品文件�
 Route::get('goodsShow',"Admin\GoodsController@goodsShow"); //商品文件上传
 Route::get('goodsUpdate',"Admin\GoodsController@goodsUpdate"); //商品修改
 Route::post('goodsUpdateDo',"Admin\GoodsController@goodsUpdateDo"); //商品修改执行
+Route::post('attrAddDo',"Admin\GoodsController@attrAddDo"); //商品添加属性执行
+Route::get('attrUpdate',"Admin\GoodsController@attrUpdate"); //商品属性修改
 Route::post('goodsDelete',"Admin\GoodsController@goodsDelete"); //商品删除
 Route::get('productAdd',"Admin\GoodsController@productAdd"); //商品sku
 Route::post('productAddDo',"Admin\GoodsController@productAddDo"); //商品sku执行
@@ -93,8 +97,6 @@ Route::get('typeUpdate',"Admin\AdminController@typeUpdate");//类型修改页面
 Route::post('typeUpdateDo',"Admin\AdminController@typeUpdateDo");//类型修改页面
 
 Route::get('attrAdd',"Admin\GoodsController@attrAdd"); //商品添加属性页面
-Route::post('attrAddDo',"Admin\GoodsController@attrAddDo"); //商品添加属性执行
-Route::get('attrUpdate',"Admin\GoodsController@attrUpdate"); //商品属性修改
 Route::post('attrUpdateDo',"Admin\GoodsController@attrUpdateDo"); //商品属性修改执行
 
 
@@ -120,6 +122,8 @@ Route::post('/address',"Index\AddressController@address");   //添加收货地�
 Route::post('/upaddress',"Index\AddressController@upaddress");   //修改收货地址
 Route::get('/addressGet',"Index\AddressController@addressGet");   //收货地址展示
 Route::get('/deladdress',"Index\AddressController@deladdress");   //删除收货地址
+Route::get('/is_address',"Index\AddressController@is_address");   //设为默认地址
+
 
 
 //订单展示
@@ -140,6 +144,7 @@ Route::get('/appadvget',"Admin\AdvController@appAdvGet");     //app广告展示
 //收藏
 Route::post('/collection','Index\CollController@coll'); //收藏
 Route::post('/uncollection','Index\CollController@uncoll'); //取消收藏
+Route::get('/delconllection','Index\CollController@delconllection'); //删除全部收藏
 Route::get('/collectionget','Index\CollController@collGet'); //展示收藏
 
 
@@ -149,11 +154,12 @@ Route::get('/collectionget','Index\CollController@collGet'); //展示收藏
 //购物车
 Route::post('cartAdd','Index\CartController@cartAdd'); //购物车添加
 Route::any('/cartshow','Index\CartController@cartshow'); //展示购物车列表
+Route::get('/cartUpdate','Index\CartController@cartUpdate'); //购物车即点即改
 
 Route::get('/indexgoods','Index\GoodsController@goods'); //所有商品列表
 Route::get('/cateshow','Index\CateController@cateshow'); //首页分类展示
 
-Route::get('/slide','Index\GoodsController@slide'); //前台 轮播图
+Route::get('/slide','Admin\AdvController@slide'); //前台 轮播图
 
 
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //所有商品列表
@@ -163,7 +169,17 @@ Route::any('/indexCartDel','Index\ZhaoController@indexCartDel'); //前台订单�
 Route::post('/createOrder','Index\ZhaoController@createOrder'); //生成订单
 Route::get('/orderShow','Index\ZhaoController@orderShow'); //订单详情
 Route::get('/drawCoupon','Index\ZhaoController@drawCoupon'); //订单详情
+Route::get('/orderDel','Index\ZhaoController@orderDel'); //
+Route::get('/cartDel','Index\ZhaoController@cartDel'); //
+Route::get('/couponDel','Index\ZhaoController@couponDel'); //
 
 Route::get('/getcode','Index\UserController@getCode'); //获取注册验证码
 Route::get('/getvercode','Index\UserController@getVerCode'); //获取忘记密码验证码
 Route::post('/forget','Index\UserController@forget'); //点击修改密码
+
+
+Route::get('/getUserCoupon','Index\ZhaoController@getUserCoupon');//获取用户优惠券
+
+Route::get('/getcoupon','Index\ZhaoController@getCoupon');// 展示领取优惠券
+Route::get('/coupondo','Index\ZhaoController@couponDo');// 执行领取优惠券
+Route::get('/couponcon','Index\ZhaoController@couponContent');// 个人中心优惠券展示

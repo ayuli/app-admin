@@ -73,19 +73,19 @@ class ZhaoController extends Controller
 //        return json_encode(['goodsInfo'=>$goodsinfo]);
 //    }
 
-    //前台订单页单删批删
+    //前台购物车单删批删
 
     public function indexCartDel(Request $request){
         $cart_id=$request->input('cart_id');
-        $user_id=$request->input('user_id');
+        $cart_id=explode(',',rtrim($cart_id));
         $cartUpdate=[
-            'is_detele'=>2,
+            'is_delete'=>2,
         ];
-        $res = CartModel::where('user_id',$user_id)->whereIn('cart_id',$cart_id)->update($cartUpdate);
+        $res = CartModel::whereIn('cart_id',$cart_id)->update($cartUpdate);
         if($res){
             return json_encode(['code'=>1,'msg'=>'删除成功']);
         }else{
-            return json_encode(['code'=>2,'msg'=>'删除失败']);
+            return json_encode(['code'=>2,'msg'=>'请稍后再试！']);
         }
     }
 
@@ -219,4 +219,158 @@ class ZhaoController extends Controller
             return json_encode(['msg'=>'只可领取一张','code'=>2]);
         }
     }
+
+    //获取优惠券
+    public function getUserCoupon(Request $request){
+        $user_id=$request->input('user_id');
+        $couponInfo=DB::table('app_user_coupon')
+                        ->where(['user_id'=>$user_id,'is_del'=>1,'coupon_del'=>0])
+                        ->join('app_coupon','app_user_coupon.coupon_id','=','app_coupon.coupon_id')
+                        ->get();
+        if(count($couponInfo)>0){
+            foreach ($couponInfo as $k=>$v){
+                if($v->coupon_type==1){
+                    $coupon_attr=explode('-',$v->coupon_attr);
+                    $couponInfo[$k]->max=$coupon_attr[0];
+                    $couponInfo[$k]->price=$coupon_attr[1];
+                }else if($v->coupon_type==2){
+                    $couponInfo[$k]->price=$v->coupon_attr;
+                }else{
+                    $couponInfo[$k]->discount=$v->coupon_attr;
+                }
+            }
+            echo json_encode(['code'=>1,'data'=>$couponInfo]);
+        }else{
+            echo json_encode(['code'=>0,'data'=>'']);
+        }
+    }
+
+
+    /**
+     * 领取优惠卷 展示所有优惠卷
+     */
+    public function getCoupon()
+    {
+        $coupon = DB::table('app_coupon')->get();
+        $data = ['code'=>0,'msg'=>'success','data'=>$coupon];
+        return json_encode($data,JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * 执行领取优惠卷
+     */
+    public function couponDo(Request $request)
+    {
+        $coupon_id = $request->input('coupon_id');
+        $user_id = $request->input('user_id');
+        // 先判断该用户是否领取该优惠卷
+        $coupon_user = DB::table('app_user_coupon')->where(['user_id'=>$user_id,'coupon_id'=>$coupon_id,'is_del'=>1])->get();
+        if(count($coupon_user)>0){ return returnJson('1022','该用户已领取该优惠卷');}
+        //优惠卷 -1
+        $coupon_num = DB::table('app_coupon')->where(['coupon_id'=>$coupon_id])->value('coupon_num');
+        $coupon_num = $coupon_num-1;
+        $res_num = DB::table('app_coupon')->where(['coupon_id'=>$coupon_id])->update(['coupon_num'=>$coupon_num]);
+        if(!$res_num){ return returnJson('1023','领取失败');}
+        // 用户加优惠卷
+        $data= ['user_id'=>$user_id,'coupon_id'=>$coupon_id,'createtime'=>time()];
+        $res_insert = DB::table('app_user_coupon')->insert($data);
+        if(!$res_insert){ return returnJson('1023','领取失败');}
+        return returnJson('0','领取成功');
+    }
+
+    /**
+     *  个人中心展示优惠卷
+     */
+    public function couponContent(Request $request)
+    {
+        //
+        $user_id=$request->input('user_id');
+        $couponInfo=DB::table('app_user_coupon')
+            ->where(['user_id'=>$user_id,'is_del'=>1,'coupon_del'=>0])
+            ->join('app_coupon','app_user_coupon.coupon_id','=','app_coupon.coupon_id')
+            ->get();
+        $data = ['code'=>0,'msg'=>'success','data'=>$couponInfo];
+        return json_encode($data,JSON_UNESCAPED_UNICODE);
+    }
+    //订单失效
+    public function orderDel(){
+        $dataorder = DB::table('app_order')->where('is_del',1)->get();
+        foreach($dataorder as $k=>$v){
+            $add_time = $v->add_time;
+            $die_time = $add_time+86400;
+            $time = time();
+            if( $time > $die_time){
+                $where=[
+                    'order_id'=>"$v->order_id"
+                ];
+                $where1=[
+                    'is_del'=>2
+                ];
+                $res = DB::table('app_order')->where($where)->update($where1);
+
+            }else{
+
+            }
+        }
+    }
+
+    //购物车失效
+    public function cartDel(){
+
+        $datacart = DB::table('app_cart')->where('is_delete',1)->get();
+        foreach($datacart as $k=>$v){
+            $add_time = $v->add_time;
+            $die_time = $add_time+86400;
+            $time = time();
+            if( $time > $die_time){
+                $where=[
+                    'cart_id'=>"$v->cart_id"
+                ];
+                $where1=[
+                    'is_delete'=>2
+                ];
+                $res = DB::table('app_cart')->where($where)->update($where1);
+
+            }else{
+
+            }
+        }
+    }
+
+    //优惠券失效 unused未使用   used已使用  pastdue已过期
+    public function couponDel(Request $request){
+        $user_id = $request->input('user_id');
+        $type = $request->input('type');
+        $datacoupon = DB::table('app_user_coupon')->where('is_del',1)->get();
+        foreach($datacoupon as $k=>$v){
+            $add_time = $v->createtime;
+            $die_time = $add_time+86400;
+            $time = time();
+            if( $time > $die_time){
+                $where=[
+                    'coupon_id'=>"$v->coupon_id",
+                    'user_id'=>"$v->user_id"
+                ];
+                $where1=[
+                    'is_del'=>3
+                ];
+                $res = DB::table('app_user_coupon')->where($where)->update($where1);
+
+            }
+        }
+
+        $wheredata = [
+            'is_del'=>$type,
+            'user_id'=>$user_id
+        ];
+        $data = DB::table('app_user_coupon')->join('app_coupon','app_user_coupon.coupon_id','=','app_coupon.coupon_id')->where($wheredata)->get();
+//        print_r($data);
+        if(count($data)>0){
+            return json_encode(['data'=>$data,'code'=>1]);
+        }else{
+            return json_encode(['data'=>'','code'=>2]);
+        }
+
+    }
+
 }
