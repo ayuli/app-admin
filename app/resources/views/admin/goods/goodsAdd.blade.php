@@ -153,7 +153,7 @@
                             <td class="label">商品类型：</td>
                         <td>
                         <select class='form-control goods_type' name="type_id" >
-                            <option value="">请选择商品类型</option>
+                            <option value="0">请选择商品类型</option>
                                 @foreach($typeInfo as $k=>$v)
                                     <option value="{{$v->type_id}}">{{$v->type_name}}</option>
                                 @endforeach
