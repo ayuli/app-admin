@@ -227,8 +227,14 @@ class UserController extends Controller
         $imgInfo=$request->input('data');
         $name=$request->input('name');
         $imgInfo=substr($imgInfo,17);
-        $file_name="user/".$user_id."/".$name;
-        $res=file_put_contents($file_name,$imgInfo,FILE_APPEND);
+        $file_name="user/".$user_id."/";
+        if(!is_dir($file_name)){
+            $res=mkdir($file_name,0777,true);
+            if(!$res){
+                echo json_encode(['code'=>1,'msg'=>'请稍后再试！']);die;
+            }
+        }
+        $res=file_put_contents($file_name.$name,$imgInfo,FILE_APPEND);
         $touxiangurl=DB::table('user_info')->where('user_id',$user_id)->value('touxiangurl');
         if(!empty($touxiangurl)){
             @unlink($file_name);
