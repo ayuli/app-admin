@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Index;
 
 use Illuminate\Http\Request;
@@ -9,8 +8,9 @@ use App\Model\CateModel;
 class CateController extends Controller{
 	public function cateshow(Request $request){
 		$cate_id = $request->input('cate_id');
-        $info = getCateInfo($cate_id);
-		$data = json_encode($info);
-		return $data;
+		$data = CateModel::get()->toArray();
+        $info = getCateInfo($data,$cate_id);
+		$res= json_encode(['code'=>1,'msg'=>'没有更多数据了！']);
+		return $res; 
 	}
 }
