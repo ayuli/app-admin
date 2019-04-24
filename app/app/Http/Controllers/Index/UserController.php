@@ -195,7 +195,6 @@ class UserController extends Controller
                 'age'=>$age,
                 'sex'=>$sex,
             );
-            print_r($data);
             $res=DB::table('user_info')->where('user_id',$uid)->update($data);
             if($res){
                 return 1;
