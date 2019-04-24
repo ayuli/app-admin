@@ -99,6 +99,7 @@ class ZhaoController extends Controller
         $address_id = $request->input('address_id');
         $total = $request->input('total');
         $way = $request->input('pay_way');
+        $uc_id = $request->input('uc_id','');
 
         if(empty($user_id)){
             return json_encode(['msg'=>'未登录','code'=>2]);
@@ -131,10 +132,14 @@ class ZhaoController extends Controller
         ];
         $cartRes = CartModel::where('user_id',$user_id)->whereIn('cart_id',$cart_id)->update($wherecart);
 
+        if(!$cartRes){
+            DB::rollBack();
+            return json_encode(['msg'=>'请稍后再试！','code'=>2]);
+        }
+
         //生成订单详情
-        $goods_id = CartModel::where('user_id',$user_id)->whereIn('cart_id',$cart_id)->pluck('goods_id');
         $goodsInfo = CartModel::join('app_goods','app_cart.goods_id','=','app_goods.goods_id')
-            ->whereIn('app_cart.goods_id',$goods_id)
+            ->whereIn('app_cart.cart_id',$cart_id)
             ->get();
         foreach($goodsInfo as $k=>$v){
             $dataInfo = [
@@ -151,6 +156,8 @@ class ZhaoController extends Controller
             DB::table('app_order_goods')->insert($dataInfo);
         }
 
+        //
+
         //生成订单地址
         $addressData = DB::table('app_address')->where('id',$address_id)->first();
         $addressInfo = [
@@ -164,13 +171,19 @@ class ZhaoController extends Controller
             'ctime'=>time()
         ];
         $resaddress = DB::table('app_order_address')->insert($addressInfo);
+
+
         if($resaddress){
+            if($uc_id!=''){
+                $res=DB::table('app_user_coupon')->where('uc_id',$uc_id)->update(['is_del'=>2]);
+            }
             DB::commit();
             return json_encode(['msg'=>'添加成功','code'=>1,'order_id'=>$order_id]);
         }else{
             DB::rollBack();
             return json_encode(['msg'=>'添加失败','code'=>2]);
         }
+
     }
 
     //订单详情
