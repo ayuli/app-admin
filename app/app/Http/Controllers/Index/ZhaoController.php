@@ -278,20 +278,6 @@ class ZhaoController extends Controller
         return returnJson('0','领取成功');
     }
 
-    /**
-     *  个人中心展示优惠卷
-     */
-    public function couponContent(Request $request)
-    {
-        //
-        $user_id=$request->input('user_id');
-        $couponInfo=DB::table('app_user_coupon')
-            ->where(['user_id'=>$user_id,'is_del'=>1,'coupon_del'=>0])
-            ->join('app_coupon','app_user_coupon.coupon_id','=','app_coupon.coupon_id')
-            ->get();
-        $data = ['code'=>0,'msg'=>'success','data'=>$couponInfo];
-        return json_encode($data,JSON_UNESCAPED_UNICODE);
-    }
     //订单失效
     public function orderDel(){
         $dataorder = DB::table('app_order')->where('is_del',1)->get();
@@ -337,7 +323,7 @@ class ZhaoController extends Controller
         }
     }
 
-    //优惠券失效 unused未使用   used已使用  pastdue已过期
+    //优惠券失效及展示 unused未使用   used已使用  pastdue已过期
     public function couponDel(Request $request){
         $user_id = $request->input('user_id');
         $type = $request->input('type');
