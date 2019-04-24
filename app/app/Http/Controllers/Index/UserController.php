@@ -178,6 +178,10 @@ class UserController extends Controller
         return returnJson('0','验证码为:'.$code);
 
     }
-
-
+        public function adduserinfo(Request $request){
+            $nickname=$request->nickname;
+            $age=$request->age;
+            $sex=$request->sex;
+            
+        }
 }
