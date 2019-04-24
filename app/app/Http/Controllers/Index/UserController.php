@@ -257,7 +257,8 @@ class UserController extends Controller
             ->join('app_order_goods','app_order.order_id','=','app_order_goods.order_id')
             ->where(['user_id'=>$user_id,'order_status'=>$type])
             ->get();
-        $data = ['code'=>0,'msg'=>'success','data'=>$arr];
+        if(count($arr)>0){$data = ['code'=>0,'msg'=>'success','data'=>$arr];}else{
+            $data = ['code'=>404,'msg'=>'没有数据'];}
         return json_encode($data,JSON_UNESCAPED_UNICODE);
     }
 
