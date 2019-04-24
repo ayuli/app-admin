@@ -264,7 +264,7 @@ class ZhaoController extends Controller
         $coupon_id = $request->input('coupon_id');
         $user_id = $request->input('user_id');
         // 先判断该用户是否领取该优惠卷
-        $coupon_user = DB::table('app_user_coupon')->where(['user_id'=>$user_id,'coupon_id'=>$coupon_id])->get();
+        $coupon_user = DB::table('app_user_coupon')->where(['user_id'=>$user_id,'coupon_id'=>$coupon_id,'is_del'=>1])->get();
         if(count($coupon_user)>0){ return returnJson('1022','该用户已领取该优惠卷');}
         //优惠卷 -1
         $coupon_num = DB::table('app_coupon')->where(['coupon_id'=>$coupon_id])->value('coupon_num');
@@ -283,11 +283,14 @@ class ZhaoController extends Controller
      */
     public function couponContent(Request $request)
     {
-        $user_id = $request->input('user_id');
-        $couponInfo = DB::table('app_user_coupon')
-            ->where(['user_id' => $user_id, 'is_del' => 1, 'coupon_del' => 0])
-            ->join('app_coupon', 'app_user_coupon.coupon_id', '=', 'app_coupon.coupon_id')
+        //
+        $user_id=$request->input('user_id');
+        $couponInfo=DB::table('app_user_coupon')
+            ->where(['user_id'=>$user_id,'is_del'=>1,'coupon_del'=>0])
+            ->join('app_coupon','app_user_coupon.coupon_id','=','app_coupon.coupon_id')
             ->get();
+        $data = ['code'=>0,'msg'=>'success','data'=>$couponInfo];
+        return json_encode($data,JSON_UNESCAPED_UNICODE);
     }
     //订单失效
     public function orderDel(){
