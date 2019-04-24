@@ -100,7 +100,7 @@ class GoodsController extends Controller
 //            }
 //        }
         $type=$request->input('type','is_del');
-        $search=$request->input('search'," ");
+        $search=$request->input('search',"");
 
         $where=[];
 
