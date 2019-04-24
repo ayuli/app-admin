@@ -113,7 +113,7 @@ class ZhaoController extends Controller
             'add_time'=>time(),
             'order_amount'=>$total,
             'pay_amount'=>$total,
-            'order_status'=>3,
+            'order_status'=>1,
             'pay_way'=>$way,
             'is_pay'=>2
         ];
@@ -289,9 +289,11 @@ class ZhaoController extends Controller
             ->join('app_coupon', 'app_user_coupon.coupon_id', '=', 'app_coupon.coupon_id')
             ->get();
     }
+
+
     //订单失效
     public function orderDel(){
-        $dataorder = DB::table('app_order')->where('is_del',1)->get();
+        $dataorder = DB::table('app_order')->get();
         foreach($dataorder as $k=>$v){
             $add_time = $v->add_time;
             $die_time = $add_time+86400;
@@ -301,32 +303,9 @@ class ZhaoController extends Controller
                     'order_id'=>"$v->order_id"
                 ];
                 $where1=[
-                    'is_del'=>2
+                    'order_status'=>6
                 ];
                 $res = DB::table('app_order')->where($where)->update($where1);
-
-            }else{
-
-            }
-        }
-    }
-
-    //购物车失效
-    public function cartDel(){
-
-        $datacart = DB::table('app_cart')->where('is_delete',1)->get();
-        foreach($datacart as $k=>$v){
-            $add_time = $v->add_time;
-            $die_time = $add_time+86400;
-            $time = time();
-            if( $time > $die_time){
-                $where=[
-                    'cart_id'=>"$v->cart_id"
-                ];
-                $where1=[
-                    'is_delete'=>2
-                ];
-                $res = DB::table('app_cart')->where($where)->update($where1);
 
             }else{
 
@@ -352,7 +331,6 @@ class ZhaoController extends Controller
                     'is_del'=>3
                 ];
                 $res = DB::table('app_user_coupon')->where($where)->update($where1);
-
             }
         }
 
@@ -368,6 +346,30 @@ class ZhaoController extends Controller
             return json_encode(['data'=>'','code'=>2]);
         }
 
+    }
+
+
+    public function couponStatus(){
+
+        $datacoupon = DB::table('app_user_coupon')->where('is_del',1)->get();
+        foreach($datacoupon as $k=>$v){
+            $add_time = $v->createtime;
+            $die_time = $add_time+86400;
+            $time = time();
+            if( $time > $die_time){
+                $where=[
+                    'coupon_id'=>"$v->coupon_id",
+                    'user_id'=>"$v->user_id"
+                ];
+                $where1=[
+                    'is_del'=>3
+                ];
+                $res = DB::table('app_user_coupon')->where($where)->update($where1);
+            }else{
+
+            }
+
+        }
     }
 
 }
