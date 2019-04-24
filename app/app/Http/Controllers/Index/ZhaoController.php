@@ -244,4 +244,86 @@ class ZhaoController extends Controller
             echo json_encode(['code'=>0,'data'=>'']);
         }
     }
+
+    //订单失效
+    public function orderDel(){
+        $dataorder = DB::table('app_order')->where('is_del',1)->get();
+        foreach($dataorder as $k=>$v){
+            $add_time = $v->add_time;
+            $die_time = $add_time+86400;
+            $time = time();
+            if( $time > $die_time){
+                $where=[
+                    'order_id'=>"$v->order_id"
+                ];
+                $where1=[
+                    'is_del'=>2
+                ];
+                $res = DB::table('app_order')->where($where)->update($where1);
+
+            }else{
+
+            }
+        }
+    }
+
+    //购物车失效
+    public function cartDel(){
+
+        $datacart = DB::table('app_cart')->where('is_delete',1)->get();
+        foreach($datacart as $k=>$v){
+            $add_time = $v->add_time;
+            $die_time = $add_time+86400;
+            $time = time();
+            if( $time > $die_time){
+                $where=[
+                    'cart_id'=>"$v->cart_id"
+                ];
+                $where1=[
+                    'is_delete'=>2
+                ];
+                $res = DB::table('app_cart')->where($where)->update($where1);
+
+            }else{
+
+            }
+        }
+    }
+
+    //优惠券失效 unused未使用   used已使用  pastdue已过期
+    public function couponDel(Request $request){
+        $user_id = $request->input('user_id');
+        $type = $request->input('type');
+        $datacoupon = DB::table('app_user_coupon')->where('is_del',1)->get();
+        foreach($datacoupon as $k=>$v){
+            $add_time = $v->createtime;
+            $die_time = $add_time+86400;
+            $time = time();
+            if( $time > $die_time){
+                $where=[
+                    'coupon_id'=>"$v->coupon_id",
+                    'user_id'=>"$v->user_id"
+                ];
+                $where1=[
+                    'is_del'=>3
+                ];
+                $res = DB::table('app_user_coupon')->where($where)->update($where1);
+
+            }
+        }
+
+        $wheredata = [
+            'is_del'=>$type,
+            'user_id'=>$user_id
+        ];
+        $data = DB::table('app_user_coupon')->join('app_coupon','app_user_coupon.coupon_id','=','app_coupon.coupon_id')->where($wheredata)->get();
+//        print_r($data);
+        if(count($data)>0){
+            return json_encode(['data'=>$data,'code'=>1]);
+        }else{
+            return json_encode(['data'=>'','code'=>2]);
+        }
+
+    }
+
 }
