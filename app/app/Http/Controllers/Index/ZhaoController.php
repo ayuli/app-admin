@@ -134,7 +134,7 @@ class ZhaoController extends Controller
 
         if(!$cartRes){
             DB::rollBack();
-            return json_encode(['msg'=>'该商品已生成订单，请刷新页面再试！','code'=>2]);
+            return json_encode(['msg'=>'该商品已生成订单，请刷新页面再试！','code'=>3]);
         }
 
         //生成订单详情
