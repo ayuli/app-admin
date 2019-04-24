@@ -157,12 +157,13 @@ Route::any('/cartshow','Index\CartController@cartshow'); //展示购物车列表
 Route::get('/cartUpdate','Index\CartController@cartUpdate'); //购物车即点即改
 
 Route::get('/indexgoods','Index\GoodsController@goods'); //所有商品列表
-
+Route::get('/cateshow','Index\CateController@cateshow'); //首页分类展示
 
 Route::get('/slide','Admin\AdvController@slide'); //前台 轮播图
 
 
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //所有商品列表
+
 Route::get('/indexGoodsDetail','Index\ZhaoController@indexGoodsDetail'); //前台详情页
 Route::any('/indexCartDel','Index\ZhaoController@indexCartDel'); //前台订单页单删批删
 Route::post('/createOrder','Index\ZhaoController@createOrder'); //生成订单
