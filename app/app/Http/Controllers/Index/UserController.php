@@ -178,11 +178,13 @@ class UserController extends Controller
         return returnJson('0','验证码为:'.$code);
 
     }
+        //个人资料展示
         public function  showuserinfo(Request $request){
             $uid=$request->input('uid');
             $res=DB::table('user_info')->where('user_id',$uid)->first();
+            $res1=json_encode($res);
             if($res){
-                return $res;
+                return $res1;
             }else{
                 return 2;
             }
