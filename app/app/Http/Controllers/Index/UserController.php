@@ -178,6 +178,11 @@ class UserController extends Controller
         return returnJson('0','验证码为:'.$code);
 
     }
+        public function  showuserinfo(Request $request){
+            $uid=$request->input('uid');
+            $res=DB::table('user_info')->where('user_id',$uid)->first();
+            $nickname=$res->nickname;
+        }
         //添加修改个人资料
         public function adduserinfo(Request $request){
             $uid=$request->input('uid');
