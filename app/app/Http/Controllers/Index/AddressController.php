@@ -104,7 +104,7 @@ class AddressController extends Controller
                 }
 
             }else{
-                echo json_encode(['code'=>0,'msg'=>'请先登录！','data'=>'']);
+                echo json_encode(['code'=>3,'msg'=>'请先登录！','data'=>'']);
             }
     }
         //删除收获地址
