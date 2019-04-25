@@ -1,6 +1,6 @@
 
 @foreach($info as $v)
-     <input type="checkbox" name="like[write]"   node_id="{{$v->node_id}}"  title="{{$v->node_name}}">
+     <input type="hidden" name="like[write]"   node_id="{{$v->node_id}}"  title="{{$v->node_name}}">
         <div class="layui-unselect layui-form-checkbox " lay-skin>
             <span class="{{$names}}">{{$v->node_name}}</span>
             <i class="layui-icon {{$names}}" ></i>

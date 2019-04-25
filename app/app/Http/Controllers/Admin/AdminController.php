@@ -251,7 +251,7 @@ class AdminController extends Controller
         $role_id = $request->input('role_id');
 
         if(empty($data)){
-            return json_encode(['msg'=>'您未选择权限','code'=>1]);
+            return json_encode(['msg'=>'选择权限','code'=>1]);
         }
         if(empty($role_name)){
             return json_encode(['msg'=>'名称不能为空','code'=>1]);

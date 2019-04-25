@@ -344,7 +344,7 @@ class GoodsController extends Controller
         $attr_id=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_id');
         $attr_name=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_name');
         if(count($attr_name)==0){
-            echo "<script>alert('该商品没有属性！');history.go(-1)</script>";
+            echo "<script>alert('该商品没有属性！');history.go(-1)</script>";exit;
         }
         $attr_info=DB::table('app_goods_attr')->where('goods_id',$goods_id)->whereIn('attr_id',$attr_id)->get();
 
@@ -418,6 +418,9 @@ class GoodsController extends Controller
     public function attrAddDo(Request $request){
         $data=$request->input();
         $type_id=$data['type_id'];
+        if(empty($data['attr_name'])){
+            echo json_encode(['code'=>0,'msg'=>'名称不能为空！']);exit;
+        }
         if(!isset($data['attr_values'])){
             $data['attr_values']="";
         }
@@ -459,7 +462,7 @@ class GoodsController extends Controller
         if($res){
             echo json_encode(['code'=>1,'msg'=>'修改成功！','type_id'=>$type_id]);
         }else{
-            echo json_encode(['code'=>0,'msg'=>'修改失败！']);
+            echo json_encode(['code'=>0,'msg'=>'未修改！']);
         }
     }
 

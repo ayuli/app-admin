@@ -10,7 +10,7 @@
     <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 </head>
 <body>
-<form  class="layui-form">
+
 <div id="pageAll">
     <div class="pageTop">
         <div class="page">
@@ -37,6 +37,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;角色名称：<input type="text" name="role_name" id="rolename" class="input3" />
                 </div>
                 <br>
+                {{--<form  class="layui-form">--}}
                 <div class="layui-collapse"style="width:900px;" lay-filter="test">
                     <div class="layui-colla-item" style="width:900px;">
                         <h2 class="layui-colla-title  layui-bg-blue" names="管理员">管理员管理</h2>
@@ -83,7 +84,6 @@
                     </div>
                 </div>
             <div class="bbD">
-
                     <br>
                     <p class="bbDP">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -100,7 +100,7 @@
         <!-- 上传广告页面样式end -->
     </div>
 </div>
-</form>
+
 </body>
 </html>
 <script>
@@ -132,11 +132,6 @@
 </script>
 
 <script>
-    layui.use(['layer','form'], function() {
-        var layer = layui.layer;
-        var form = layui.form;
-
-    })
 layui.use('layer', function() {
     var layer = layui.layer;
     $('#btn').click(function(){

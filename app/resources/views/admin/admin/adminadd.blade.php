@@ -49,7 +49,6 @@
                 <div class="bbD">
                     <p class="bbDP">
                         <button class="btn_ok btn_yes" id="btn" href="#" >提交</button>
-                        <a class="btn_ok btn_no" href="#">取消</a>
                     </p>
                 </div>
             </div>

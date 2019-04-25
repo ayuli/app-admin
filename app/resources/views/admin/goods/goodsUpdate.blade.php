@@ -330,7 +330,8 @@
                                 });
                             }
                             $(function(){
-
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
                                     var type_id = $('.goods_type').val();
                                     var url="changeType";
                                     var data={};
@@ -347,23 +348,33 @@
                                         });
                                     }
 
-                                $(".button_ok").click(function(){
-                                    var form=$(".form-inline").serialize();
+                                    $(".button_ok").click(function(){
+                                        var form=$(".form-inline").serialize();
 
 
 
-                                    var url="goodsUpdateDo";
-                                    $.ajax({
-                                        url:url,
-                                        type:'post',
-                                        data:form,
-                                        dataType:'json',
-                                        success:function(res){
-                                            alert(res.msg);
-                                            if(res.code==1){
-                                                location.href='goodsShow';
+                                        var url="goodsUpdateDo";
+                                        $.ajax({
+                                            url:url,
+                                            type:'post',
+                                            data:form,
+                                            dataType:'json',
+                                            success:function(res){
+                                                if(res.code==1){
+                                                    layer.open({
+                                                        type:0,
+                                                        content:'修改成功',
+                                                        btn:['确定'],
+                                                        yes:function(index,layero){
+                                                            location.href='goodsShow';
+                                                            return true;
+                                                        }
+                                                    })
+                                                }else{
+                                                    layer.msg(res.msg);
+                                                }
                                             }
-                                        }
+                                        });
                                     });
                                 });
                             })
