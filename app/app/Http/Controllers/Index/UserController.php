@@ -261,12 +261,11 @@ class UserController extends Controller
     {
         $user_id = $request->input('user_id');
         $type = $request->input('type');
+        $order_id = $request->input('order_id');
         if($type==4){
-            $order_id = $request->input('order_id');
             $arr=DB::table('app_order')
             ->join('app_order_goods','app_order.order_id','=','app_order_goods.order_id')
-            ->where(['user_id'=>$user_id,'app_order.order_id'=>$order_id,'order_status'=>1,'app_order_goods.status'=>1])
-                ->where(['user_id'=>$user_id,'order_status'=>$type])
+            ->where(['user_id'=>$user_id,'app_order.order_id'=>$order_id,'app_order.order_status'=>1,'app_order_goods.status'=>1])
                 ->get();
         }else{
             $arr=DB::table('app_order')
