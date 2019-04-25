@@ -261,11 +261,18 @@ class UserController extends Controller
     {
         $user_id = $request->input('user_id');
         $type = $request->input('type');
-        $arr=DB::table('app_order')
-//            ->join('app_order_goods','app_order.order_id','=','app_order_goods.order_id')
-//            ->where(['user_id'=>$user_id,'order_status'=>$type,'app_order_goods.status'=>1])
-            ->where(['user_id'=>$user_id,'order_status'=>$type])
-            ->get();
+        if($type==4){
+            $order_id = $request->input('order_id');
+            $arr=DB::table('app_order')
+            ->join('app_order_goods','app_order.order_id','=','app_order_goods.order_id')
+            ->where(['user_id'=>$user_id,'order_id'=>$order_id,'order_status'=>1,'app_order_goods.status'=>1])
+                ->where(['user_id'=>$user_id,'order_status'=>$type])
+                ->get();
+        }else{
+            $arr=DB::table('app_order')
+                ->where(['user_id'=>$user_id,'order_status'=>$type])
+                ->get();
+        }
         if(count($arr)>0){$data = ['code'=>0,'msg'=>'success','data'=>$arr];}else{
             $data = ['code'=>404,'msg'=>'没有数据'];}
         return json_encode($data,JSON_UNESCAPED_UNICODE);
