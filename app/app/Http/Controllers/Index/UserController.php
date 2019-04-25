@@ -226,7 +226,9 @@ class UserController extends Controller
         $user_id=$request->input('user_id');
         $imgInfo=$request->input('data');
         $imgInfo=substr($imgInfo,17);
+        file_put_contents('/tmp/333333.log',$imgInfo);
         $imgInfo=base64_decode($imgInfo);
+        file_put_contents('/tmp/22222.log',$imgInfo);
         $name=date('YmdHis',time()).rand(1,100).'.jpg';
         $file_name="user/".$user_id."/";
         if(!is_dir($file_name)){
