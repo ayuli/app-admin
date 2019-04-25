@@ -127,7 +127,7 @@ Route::get('/is_address',"Index\AddressController@is_address");   //设为默认
 
 
 //订单展示
-Route::get('/orderget',"Admin\OrderController@orderGet");
+Route::get('/adminorderget',"Admin\OrderController@orderGet");
 Route::get('/orderdetails',"Admin\OrderController@orderDetails"); //后台订单详情
 
 
