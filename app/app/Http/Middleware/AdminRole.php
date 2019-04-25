@@ -36,7 +36,7 @@ class AdminRole
             echo "您没有权限";exit;
         }
 
-        echo '<a href="adminLogin" target="_top">未登录,点击登录</a>';exit;
+        echo '<a href="adminLogin" target="_top"><img src="/img/denglu.jpg"></a>';exit;
 //        return $next($request);
     }
 }
