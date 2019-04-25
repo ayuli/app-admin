@@ -344,7 +344,7 @@ class GoodsController extends Controller
         $attr_id=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_id');
         $attr_name=DB::table('app_attr')->whereIn('attr_id',$attr_id)->where('attr_input_type',1)->pluck('attr_name');
         if(count($attr_name)==0){
-            echo "<script>alert('该商品没有属性！');history.go(-1)</script>";
+            echo "<script>alert('该商品没有属性！');history.go(-1)</script>";exit;
         }
         $attr_info=DB::table('app_goods_attr')->where('goods_id',$goods_id)->whereIn('attr_id',$attr_id)->get();
 
