@@ -22,6 +22,22 @@ class GoodsController extends Controller
     public function goodsAddDo(Request $request){
         DB::beginTransaction();
         $data=$request->input();
+        if(empty($data['goods_name'])){
+            echo json_encode(['code'=>2,'msg'=>'名称必填']);exit;
+        }
+        if(empty($data['cate_id'])){
+            echo json_encode(['code'=>2,'msg'=>'分类必选']);exit;
+        }
+        if(empty($data['brand_id'])){
+            echo json_encode(['code'=>2,'msg'=>'品牌必选']);exit;
+        }
+        if(empty($data['goods_score'])){
+            echo json_encode(['code'=>2,'msg'=>'价格必填']);exit;
+        }
+        if(empty($data['goods_number'])){
+            echo json_encode(['code'=>2,'msg'=>'库存必填']);exit;
+        }
+        
         if(!isset($data['is_show'])){
             $data['is_show']=1;
         }
