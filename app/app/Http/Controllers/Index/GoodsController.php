@@ -7,6 +7,7 @@ use App\Model\CateModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\GoodsModel;
+use Illuminate\Support\Facades\DB;
 
 class GoodsController extends Controller
 {
@@ -42,7 +43,7 @@ class GoodsController extends Controller
         $page_num = 6;
         $start = ($page-1)*$page_num;
 
-        if($cate_id==''){
+        if($cate_id==null){
 
             $arr = GoodsModel::where('goods_name','like',"%$search%")->where($where)->orderBy($column,$order)->offset($start)->limit($page_num)->get();
             $count = count($arr);
@@ -51,7 +52,9 @@ class GoodsController extends Controller
 
             $cate=CateModel::where('is_show',1)->get();
             $cateInfo=getCateInfo($cate,$cate_id);
-            $arr = GoodsModel::where('goods_name','like',"%$search%")->where($where)->whereIn('cate_id',$cateInfo)->orderBy($column,$order)->offset($start)->limit($page_num)->get();
+
+            $arr = DB::table('app_goods')->where('goods_name','like',"%$search%")->where($where)->whereIn('cate_id',$cateInfo)->orderBy($column,$order)->offset($start)->limit($page_num)->get();
+
             $count = count($arr);
         }
 
