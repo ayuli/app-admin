@@ -84,18 +84,14 @@
                         layer.open({
                             type:0,
                             content:'添加成功',
-                            btn:['继续添加','列表展示'],
+                            btn:['确定'],
                             yes:function(index,layero){
-                                location.href="attrAdd";
-                                return true;
-                            },
-                            btn2:function(){
                                 location.href="attrShow?type_id="+res.type_id;
                                 return true;
                             }
                         })
                     }else{
-                        layer.msg('添加失败');
+                        layer.msg(res.msg);
                     }
                 },'json');
             });

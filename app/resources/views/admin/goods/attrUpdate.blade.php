@@ -70,23 +70,36 @@
     }
 
     $(function(){
-        var status="{{$attrInfo->attr_input_type}}";
-        if(status==1){
-            $('.attr_values').removeAttr('disabled');
-        }
+        layui.use('layer', function() {
+            var layer = layui.layer;
 
-        $(".layui-btn").click(function(){
-            var form=$(".form-inline").serialize();
+            var status="{{$attrInfo->attr_input_type}}";
+            if(status==1){
+                $('.attr_values').removeAttr('disabled');
+            }
 
-            var url="attrUpdateDo";
+            $(".layui-btn").click(function(){
+                var form=$(".form-inline").serialize();
 
-            $.post(url,form,function(res){
-                alert(res.msg);
-                if(res.code==1){
-                    location.href="attrShow?type_id="+res.type_id;
-                }
-            },'json');
-        });
+                var url="attrUpdateDo";
 
+                $.post(url,form,function(res){
+
+                    if(res.code==1){
+                        layer.open({
+                            type:0,
+                            content:'修改成功',
+                            btn:['确定'],
+                            yes:function(index,layero){
+                                location.href="attrShow?type_id="+res.type_id;
+                                return true;
+                            }
+                        })
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                },'json');
+            });
+        })
     })
 </script>

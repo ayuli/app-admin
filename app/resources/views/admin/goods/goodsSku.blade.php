@@ -77,22 +77,34 @@
 </script>
 <script>
     $(function(){
-        $(".submit").click(function(){
-            var form=$("#addForm").serialize();
+        layui.use('layer', function() {
+            var layer = layui.layer;
+                $(".submit").click(function(){
+                    var form=$("#addForm").serialize();
 
-            var url="productAddDo";
-            $.ajax({
-                url:url,
-                type:'post',
-                data:form,
-                dataType:'json',
-                success:function(res){
-                    alert(res.msg);
-                    if(res.code==1){
-                        location.href='goodsShow';
-                    }
-                }
-            });
+                    var url="productAddDo";
+                    $.ajax({
+                        url:url,
+                        type:'post',
+                        data:form,
+                        dataType:'json',
+                        success:function(res){
+                            if(res.code==1){
+                                layer.open({
+                                    type:0,
+                                    content:'保存成功',
+                                    btn:['确定'],
+                                    yes:function(index,layero){
+                                        location.href='goodsShow';
+                                        return true;
+                                    }
+                                })
+                            }else{
+                                layer.msg(res.msg);
+                            }
+                        }
+                    });
+                });
         });
     })
 </script>
