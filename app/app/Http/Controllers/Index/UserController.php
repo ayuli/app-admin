@@ -249,6 +249,8 @@ class UserController extends Controller
                 }else{
                     echo json_encode(['code'=>0,'msg'=>'请稍后再试！']);
                 }
+            }else{
+                echo json_encode(['code'=>0,'msg'=>'请稍后再试！']);
             }
         }
     }
