@@ -53,6 +53,7 @@ class GoodsController extends Controller
             $count = count($arr);
 
         }else{
+            
             $cate=CateModel::where('is_show',1)->get();
             $cateInfo=getCateInfo($cate,$cate_id);
 
