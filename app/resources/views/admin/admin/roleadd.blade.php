@@ -63,6 +63,16 @@
                         </div>
                     </div>
                     <div class="layui-colla-item"style="width:900px;">
+                        <h2 class="layui-colla-title layui-bg-blue" names="商品">商品管理</h2>
+                        <div class="layui-colla-content">
+                        </div>
+                    </div>
+                    <div class="layui-colla-item"style="width:900px;">
+                        <h2 class="layui-colla-title layui-bg-gray" names="类型">类型管理</h2>
+                        <div class="layui-colla-content">
+                        </div>
+                    </div>
+                    <div class="layui-colla-item"style="width:900px;">
                         <h2 class="layui-colla-title layui-bg-blue" names="分类">分类管理</h2>
                         <div class="layui-colla-content">
                         </div>
@@ -79,6 +89,16 @@
                     </div>
                     <div class="layui-colla-item"style="width:900px;">
                         <h2 class="layui-colla-title layui-bg-gray" names="优惠券">优惠券管理</h2>
+                        <div class="layui-colla-content">
+                        </div>
+                    </div>
+                    <div class="layui-colla-item"style="width:900px;">
+                        <h2 class="layui-colla-title layui-bg-blue" names="分类">分类管理</h2>
+                        <div class="layui-colla-content">
+                        </div>
+                    </div>
+                    <div class="layui-colla-item"style="width:900px;">
+                        <h2 class="layui-colla-title layui-bg-gray" names="属性">属性管理</h2>
                         <div class="layui-colla-content">
                         </div>
                     </div>

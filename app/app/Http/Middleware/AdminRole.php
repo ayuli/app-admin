@@ -33,9 +33,10 @@ class AdminRole
             if(in_array($route,$action_name)){
                 return $next($request);
             }
-            echo '您未拥有该权限';exit;
+            echo "您没有权限";exit;
         }
-//        echo '未登录';exit;
-        return $next($request);
+
+        echo '<a href="adminLogin" target="_top">未登录,点击登录</a>';exit;
+//        return $next($request);
     }
 }
