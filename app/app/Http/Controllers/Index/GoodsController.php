@@ -35,11 +35,15 @@ class GoodsController extends Controller
         }else if($type=="is_best"){
             $column="goods_id";
             $order="asc";
-            $where=[ "$type"=>1];
+            $where[$type]=1;
         }else if($type=="is_new"){
             $column="goods_id";
             $order="desc";
-            $where=[ "$type"=>1];
+            $where[$type]=1;
+        }else{
+            $column="goods_id";
+            $order="asc";
+            $where[$type]=1;
         }
 
         if(!isset($where['is_del'])){
