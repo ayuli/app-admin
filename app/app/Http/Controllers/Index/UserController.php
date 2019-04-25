@@ -241,9 +241,9 @@ class UserController extends Controller
             if(file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
                 $touxiangurl=DB::table('user_info')->where('user_id',$user_id)->value('touxiangurl');
                 if(!empty($touxiangurl)){
-                    @unlink($file_name);
+                    @unlink($touxiangurl);
                 }
-                $res=DB::table('user_info')->where('user_id',$user_id)->update(['touxiangurl'=>$file_name]);
+                $res=DB::table('user_info')->where('user_id',$user_id)->update(['touxiangurl'=>$new_file]);
                 if($res){
                     echo json_encode(['code'=>1,'msg'=>'上传成功！']);
                 }else{
