@@ -225,28 +225,31 @@ class UserController extends Controller
     public function uploadPortrait(Request $request){
         $user_id=$request->input('user_id');
         $imgInfo=$request->input('data');
-        $imgInfo=substr($imgInfo,17);
-        file_put_contents('/tmp/333333.log',$imgInfo);
-        $imgInfo=base64_decode($imgInfo);
-        file_put_contents('/tmp/22222.log',$imgInfo);
-        $name=date('YmdHis',time()).rand(1,100).'.jpg';
-        $file_name="user/".$user_id."/";
-        if(!is_dir($file_name)){
-            $res=mkdir($file_name,0777,true);
-            if(!$res){
-                echo json_encode(['code'=>1,'msg'=>'请稍后再试！']);die;
+        $base64_image_content = $imgInfo;
+
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/',$base64_image_content,$result)){
+            $type = $result[2];//图片后缀
+            $new_file = $file_name="user/".$user_id."/";
+            if (!file_exists($new_file)) {
+                //检查是否有该文件夹，如果没有就创建，并给予最高权限
+                mkdir($new_file, 0777,true);
             }
-        }
-        $res=file_put_contents($file_name.$name,$imgInfo,FILE_APPEND);
-        $touxiangurl=DB::table('user_info')->where('user_id',$user_id)->value('touxiangurl');
-        if(!empty($touxiangurl)){
-            @unlink($file_name);
-        }
-        $res=DB::table('user_info')->where('user_id',$user_id)->update(['touxiangurl'=>$file_name]);
-        if($res){
-            echo json_encode(['code'=>1,'msg'=>'上传成功！']);
-        }else{
-            echo json_encode(['code'=>1,'msg'=>'请稍后再试！']);
+
+            $filename = time() . '_' . uniqid() . ".{$type}"; //文件名
+            $new_file = $new_file . $filename;
+            //写入操作
+            if(file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {
+                $touxiangurl=DB::table('user_info')->where('user_id',$user_id)->value('touxiangurl');
+                if(!empty($touxiangurl)){
+                    @unlink($file_name);
+                }
+                $res=DB::table('user_info')->where('user_id',$user_id)->update(['touxiangurl'=>$file_name]);
+                if($res){
+                    echo json_encode(['code'=>1,'msg'=>'上传成功！']);
+                }else{
+                    echo json_encode(['code'=>1,'msg'=>'请稍后再试！']);
+                }
+            }
         }
     }
     /**
