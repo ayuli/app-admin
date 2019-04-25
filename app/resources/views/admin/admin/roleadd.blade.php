@@ -88,7 +88,7 @@
                     <p class="bbDP">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button class="layui-btn layui-btn-lg layui-btn-normal" id="btn">提交</button>
-                        <button class="layui-btn layui-btn-primary layui-btn-lg">取消</button>
+                        <a href="roleList"><button class="layui-btn layui-btn-primary layui-btn-lg">取消</button></a>
                     </p>
                 </div>
                 <br>
