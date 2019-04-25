@@ -176,6 +176,7 @@ Route::get('/cartDel','Index\ZhaoController@cartDel'); //
 Route::get('/couponDel','Index\ZhaoController@couponDel'); //
 Route::get('/couponStatus','Index\ZhaoController@couponStatus'); //
 Route::get('/orderget','Index\UserController@orderGet'); //前台个人中心订单展示
+Route::get('/orderoff','Index\UserController@orderOff'); //前台个人中心订单展示
 
 
 Route::get('/getcode','Index\UserController@getCode'); //获取注册验证码

@@ -272,9 +272,14 @@ class UserController extends Controller
     }
 
     //取消订单
-    public function orderOff()
+    public function orderOff(Request $request)
     {
-
+        $order_id = $request->input('order_id');
+        $user_id = $request->input('user_id');
+        $arr=DB::table('app_order')->where(['order_id'=>$order_id,'user_id'=>$user_id,'order_status'=>1])->get();
+        if(count($arr)<1){ return returnJson('100','该订单不存在'); }
+        $res=DB::table('app_order')->where(['order_id'=>$order_id])->update(['order_status'=>6]);
+        if($res){return returnJson('0','该订单已取消');}
     }
 
 }
