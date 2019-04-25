@@ -247,7 +247,7 @@ class UserController extends Controller
                 if($res){
                     echo json_encode(['code'=>1,'msg'=>'上传成功！']);
                 }else{
-                    echo json_encode(['code'=>1,'msg'=>'请稍后再试！']);
+                    echo json_encode(['code'=>0,'msg'=>'请稍后再试！']);
                 }
             }
         }
