@@ -176,7 +176,8 @@ Route::get('/cartDel','Index\ZhaoController@cartDel'); //
 Route::get('/couponDel','Index\ZhaoController@couponDel'); //
 Route::get('/couponStatus','Index\ZhaoController@couponStatus'); //
 Route::get('/orderget','Index\UserController@orderGet'); //前台个人中心订单展示
-Route::get('/orderoff','Index\UserController@orderOff'); //前台个人中心订单展示
+Route::get('/orderoff','Index\UserController@orderOff'); //取消订单
+Route::get('/ordergoodsoff','Index\UserController@orderGoodsOff'); //取消该商品
 
 
 Route::get('/getcode','Index\UserController@getCode'); //获取注册验证码

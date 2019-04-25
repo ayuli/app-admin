@@ -288,4 +288,14 @@ class UserController extends Controller
         if($res){return returnJson('0','该订单已取消');}
     }
 
+    //取消该商品
+    public function orderGoodsOff(Request $request)
+    {
+        $order_goods_id = $request->input('order_goods_id');
+        $arr=DB::table('app_order_goods')->where(['order_goods_id'=>$order_goods_id,'status'=>1])->get();
+        if(count($arr)<1){ return returnJson('100','该商品不存在'); }
+        $res=DB::table('app_order')->where(['order_goods_id'=>$order_goods_id])->update(['status'=>2]);
+        if($res){return returnJson('0','该商品已取消');}
+    }
+
 }
