@@ -98,6 +98,7 @@ Route::post('typeUpdateDo',"Admin\AdminController@typeUpdateDo");//类型修改�
 
 Route::get('attrAdd',"Admin\GoodsController@attrAdd"); //商品添加属性页面
 Route::post('attrUpdateDo',"Admin\GoodsController@attrUpdateDo"); //商品属性修改执行
+Route::get('attrShow',"Admin\GoodsController@attrShow"); //商品属性展示
 
 
 //前台登陆
