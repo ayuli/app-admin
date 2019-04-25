@@ -277,7 +277,6 @@ class GoodsController extends Controller
             'goods_price'=>$data['goods_price'],
             'goods_img'=>$data['goods_img'],
             'goods_score'=>$data['goods_score'],
-            'add_time'=>time(),
             'is_show'=>$data['is_show'],
             'is_best'=>$data['is_best'],
             'is_new'=>$data['is_new'],
@@ -332,8 +331,13 @@ class GoodsController extends Controller
                     }
                 }
             }
-            DB::commit();
-            echo json_encode(['code'=>1,'msg'=>'修改成功！']);
+            if($res){
+                DB::commit();
+                echo json_encode(['code'=>1,'msg'=>'修改成功！']);
+            }else{
+                echo json_encode(['code'=>2,'msg'=>'未修改']);
+            }
+
         }else{
             DB::rollBack();
             echo json_encode(['code'=>2,'msg'=>'修改失败！']);
