@@ -32,21 +32,47 @@
                 <span>优惠券添加</span>
             </div>
             <div class="baBody">
+                <div class="bbD">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <form  class="layui-form">
+                        <div class="layui-inline" >
+                            <label class="layui-form-label" style="width:100px;margin-left:0;">优惠券类型：</label>
+                            <div class="layui-input-inline">
+
+                                <select name="modules" class="selects" lay-verify="required" lay-search="">
+                                    <option value="">选择优惠券类型</option>
+                                    @if($couponinfo->coupon_type == 1)
+                                        <option value="1" selected>满减券</option>
+                                        <option value="2">立减券</option>
+                                        <option value="3">折扣券</option>
+                                    @elseif($couponinfo->coupon_type == 2)
+                                        <option value="1">满减券</option>
+                                        <option value="2" selected>立减券</option>
+                                        <option value="3">折扣券</option>
+                                    @else
+                                        <option value="1">满减券</option>
+                                        <option value="2">立减券</option>
+                                        <option value="3" selected>折扣券</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <input type="hidden" name="coupon_id" value="{{$couponinfo->coupon_id}}">
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券名称：<input type="text" name="coupon_name" value="{{$couponinfo->coupon_name}}" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券名称：<input type="text" name="coupon_name" value="{{$couponinfo->coupon_name}}" class="input3" />
                 </div>
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券数量：<input type="text" name="coupon_num" value="{{$couponinfo->coupon_num}}" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券数量：<input type="text" name="coupon_num" value="{{$couponinfo->coupon_num}}" class="input3" />
                 </div>
                 <div class="bbD">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券价格：<input type="text" name="coupon_price" value="{{$couponinfo->coupon_price}}" class="input3" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优惠券规格：<input type="text" name="coupon_attr" value="{{$couponinfo->coupon_attr}}" class="input3" />
                 </div>
                 <br>
                 <div class="bbD">
                     <p class="bbDP">
                         <button class="btn_ok btn_yes" id="btn" href="#" >提交</button>
-                        <a class="btn_ok btn_no" href="#">取消</a>
+                        <a class="btn_ok btn_no" href="couponList">取消</a>
                     </p>
                 </div>
             </div>
@@ -59,18 +85,24 @@
 </html>
 
 <script>
+    layui.use(['layer','form'], function() {
+        var layer = layui.layer;
+        var form = layui.form;
+
+    })
     layui.use('layer', function() {
         var layer = layui.layer;
         $('#btn').click(function(){
+            var select = $("select[name='modules']").val();
             var coupon_id = $("input[name='coupon_id']").val();
             var coupon_name = $("input[name='coupon_name']").val();
             var coupon_num = $("input[name='coupon_num']").val();
-            var coupon_price = $("input[name='coupon_price']").val();
+            var coupon_attr = $("input[name='coupon_attr']").val();
 
 
             $.post(
                 'couponUpdateDo',
-                {coupon_id:coupon_id,coupon_name:coupon_name,coupon_num:coupon_num,coupon_price:coupon_price},
+                {coupon_id:coupon_id,coupon_name:coupon_name,coupon_num:coupon_num,coupon_attr:coupon_attr},
                 function(res){
                     if(res.code==0){
                         layer.open({
