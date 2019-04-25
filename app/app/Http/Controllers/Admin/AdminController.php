@@ -416,7 +416,7 @@ class AdminController extends Controller
         $coupon_id = $request->input('coupon_id');
         $coupon_name = $request->input('coupon_name');
         $coupon_num = $request->input('coupon_num');
-        $coupon_price = $request->input('coupon_price');
+        $coupon_attr = $request->input('coupon_attr');
 
         if(empty($coupon_name)){
             return json_encode(['msg'=>'名称不能为空','code'=>1]);
@@ -424,14 +424,14 @@ class AdminController extends Controller
         if(empty($coupon_num)){
             return json_encode(['msg'=>'数量不能为空','code'=>1]);
         }
-        if(empty($coupon_price)){
-            return json_encode(['msg'=>'价格不能为空','code'=>1]);
+        if(empty($coupon_attr)){
+            return json_encode(['msg'=>'规格不能为空','code'=>1]);
         }
 
         $couponinfo = [
             'coupon_name'=>$coupon_name,
             'coupon_num'=>$coupon_num,
-            'coupon_price'=>$coupon_price
+            'coupon_attr'=>$coupon_attr
         ];
         $res = DB::table('app_coupon')->where('coupon_id',$coupon_id)->update($couponinfo);
         if($res){

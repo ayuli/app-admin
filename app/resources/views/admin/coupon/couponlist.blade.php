@@ -110,7 +110,6 @@
                 <br>
                 <br>
                 <tr>
-                <tr>
                     <td width="100px" class="tdColor tdC">序号</td>
                     <td width="250px" class="tdColor">优惠券名称</td>
                     <td width="250px" class="tdColor">优惠券类型</td>
