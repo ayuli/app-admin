@@ -225,6 +225,7 @@ class UserController extends Controller
     public function uploadPortrait(Request $request){
         $user_id=$request->input('user_id');
         $imgInfo=$request->input('data');
+        $imgInfo=substr($imgInfo,17);
         $imgInfo=base64_decode($imgInfo);
         $name=date('YmdHis',time()).rand(1,100).'.jpg';
         $file_name="user/".$user_id."/";
