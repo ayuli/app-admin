@@ -68,18 +68,37 @@
     }
 
     $(function(){
-        $(".layui-btn").click(function(){
-            var form=$(".form-inline").serialize();
+        layui.use('layer', function() {
+            var layer = layui.layer;
 
-            var url="attrAddDo";
 
-            $.post(url,form,function(res){
-                alert(res.msg);
-                if(res.code==1){
-                    location.href="attrShow?type_id="+res.type_id;
-                }
-            },'json');
-        });
 
+            $(".layui-btn").click(function(){
+                var form=$(".form-inline").serialize();
+
+                var url="attrAddDo";
+
+                $.post(url,form,function(res){
+
+                    if(res.code==1){
+                        layer.open({
+                            type:0,
+                            content:'添加成功',
+                            btn:['继续添加','列表展示'],
+                            yes:function(index,layero){
+                                location.href="attrAdd";
+                                return true;
+                            },
+                            btn2:function(){
+                                location.href="attrShow?type_id="+res.type_id;
+                                return true;
+                            }
+                        })
+                    }else{
+                        layer.msg('添加失败');
+                    }
+                },'json');
+            });
+        })
     })
 </script>
