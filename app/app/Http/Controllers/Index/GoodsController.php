@@ -40,6 +40,10 @@ class GoodsController extends Controller
             ];
         }
 
+        if(!isset($where['is_del'])){
+            $where['is_del']=1;
+        }
+
         $page_num = 6;
         $start = ($page-1)*$page_num;
 
