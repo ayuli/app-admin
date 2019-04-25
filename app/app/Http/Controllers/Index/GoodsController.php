@@ -49,11 +49,16 @@ class GoodsController extends Controller
             $count = count($arr);
 
         }else{
-
             $cate=CateModel::where('is_show',1)->get();
             $cateInfo=getCateInfo($cate,$cate_id);
 
-            $arr = DB::table('app_goods')->where('goods_name','like',"%$search%")->where($where)->whereIn('cate_id',$cateInfo)->orderBy($column,$order)->offset($start)->limit($page_num)->get();
+            $cateId=[];
+
+            foreach($cateInfo as $k=>$v){
+                $cateId[]=$v->cate_id;
+            }
+
+            $arr = DB::table('app_goods')->where('goods_name','like',"%$search%")->where($where)->whereIn('cate_id',$cateId)->orderBy($column,$order)->offset($start)->limit($page_num)->get();
 
             $count = count($arr);
         }
