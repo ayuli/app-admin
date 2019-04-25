@@ -296,7 +296,7 @@ class ZhaoController extends Controller
         $data= ['user_id'=>$user_id,'coupon_id'=>$coupon_id,'createtime'=>time()];
         $res_insert = DB::table('app_user_coupon')->insert($data);
         if(!$res_insert){ return returnJson('1023','领取失败');}
-        return returnJson('0','领取成功');
+        return json_encode(['code'=>0,'msg'=>'领取成功','num'=>$coupon_num],JSON_UNESCAPED_UNICODE);
     }
 
     /**
