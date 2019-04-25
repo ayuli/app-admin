@@ -234,11 +234,9 @@ class AdminController extends Controller
         $role_id = $request->input('role_id');
         $names = $request->input('names');
         $info = DB::table('app_node')->where('node_name','like',"%$names%")->get();
-//        print_r($names);exit;
         $role_node = DB::table('app_role_node')->where('role_id',$role_id)->pluck('node_id');
 
         $data = json_decode($role_node);
-//        print_r($data);exit;
         $objview =view('admin.admin.roleupdatenodedo',['info'=>$info,'data'=>$data,'names'=>$names]);
         $content = response($objview)->getContent();
         return json_encode(['data'=>$content,'code'=>1,'names'=>$names]);
@@ -247,6 +245,7 @@ class AdminController extends Controller
     public function roleUpdateDo(Request $request){
 
         $data = $request->input('data');
+//        print_r($data);exit;
         $role_name = $request->input('role_name');
         $role_id = $request->input('role_id');
 
