@@ -31,7 +31,7 @@ class GoodsController extends Controller
         if(empty($data['brand_id'])){
             echo json_encode(['code'=>2,'msg'=>'品牌必选']);exit;
         }
-        if(empty($data['goods_score'])){
+        if(empty($data['goods_price'])){
             echo json_encode(['code'=>2,'msg'=>'价格必填']);exit;
         }
         if(empty($data['goods_number'])){
