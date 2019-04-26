@@ -381,7 +381,7 @@ class GoodsController extends Controller
             $attr_values[$v->attr_id][$v->goods_attr_id]=$v->attr_value;
             $attr_price[$v->attr_id][$v->goods_attr_id]=$v->attr_price;
         }
-
+        
         return view('admin.goods.goodsSku',['product_info'=>$product_info,'goods_info'=>$goods_info,'attr_name'=>$attr_name,'attr_values'=>$attr_values,'attr_id'=>$attr_id]);
     }
 
