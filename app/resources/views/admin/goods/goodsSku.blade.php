@@ -1,5 +1,7 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.min.js"></script>
 <link rel="stylesheet" href="css/css.css" />
+<script src="layui/layui.js"></script>
+<link rel="stylesheet" href="layui/css/layui.css"  media="all">
 
 <style>
     input[type="checkbox"] { height:20px;width:20px; }
