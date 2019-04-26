@@ -69,8 +69,9 @@ class CartController extends Controller
         $goods_num=$data['goods_num'];
         $user_id=$data['user_id'];
         $goods_id=$data['goods_id'];
+        $goods_attr=$data['goods_attr'];
 
-        $cartInfo=DB::table('app_cart')->where(['goods_id'=>$goods_id,'user_id'=>$user_id,'is_delete'=>1])->first();
+        $cartInfo=DB::table('app_cart')->where(['goods_id'=>$goods_id,'user_id'=>$user_id,'is_delete'=>1,'goods_attr'=>$goods_attr])->first();
 
         if($cartInfo){
             echo json_encode(['code'=>1,'msg'=>'该商品已在购物车，确认去查看！']);
