@@ -32,8 +32,15 @@ class AdminRole
 
             if(in_array($route,$action_name)){
                 return $next($request);
+            }else{
+                if($route == 'index'){
+                    return $next($request);
+                }else{
+                    echo "您没有权限";exit;
+                }
+
             }
-            echo "您没有权限";exit;
+
         }
 
 //        echo '<a href="adminLogin" target="_top"><img src="/img/denglu.png" style="width:160px; height:80px;"></a>';exit;
