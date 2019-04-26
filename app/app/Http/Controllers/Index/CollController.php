@@ -19,6 +19,10 @@ class CollController extends Controller
     public function coll(Request $request){
         $user_id = $request->input('user_id');
         $goods_id = $request->input('goods_id');
+        if($user_id==null){
+            $result = [ 'code'=>1000 , 'msg'=>'请先登录' ];
+            return json_encode($result,JSON_UNESCAPED_UNICODE);
+        }
         $add_time = time();
         $data = [
             'user_id' => $user_id,
