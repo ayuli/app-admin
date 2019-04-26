@@ -70,6 +70,9 @@ class CartController extends Controller
         $user_id=$data['user_id'];
         $goods_id=$data['goods_id'];
         $goods_attr=$data['goods_attr'];
+        if($goods_attr==null){
+            $goods_attr="";
+        }
 
         $cartInfo=DB::table('app_cart')->where(['goods_id'=>$goods_id,'user_id'=>$user_id,'is_delete'=>1,'goods_attr_id'=>$goods_attr])->first();
 
