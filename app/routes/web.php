@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('index',"Admin\IndexController@index");
+Route::get('index',"Admin\IndexController@index")->middleware('AdminRole');
 //Route::get('/',"Admin\IndexController@index");
 Route::get('main',"Admin\IndexController@main");
 
