@@ -33,10 +33,11 @@ class AdminRole
             if(in_array($route,$action_name)){
                 return $next($request);
             }else{
-                if($route == 'index'){
-                    return $next($request);
-                }else{
+                if($route != 'index'){
                     echo "您没有权限";exit;
+                }else{
+                    return $next($request);
+
                 }
 
             }
